@@ -29,7 +29,7 @@ import org.tmatesoft.svn.core.wc.SVNWCUtil;
 public class Svn
 {
     private static final Logger logger = Logger.getLogger( Svn.class );
-    
+
     /**
      * Déclaration des attributs de la classe Svn
      */
@@ -200,50 +200,62 @@ public class Svn
     /**
      * Liste un dossier du dépot
      * @param path dossier du dépot
+     * @param deep the deep to search, stop at 0, boundless with infinite
+     * @param filter the content filter, can be null
      * @throws SVNException
      */
     @SuppressWarnings( "rawtypes" )
-    public List<SvnEntry> list( String path, int deep ) throws SVNException
+    public List<SvnEntry> list( String path, int deep, SvnFilter filter ) throws SVNException
     {
         List<SvnEntry> tree = new ArrayList<SvnEntry>( );
         if ( "FOLDER".equalsIgnoreCase( this.check( path ) ) )
         {
             Collection entries = this.repository.getDir( path, -1, null, (Collection) null );
+            logger.debug( "At " + path + ", found " + entries.size( ) + " entries" );
             Iterator iterator = entries.iterator( );
             while ( iterator.hasNext( ) )
             {
                 SVNDirEntry entry = (SVNDirEntry) iterator.next( );
 
-                SvnEntry svnEntry = new SvnEntry( );
-                svnEntry.setAuthor( entry.getName( ) );
-                svnEntry.setDate( entry.getDate( ) );
-                svnEntry.setLock( entry.getLock( ) );
-                svnEntry.setPath( ( path.equals( StringUtils.EMPTY ) ? StringUtils.EMPTY : path + "/" ) );
-                svnEntry.setRevision( entry.getRevision( ) );
-                svnEntry.setSize( entry.getSize( ) );
+                //first filter, the entry type
+                if ( checkName( filter, entry ) )
+                {
+                    SvnEntry svnEntry = new SvnEntry( );
+                    svnEntry.setAuthor( entry.getName( ) );
+                    svnEntry.setDate( entry.getDate( ) );
+                    svnEntry.setLock( entry.getLock( ) );
+                    svnEntry.setPath( ( path.equals( StringUtils.EMPTY ) ? StringUtils.EMPTY : path + "/" ) );
+                    svnEntry.setRevision( entry.getRevision( ) );
+                    svnEntry.setSize( entry.getSize( ) );
 
-                if ( entry.getKind( ) == SVNNodeKind.NONE )
-                {
-                    svnEntry.setType( "EMPTY" );
-                }
-                else if ( entry.getKind( ) == SVNNodeKind.FILE )
-                {
-                    svnEntry.setType( "FILE" );
-                }
-                else if ( entry.getKind( ) == SVNNodeKind.DIR )
-                {
-                    svnEntry.setType( "FOLDER" );
-                }
-                else if ( entry.getKind( ) == SVNNodeKind.UNKNOWN )
-                {
-                    svnEntry.setType( "UNKNOWN" );
-                }
-                svnEntry.setUrl( entry.getURL( ).toString( ) );
-                tree.add( svnEntry );
+                    if ( entry.getKind( ) == SVNNodeKind.NONE )
+                    {
+                        svnEntry.setType( "EMPTY" );
+                    }
+                    else if ( entry.getKind( ) == SVNNodeKind.FILE )
+                    {
+                        svnEntry.setType( "FILE" );
+                    }
+                    else if ( entry.getKind( ) == SVNNodeKind.DIR )
+                    {
+                        svnEntry.setType( "FOLDER" );
+                    }
+                    else if ( entry.getKind( ) == SVNNodeKind.UNKNOWN )
+                    {
+                        svnEntry.setType( "UNKNOWN" );
+                    }
+                    svnEntry.setUrl( entry.getURL( ).toString( ) );
+                    if ( checkType( filter, entry ) )
+                    {
+                        tree.add( svnEntry );
+                    }
 
-                if ( deep > 0 && entry.getKind( ) == SVNNodeKind.DIR )
-                {
-                    this.list( ( path.equals( StringUtils.EMPTY ) ) ? entry.getName( ) : path + "/" + entry.getName( ), deep - 1 );
+                    if ( ( deep > 0 || deep < 0 ) && entry.getKind( ) == SVNNodeKind.DIR )
+                    {
+                        List<SvnEntry> subEntries = this.list( ( path.equals( StringUtils.EMPTY ) ) ? entry.getName( )
+                                : path + "/" + entry.getName( ), deep - 1, filter );
+                        tree.addAll( subEntries );
+                    }
                 }
             }
         }
@@ -252,6 +264,47 @@ public class Svn
             logger.info( "Impossible de lister " + path + " car ce n'est pas un dossier" );
         }
         return tree;
+    }
+
+    /**
+     * Check the name of the entry
+     * @param filter the entry filter
+     * @param entry the entry to check
+     * @return true if the entry must be accept, false otherwise
+     */
+    private boolean checkName( SvnFilter filter, SVNDirEntry entry )
+    {
+        boolean accept = true;
+        if ( filter != null )
+        {
+            if ( !filter.getBlackList( ).isEmpty( ) )
+            {
+                if ( filter.getBlackList( ).contains( entry.getName( ) ) )
+                {
+                    accept = false;
+                }
+            }
+            else if ( !filter.getWhiteList( ).isEmpty( ) )
+            {
+                if ( !filter.getWhiteList( ).contains( entry.getName( ) ) )
+                {
+                    accept = false;
+                }
+
+            }
+        }
+        return accept;
+    }
+
+    /**
+     * Check the type of the entry
+     * @param filter the entry filter
+     * @param entry the entry to check
+     * @return true if the entry must be accept, false otherwise
+     */
+    private boolean checkType( SvnFilter filter, SVNDirEntry entry )
+    {
+        return filter == null || filter.getKind( ) == null || filter.getKind( ) == entry.getKind( );
     }
 
     /****************/
