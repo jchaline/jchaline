@@ -86,14 +86,14 @@ public final class MarkerTool implements Tool
         logger.debug( "File path : " + pathFiles );
 
         //configuration test
-        if ( StringUtils.isNotBlank( filePatternFilter ) && StringUtils.isNotBlank( pathFiles ) )
+        if ( StringUtils.isBlank( filePatternFilter ) || StringUtils.isBlank( pathFiles ) )
         {
             logger.error( "You must configure the pattern and the path for the file, into the marker.properties file" );
             return ToolsConstants.STATUS_ERROR;
         }
 
         //environnement test
-        if ( new File( pathFiles ).exists( ) )
+        if ( !(new File( pathFiles ).exists( )) )
         {
             logger.error( pathFiles
                     + " isn't correct, you must set a valide path for the files, into marker.properties : marker.templates.path" );
@@ -102,12 +102,12 @@ public final class MarkerTool implements Tool
 
         ReadWrite.findFiles( -1, listFiles, pathFiles, filePatternFilter );
 
-        logger.debug( "# files find : " + listFiles.size( ) );
+        logger.debug( "# files found : " + listFiles.size( ) );
         for ( String file : listFiles )
         {
             appendMark( file );
         }
-        logger.debug( " Files append. " );
+        logger.debug( " Files appends. " );
 
         return ToolsConstants.STATUS_OK;
     }
