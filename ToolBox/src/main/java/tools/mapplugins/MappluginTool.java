@@ -19,6 +19,7 @@ import services.svn.SvnFilter;
 import tools.Tool;
 import tools.mapplugins.bean.Repository;
 import tools.mapplugins.commons.MappluginConstants;
+import tools.mapplugins.service.SqlService;
 
 
 @Service
@@ -69,6 +70,10 @@ public class MappluginTool implements Tool
                         
                     }
                 }
+                
+                //derniere etape, generer le fichier SQL permettant de créer la bdd
+                String sqlPath = PropertiesService.getProperty( MappluginConstants.MARK_SQL_FILE );
+                SqlService.generateSqlFile( repo, sqlPath );
             }
             catch ( SVNException e )
             {
