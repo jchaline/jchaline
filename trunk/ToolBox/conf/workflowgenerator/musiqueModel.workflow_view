@@ -7,13 +7,13 @@
   <layoutData viewid="Technical" x="318" y="462" initialized="true">
     <describesElement href="musiqueModel.workflow#//@elements.0/@nodes.1"/>
   </layoutData>
-  <layoutData viewid="Technical" width="80" height="43" x="672" y="154" initialized="true">
+  <layoutData viewid="Technical" width="80" height="43" x="672" y="144" initialized="true">
     <describesElement href="musiqueModel.workflow#//@elements.0/@nodes.2"/>
   </layoutData>
   <layoutData viewid="Technical" x="327" y="163" initialized="true">
     <describesElement href="musiqueModel.workflow#//@elements.0/@nodes.3"/>
   </layoutData>
-  <layoutData viewid="Technical" x="14" y="161" initialized="true">
+  <layoutData viewid="Technical" x="14" y="151" initialized="true">
     <describesElement href="musiqueModel.workflow#//@elements.0/@nodes.4"/>
   </layoutData>
   <layoutData viewid="Technical" x="249" y="294" initialized="true">
