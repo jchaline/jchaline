@@ -21,6 +21,7 @@ import fr.paris.lutece.plugins.pac.service.pacuser.PacuserService;
 import fr.paris.lutece.plugins.pac.utils.commons.CsvUtils;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConfigs;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConstants;
+import fr.paris.lutece.plugins.pac.utils.messages.SessionMessage;
 import fr.paris.lutece.plugins.pac.web.AbstractPacJspBean;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.message.AdminMessage;
@@ -44,8 +45,6 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
 
     private static final long serialVersionUID = 4056641770117704752L;
 
-    private static final String I18N_ERROR_OCCUR = "pac.error.errorOccur";
-
     private static final String PARAMETER_DOWNLOAD_FILE_NAME = "pac.csv";
 
     private static final String MARK_PACFILE = "pacfile";
@@ -68,15 +67,31 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
         PacuserFilter filter = new PacuserFilter( );
         populate( filter, request );
 
-        DataTableManager<PacuserDTO> dataTableUser = getDataTable( request, filter );
+        DataTableManager<PacuserDTO> dataTableUser = null;
+        try
+        {
+            dataTableUser = getDataTable( request, filter );
+            model.put( MARK_DATA_TABLE_BEAN, dataTableUser );
+            model.put( MARK_FILTER, filter );
 
-        model.put( MARK_DATA_TABLE_BEAN, dataTableUser );
-        model.put( MARK_FILTER, filter );
+        }
+        catch ( SecurityException e )
+        {
+            SessionMessage.pushMessage( request, SessionMessage.CODE_ALERTE, PacConfigs.I18N_ERROR_OCCUR );
+        }
+        catch ( NoSuchMethodException e )
 
+        {
+            SessionMessage.pushMessage( request, SessionMessage.CODE_ALERTE, PacConfigs.I18N_ERROR_OCCUR );
+        }
+
+        model.put( SessionMessage.MARK_SESSION_MESSAGE, SessionMessage.popMessage( request ) );
         HtmlTemplate template = AppTemplateService
                 .getTemplate( PacConfigs.TEMPLATE_MANAGE_PACUSER, getLocale( ), model );
-
-        dataTableUser.clearItems( );
+        if ( dataTableUser != null )
+        {
+            dataTableUser.clearItems( );
+        }
 
         return getAdminPage( template.getHtml( ) );
     }
@@ -164,8 +179,11 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
      * @param request the http request
      * @param filter the filter
      * @return the data table to use
+     * @throws NoSuchMethodException exception when method doesn't exist
+     * @throws SecurityException exception when canno't invoke the method
      */
     private DataTableManager<PacuserDTO> getDataTable( HttpServletRequest request, PacuserFilter filter )
+            throws SecurityException, NoSuchMethodException
     {
         Closure converter = PacuserService.getFuncConverter( );
         DataTableManager<PacuserDTO> dataTableToUse = getAbstractDataTableManager( request, _servicePacuser, converter,
@@ -232,7 +250,7 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
         }
         catch ( IOException e )
         {
-            url = AdminMessageService.getMessageUrl( request, I18N_ERROR_OCCUR, AdminMessage.TYPE_ERROR );
+            url = AdminMessageService.getMessageUrl( request, PacConfigs.I18N_ERROR_OCCUR, AdminMessage.TYPE_ERROR );
         }
 
         return url;
@@ -247,7 +265,7 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
     public String doUpload( HttpServletRequest request )
     {
         List<List<String>> fileContent = CsvUtils.uploadFile( request, MARK_PACFILE );
-        _servicePacuser.doUpload(fileContent);
+        _servicePacuser.doUpload( fileContent );
         return StringUtils.EMPTY;
     }
 }

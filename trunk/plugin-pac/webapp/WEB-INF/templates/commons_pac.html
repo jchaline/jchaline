@@ -120,3 +120,89 @@
 		#i18n{portal.util.labelNoItem}
 	</#if>
 </#macro>
+
+<#-- ------------ MESSAGE TO SHOW : INFO, ERROR, ALERTE, CONFIRM --------------- -->
+<#macro showErreurs erreursList>
+	<#if erreursList?? && erreursList?has_content >
+		<#list erreursList as erreur>
+			<div class="alert alert-block alert-error fade in">
+				<button class="close" data-dismiss="alert" type="button">
+					×
+				</button>
+				<p><strong>${(erreur)!}</strong></p>
+			</div>
+		</#list>
+	</#if>
+</#macro>
+
+<#macro showInformations informationsList>
+	<#if informationsList?? && informationsList?has_content >
+		<#list informationsList as informations>
+			<div class="alert fade in">
+				<button class="close" data-dismiss="alert" type="button">
+					×
+				</button>
+					${(informations)!}
+			</div>
+		</#list>
+	</#if>
+</#macro>
+
+<#macro showAlerte alertesList >
+	<#if alertesList?? >
+		<div id="myModal" class="modal hide fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-body">
+				<#list alertesList as alerte>
+					<p>
+						${(alerte)!}
+					<p>
+				</#list>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">#i18n{lel.page.transverse.valider}</button>
+			</div>
+		</div>
+		<script type="text/javascript" charset="utf-8">
+			$( document ).ready(function() {
+				$('#myModal').modal({show: 'true'}); 
+			});
+		</script>
+	</#if>
+</#macro>
+
+<#macro showPopupInfo alertesList >
+	<#if alertesList?? >
+		<div id="myModal" class="modal hide fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-body">
+				<#list alertesList as alerte>
+					<p>
+						${(alerte)!}
+					<p>
+				</#list>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">#i18n{lel.page.transverse.suivant}</button>
+			</div>
+		</div>
+		<script type="text/javascript" charset="utf-8">
+			$( document ).ready(function() {
+				$('#myModal').modal({show: 'true'}); 
+			});
+		</script>
+	</#if>
+</#macro>
+
+<#macro showSessionMessage >
+	<#if sessionMessage?? && sessionMessage.messages["CODE_INFORMATION"]?has_content >
+		<@showInformations informationsList=sessionMessage.messages["CODE_INFORMATION"] />
+	</#if>
+	<#if sessionMessage??&& sessionMessage.messages["CODE_ERREUR"]?has_content >
+		<@showErreurs erreursList=sessionMessage.messages["CODE_ERREUR"] />
+	</#if>
+	<#if sessionMessage?? && sessionMessage.messages["CODE_ALERTE"]?has_content >
+		<@showAlerte alertesList=sessionMessage.messages["CODE_ALERTE"] />
+	</#if>
+	<#if sessionMessage?? && sessionMessage.messages["CODE_POPUP_INFO"]?has_content >
+		<@showPopupInfo alertesList=sessionMessage.messages["CODE_POPUP_INFO"] />
+	</#if>
+</#macro>
