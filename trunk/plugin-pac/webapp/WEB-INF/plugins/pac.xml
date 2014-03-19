@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<plug-in>
+	<!-- Plugin Informations -->
+	<name>pac</name>
+	<class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation
+	</class>
+	<version>1.0.0-SNAPSHOT</version>
+	<documentation />
+	<installation></installation>
+	<changes />
+	<user-guide />
+	<description>pac.plugin.description</description>
+	<provider>XXXXXXXXX</provider>
+	<provider-url>http://lutece.paris.fr</provider-url>
+	<icon-url>images/admin/skin/plugins/pac/pac.png</icon-url>
+	<copyright>Copyright 2002-2013 Mairie de Paris</copyright>
+	<db-pool-required>1</db-pool-required>
+
+	<freemarker-macro-files>
+		<freemarker-macro-file>/commons_pac.html
+		</freemarker-macro-file>
+	</freemarker-macro-files>
+
+	<!-- Specific plugin CSS stylesheet -->
+	<css-stylesheets>
+		<css-stylesheet>pac/pac.css</css-stylesheet>
+	</css-stylesheets>
+
+	<!-- Specific plugin JAVASCRIPT -->
+	<javascript-files>
+	</javascript-files>
+
+	<!-- Administration interface parameters -->
+	<admin-features>
+		<admin-feature>
+			<feature-id>PAC_PACUSER_MANAGEMENT</feature-id>
+			<feature-title>pac.adminFeature.pac.pacuserManagement.name
+			</feature-title>
+			<feature-description>pac.adminFeature.pac.pacuserManagement.description
+			</feature-description>
+			<feature-level>4</feature-level>
+			<feature-url>jsp/admin/plugins/pac/pacuser/ManagePacuser.jsp
+			</feature-url>
+			<feature-group>PAC</feature-group>
+			<feature-icon-url>images/admin/skin/feature_default_icon.png
+			</feature-icon-url>
+		</admin-feature>
+		<admin-feature>
+			<feature-id>PAC_CONGE_MANAGEMENT</feature-id>
+			<feature-title>pac.adminFeature.pac.congeManagement.name
+			</feature-title>
+			<feature-description>pac.adminFeature.pac.congeManagement.description
+			</feature-description>
+			<feature-level>4</feature-level>
+			<feature-url>jsp/admin/plugins/pac/conge/ManageConge.jsp
+			</feature-url>
+			<feature-group>PAC</feature-group>
+			<feature-icon-url>images/admin/skin/feature_default_icon.png
+			</feature-icon-url>
+		</admin-feature>
+	</admin-features>
+
+	<!-- Applications -->
+	<applications>
+		<application>
+			<application-id>nextpac</application-id>
+			<application-class>fr.paris.lutece.plugins.pac.xpage.home.NextPacApp
+			</application-class>
+		</application>
+		<application>
+			<application-id>contact</application-id>
+			<application-class>fr.paris.lutece.plugins.pac.xpage.home.ContactApp
+			</application-class>
+		</application>
+	</applications>
+
+	<!-- Daemons -->
+	<daemons>
+		<daemon>
+			<daemon-id>pacOrderDaemon</daemon-id>
+			<daemon-name>pac.pacorder.daemon.name</daemon-name>
+			<daemon-description>pac.pacorder.daemon.description
+			</daemon-description>
+			<daemon-class>fr.paris.lutece.plugins.pac.daemon.PacOrderDaemon
+			</daemon-class>
+		</daemon>
+	</daemons>
+
+	<!-- RBAC Resources -->
+	<rbac-resource-types>
+	</rbac-resource-types>
+</plug-in>
