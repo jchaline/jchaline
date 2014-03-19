@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<configuration>
+		<stop-on-errors>true</stop-on-errors>
+		<date-format>dd/MM/yyyy</date-format>
+		<trim-strings>true</trim-strings>
+	</configuration>
+	
+	<mapping>
+		<class-a>java.util.Date</class-a>
+		<class-b>java.lang.String</class-b>
+	</mapping>
+	<mapping>
+		<class-a>
+			fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser
+		</class-a>
+		<class-b>
+			fr.paris.lutece.plugins.pac.dto.pacuser.PacuserDTO
+		</class-b>
+		<field custom-converter="fr.paris.lutece.plugins.pac.utils.dozer.pacuser.CongesConverter">
+			<a>joursConges</a>
+			<b>joursConges</b>
+		</field>
+	</mapping>
+
+</mappings>
