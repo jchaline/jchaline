@@ -168,7 +168,7 @@ public class PacuserDTO extends GenericJPADTO<Integer, Pacuser>
      */
     public void setDernierPac( String dernierPac )
     {
-        this._dernierPac = dernierPac!=null?dernierPac:"";
+        this._dernierPac = dernierPac != null ? dernierPac : "";
     }
 
     /**
@@ -184,7 +184,7 @@ public class PacuserDTO extends GenericJPADTO<Integer, Pacuser>
      */
     public void setProchainPac( String prochainPac )
     {
-        this._prochainPac = prochainPac;
+        this._prochainPac = prochainPac != null ? prochainPac : "";
     }
 
     /**

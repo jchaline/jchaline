@@ -28,6 +28,7 @@ import fr.paris.lutece.plugins.pac.service.pacconfig.PacconfigService;
 import fr.paris.lutece.plugins.pac.service.pacdate.IPacdateService;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConfigs;
 import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.util.beanvalidation.BeanValidationUtil;
 
 
 /**
@@ -255,26 +256,17 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
     }
 
     /**
-     * Get the converter function as Closure object
+     * Get the converter function between Pacuser and PacuserDTO as Closure object
      * @return the closure
+     * @throws NoSuchMethodException exception when method doesn't exist
+     * @throws SecurityException exception when canno't invoke the method
      */
-    public static Closure getFuncConverter( )
+    public static Closure getFuncConverter( ) throws SecurityException, NoSuchMethodException
     {
         Closure converter = null;
         Method convertMethod = null;
-        try
-        {
             convertMethod = PacuserDTO.class.getMethod( "convert", List.class );
             converter = new Closure( PacuserDTO.class, convertMethod );
-        }
-        catch ( NoSuchMethodException e )
-        {
-            AppLogService.error( e );
-        }
-        catch ( SecurityException e )
-        {
-            AppLogService.error( e );
-        }
         return converter;
     }
 
@@ -284,8 +276,9 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
         for ( List<String> line : lines )
         {
             PacuserDTO dto = transform( line );
-            if ( dto != null )
+            if ( dto != null && BeanValidationUtil.validate( dto ).isEmpty( ))
             {
+                
                 doSaveBean( dto.convert( ) );
             }
         }

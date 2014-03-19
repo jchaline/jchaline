@@ -33,5 +33,8 @@ public final class PacConfigs
     public static final String TEMPLATE_SAVE_PACDATE = "admin/plugins/pac/bean/pacdate/save_pacdate.html";
     public static final String TEMPLATE_MANAGE_PACDATE = "admin/plugins/pac/bean/pacdate/manage_pacdate.html";
     
+    /* I18N */
+    public static final String I18N_ERROR_OCCUR = "pac.error.errorOccur";
+    
     private PacConfigs(){}
 }
