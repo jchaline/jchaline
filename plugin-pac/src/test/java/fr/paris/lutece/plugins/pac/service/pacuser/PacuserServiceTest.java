@@ -10,7 +10,6 @@ import org.apache.commons.lang.time.DateUtils;
 
 import fr.paris.lutece.plugins.pac.bean.pacconfig.Pacconfig;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
-import fr.paris.lutece.plugins.pac.service.pacconfig.IPacconfigService;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConfigs;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.test.LuteceTestCase;
@@ -26,7 +25,7 @@ public class PacuserServiceTest extends LuteceTestCase
 
     public void testOrderWithDate( )
     {
-        List<Pacuser> list = initListPacuser( false );
+        List<Pacuser> list = initListPacuser( true );
 
         PacuserService.doOrderNextPac( list );
 
