@@ -20,14 +20,11 @@ public class PacuserComparator implements Comparator<Pacuser>
     {
         int result = 0;
         //1ere step, verifier les cas particulier d'égalité
-        if ( !( o1.getDernierPac( ) == o2.getDernierPac( ) ) || !( o1.getDateEntree( ) == o2.getDateEntree( ) ) )
+        //2eme step, verifier que les deux dates possede une date de dernier pac
+        result = DateUtils.compare( o1.getDernierPac( ), o2.getDernierPac( ) );
+        if ( result == 0 )
         {
-            //2eme step, verifier que les deux dates possede une date de dernier pac
-            result = DateUtils.compare( o1.getDernierPac( ), o2.getDernierPac( ) );
-            if ( result == 0 )
-            {
-                result = DateUtils.compare( o1.getDateEntree( ), o2.getDateEntree( ) );
-            }
+            result = DateUtils.compare( o1.getDateEntree( ), o2.getDateEntree( ) );
         }
         return result;
     }

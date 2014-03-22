@@ -87,8 +87,8 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
         }
 
         List<String[]> listChoices = new ArrayList<String[]>();
-        listChoices.add( new String[]{"delete","Supprimer"} );
-        listChoices.add( new String[]{"prevent","Prevenir"} );
+        listChoices.add( new String[]{"delete","pac.transverse.title.delete"} );
+        listChoices.add( new String[]{"prevent","pac.transverse.title.send"} );
         model.put( "listChoices", listChoices );
         model.put( SessionMessage.MARK_SESSION_MESSAGE, SessionMessage.popMessage( request ) );
         HtmlTemplate template = AppTemplateService
