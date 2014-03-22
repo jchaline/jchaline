@@ -52,7 +52,7 @@
 	</form>
 </#macro>
 
-<#macro dataTablePac dataTableManager actionMacro="" tableClass="table table-striped table-condensed" caption="&nbsp;" summary="data table" >
+<#macro dataTablePac dataTableManager actionMacro="" tableClass="table table-striped table-condensed" caption="&nbsp;" summary="data table" listChoices="" >
 	<#if 0 < dataTableManager.items?size >
 		<#if dataTableManager.enablePaginator>
 			<@displayPaginator dataTableManager=dataTableManager />
@@ -106,13 +106,17 @@
 				</tr>
 			</#list>
 		</table>
-		<input type="checkbox" id="selectAll" />
-		<select class="input-large">
-			<option>Effacer</option>
-		</select>
-		<button class="btn btn-small btn-primary">
-			Action en masse
-		</button>
+		<#if listChoices?has_content>
+			<input type="checkbox" id="selectAll" />
+			<select class="input-large">
+				<#list listChoices as choice>
+					<option value="${(choice[0])!}">${(choice[1])!}</option>
+				</#list>
+			</select>
+			<button class="btn btn-small btn-primary">
+				#i18n{pac.transverse.masse.action}
+			</button>
+		</#if>
 		<#if dataTableManager.enablePaginator>
 			<@displayPaginator dataTableManager=dataTableManager />
 		</#if>

@@ -1,6 +1,7 @@
 package fr.paris.lutece.plugins.pac.web.pacuser;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +86,10 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
             SessionMessage.pushMessage( request, SessionMessage.CODE_ALERTE, PacConfigs.I18N_ERROR_OCCUR );
         }
 
+        List<String[]> listChoices = new ArrayList<String[]>();
+        listChoices.add( new String[]{"delete","Supprimer"} );
+        listChoices.add( new String[]{"prevent","Prevenir"} );
+        model.put( "listChoices", listChoices );
         model.put( SessionMessage.MARK_SESSION_MESSAGE, SessionMessage.popMessage( request ) );
         HtmlTemplate template = AppTemplateService
                 .getTemplate( PacConfigs.TEMPLATE_MANAGE_PACUSER, getLocale( ), model );
