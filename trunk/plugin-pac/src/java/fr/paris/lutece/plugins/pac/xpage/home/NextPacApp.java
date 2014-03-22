@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import fr.chaline.scala.myproject.Currying;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
 import fr.paris.lutece.plugins.pac.dao.commons.ResultList;
 import fr.paris.lutece.plugins.pac.dto.pacuser.PacuserDTO;
@@ -17,6 +18,7 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.security.UserNotSignedException;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.web.xpages.XPage;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
@@ -34,12 +36,14 @@ public class NextPacApp extends AbstractPacApp
     public XPage getPage( HttpServletRequest request, int nMode, Plugin plugin ) throws UserNotSignedException,
             SiteMessageException
     {
+        String scalaResult = Currying.concat( "test", "append" );
+        AppLogService.info( scalaResult );
+        
         ResultList<Pacuser> listPacuser = _servicePacuser.findAll( null );
         List<PacuserDTO> listDTO = PacuserDTO.convert( listPacuser );
-
         Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_LIST_PACUSER, listDTO );
-
+        
         SessionMessage.pushMessage( request, SessionMessage.CODE_ALERTE, "pac.pacuser.field.prochainPac" );
         model.put( SessionMessage.MARK_SESSION_MESSAGE, SessionMessage.popMessage( request ) );
         
