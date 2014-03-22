@@ -64,14 +64,14 @@
 		</div>
 		<div class="span9">
 			<#if dataTableBean??>
-				<@dataTablePac dataTableManager=dataTableBean />
+				<@dataTablePac dataTableManager=dataTableBean listChoices=listChoices />
 			</#if>
 		</div>
 	</div>
 </fieldset>
 
 <fieldset>
-	<form id="myForm" action="jsp/admin/plugins/pac/pacuser/DoUpload.jsp" enctype="multipart/form-data" method="post"> 
+	<form id="uploadForm" action="jsp/admin/plugins/pac/pacuser/DoUpload.jsp" enctype="multipart/form-data" method="post"> 
 		<input type="file" name="pacfile" >
 		<button class="btn btn-success btn-small" type="submit" >
 			<i class="icon-upload icon-white"></i>&nbsp;
@@ -83,14 +83,13 @@
 </fieldset>
 
 <script> 
-    // wait for the DOM to be loaded 
     $(document).ready(function() { 
         // bind 'myForm' and provide a simple callback function 
-        $('#myForm').ajaxForm(function() { 
-            console.log("Retour form");
-        }); 
+        $('#uploadForm').ajaxForm(function() { 
+        });
+       	bindSelectAll('selectAll','checkboxSelectAll');
     }); 
 </script>
 
 <script src="js/jquery.form.js"></script>
-<script type="text/javascript" charset="UTF-8" src="js/plugins/pac/pacuser/checkboxSelectAll.js"></script>
+<script src="js/generic.js"></script>
