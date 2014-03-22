@@ -31,12 +31,12 @@
 			<div class="modal-body">
 				<#list alertesList as alerte>
 					<p>
-						${(alerte)!}
+						#i18n{${(alerte)!}}
 					<p>
 				</#list>
 			</div>
 			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal" aria-hidden="true">#i18n{lel.page.transverse.valider}</button>
+				<button class="btn" data-dismiss="modal" aria-hidden="true">#i18n{pac.transverse.valider}</button>
 			</div>
 		</div>
 		<script type="text/javascript" charset="utf-8">
