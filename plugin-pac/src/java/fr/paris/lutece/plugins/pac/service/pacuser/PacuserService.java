@@ -105,8 +105,10 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
         config.setFirstDate( calendar.getTime( ) );
         config.setTeam( "Mairie de Paris" );
 
+        //determination des prochains pacs
         associatePacDate( listPacuser, new Date( ), config );
 
+        //sauvegarde des pacuser mis à jour
         for ( Pacuser user : listPacuser )
         {
             doSaveBean( user );
@@ -120,6 +122,8 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
         refCopy.addAll( listUsers );
         Date firstPac = PacconfigService.findFirstDayForPac( startingDate, config );
 
+        //tant qu'il reste des pacuser sans prochain pac de determiné
+        //ne pas tenir compte des jours fériés => créer une liste de jours sans pac dans la config de chaque equipe
         while ( !refCopy.isEmpty( ) )
         {
             boolean notFound = true;
@@ -133,8 +137,8 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
                     userIterator.remove( );
                     notFound = false;
                 }
-                firstPac = PacconfigService.findNextDate( config, firstPac );
             }
+            firstPac = PacconfigService.findNextDate( config, firstPac );
         }
 
         // be aware about hollydays and incoming date
@@ -256,7 +260,8 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
     }
 
     /**
-     * Get the converter function between Pacuser and PacuserDTO as Closure object
+     * Get the converter function between Pacuser and PacuserDTO as Closure
+     * object
      * @return the closure
      * @throws NoSuchMethodException exception when method doesn't exist
      * @throws SecurityException exception when canno't invoke the method
@@ -265,8 +270,8 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
     {
         Closure converter = null;
         Method convertMethod = null;
-            convertMethod = PacuserDTO.class.getMethod( "convert", List.class );
-            converter = new Closure( PacuserDTO.class, convertMethod );
+        convertMethod = PacuserDTO.class.getMethod( "convert", List.class );
+        converter = new Closure( PacuserDTO.class, convertMethod );
         return converter;
     }
 
@@ -276,9 +281,9 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
         for ( List<String> line : lines )
         {
             PacuserDTO dto = transform( line );
-            if ( dto != null && BeanValidationUtil.validate( dto ).isEmpty( ))
+            if ( dto != null && BeanValidationUtil.validate( dto ).isEmpty( ) )
             {
-                
+
                 doSaveBean( dto.convert( ) );
             }
         }

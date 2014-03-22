@@ -44,12 +44,12 @@ public final class DateUtils
             }
             else
             {
-                result = -1;
+                result = 1;
             }
         }
         else if ( date2 != null )
         {
-            result = 1;
+            result = -1;
         }
 
         return result;

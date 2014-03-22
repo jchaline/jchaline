@@ -49,8 +49,8 @@ public class Pacuser extends GenericJPABean<Integer>
     @Column( name = "prenom", nullable = false )
     @NotEmpty( message = "#i18n{portal.validation.message.notEmpty}" )
     private String _strPrenom;
-    
-    @Column(name="email")
+
+    @Column( name = "email" )
     @Email
     private String _strEmail;
 
@@ -234,5 +234,11 @@ public class Pacuser extends GenericJPABean<Integer>
     public void setEmail( String email )
     {
         this._strEmail = email;
+    }
+
+    @Override
+    public String toString( )
+    {
+        return _strPrenom + " " + _strNom;
     }
 }
