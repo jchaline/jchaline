@@ -110,7 +110,7 @@
 			<input type="checkbox" id="selectAll" />
 			<select class="input-large">
 				<#list listChoices as choice>
-					<option value="${(choice[0])!}">${(choice[1])!}</option>
+					<option value="${(choice[0])!}">#i18n{${(choice[1])!}}</option>
 				</#list>
 			</select>
 			<button class="btn btn-small btn-primary">
