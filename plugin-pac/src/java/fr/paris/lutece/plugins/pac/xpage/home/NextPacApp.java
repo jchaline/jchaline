@@ -10,6 +10,7 @@ import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
 import fr.paris.lutece.plugins.pac.dao.commons.ResultList;
 import fr.paris.lutece.plugins.pac.dto.pacuser.PacuserDTO;
 import fr.paris.lutece.plugins.pac.service.pacuser.IPacuserService;
+import fr.paris.lutece.plugins.pac.utils.messages.SessionMessage;
 import fr.paris.lutece.plugins.pac.xpage.AbstractPacApp;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -39,6 +40,9 @@ public class NextPacApp extends AbstractPacApp
         Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_LIST_PACUSER, listDTO );
 
+        SessionMessage.pushMessage( request, SessionMessage.CODE_ALERTE, "pac.pacuser.field.prochainPac" );
+        model.put( SessionMessage.MARK_SESSION_MESSAGE, SessionMessage.popMessage( request ) );
+        
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_NEXTPAC, request.getLocale( ), model );
 
         XPage page = new XPage( );
