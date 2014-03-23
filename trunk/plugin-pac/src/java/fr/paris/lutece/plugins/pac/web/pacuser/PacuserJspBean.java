@@ -337,7 +337,7 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
         model.put( MARK_BEAN, userDto );
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MAIL_YOUR_NEXT_PAC, locale, model );
 
-        //        MailService.sendMailHtml( userDto.getEmail( ), "florian.cardineau@sopra.com", "jeremy.chaline@sopragroup.com",
-        //                "The Pac Company", "noreply@nowhere.com", "Votre prochain PAC", template.getHtml( ) );
+        MailService.sendMailHtml( userDto.getEmail( ), "florian.cardineau@sopra.com", "jeremy.chaline@sopragroup.com",
+                "The Pac Company", "noreply@nowhere.com", "Votre prochain PAC", template.getHtml( ) );
     }
 }
