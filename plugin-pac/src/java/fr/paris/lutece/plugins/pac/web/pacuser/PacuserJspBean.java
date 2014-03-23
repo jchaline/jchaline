@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,16 +20,20 @@ import fr.paris.lutece.plugins.pac.dto.pacuser.PacuserDTO;
 import fr.paris.lutece.plugins.pac.service.IPacService;
 import fr.paris.lutece.plugins.pac.service.pacuser.IPacuserService;
 import fr.paris.lutece.plugins.pac.service.pacuser.PacuserService;
+import fr.paris.lutece.plugins.pac.utils.commons.ArrayUtils;
 import fr.paris.lutece.plugins.pac.utils.commons.CsvUtils;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConfigs;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConstants;
 import fr.paris.lutece.plugins.pac.utils.messages.SessionMessage;
 import fr.paris.lutece.plugins.pac.web.AbstractPacJspBean;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
+import fr.paris.lutece.portal.service.i18n.I18nService;
+import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.web.constants.Messages;
 import fr.paris.lutece.util.beanvalidation.ValidationError;
 import fr.paris.lutece.util.datatable.DataTableManager;
@@ -49,9 +54,14 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
     private static final String PARAMETER_DOWNLOAD_FILE_NAME = "pac.csv";
 
     private static final String MARK_PACFILE = "pacfile";
-    private static final String MARK_PAC_FIELD_PREFIX = "pac.pacuser.field.";
+    private static final String MARK_ACTIONS_PREFIX = "pac.transverse.title.";
+    private static final String MARK_PACUSER_FIELDS_PREFIX = "pac.pacuser.field.";
+
+    private static final String TEMPLATE_MAIL_YOUR_NEXT_PAC = "admin/plugins/pac/mail/yourNextPac.html";
 
     private IPacuserService _servicePacuser;
+
+    private static final String[] fields = { "nom", "prenom", "prochainPac", "dernierPac", "dateEntree" };
 
     @Override
     public void init( HttpServletRequest request, String strRight ) throws AccessDeniedException
@@ -86,10 +96,14 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
             SessionMessage.pushMessage( request, SessionMessage.CODE_ALERTE, PacConfigs.I18N_ERROR_OCCUR );
         }
 
-        List<String[]> listChoices = new ArrayList<String[]>();
-        listChoices.add( new String[]{"delete","pac.transverse.title.delete"} );
-        listChoices.add( new String[]{"prevent","pac.transverse.title.send"} );
+        List<String[]> listChoices = new ArrayList<String[]>( );
+        listChoices.add( new String[] { PacConstants.ACTION_WARN_MAIL,
+                MARK_ACTIONS_PREFIX + PacConstants.ACTION_WARN_MAIL } );
+        listChoices.add( new String[] { PacConstants.ACTION_DELETE, MARK_ACTIONS_PREFIX + PacConstants.ACTION_DELETE } );
         model.put( "listChoices", listChoices );
+
+        model.put( "urlMasseAction", PacConfigs.JSP_PACUSER_MASSE_ACTION );
+
         model.put( SessionMessage.MARK_SESSION_MESSAGE, SessionMessage.popMessage( request ) );
         HtmlTemplate template = AppTemplateService
                 .getTemplate( PacConfigs.TEMPLATE_MANAGE_PACUSER, getLocale( ), model );
@@ -133,7 +147,7 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
         populate( dto, request );
 
         Pacuser bean = dto.convert( );
-        List<ValidationError> errors = validate( bean, MARK_PAC_FIELD_PREFIX );
+        List<ValidationError> errors = validate( bean, MARK_PACUSER_FIELDS_PREFIX );
 
         if ( errors.isEmpty( ) )
         {
@@ -208,11 +222,10 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
         if ( dataTableToUse.getListColumn( ).isEmpty( ) )
         {
             dataTableToUse.addFreeColumn( "", "columnSelectBean" );
-            dataTableToUse.addColumn( "pac.pacuser.field.nom", "nom", false );
-            dataTableToUse.addColumn( "pac.pacuser.field.prenom", "prenom", false );
-            dataTableToUse.addColumn( "pac.pacuser.field.prochainPac", "prochainPac", false );
-            dataTableToUse.addColumn( "pac.pacuser.field.dernierPac", "dernierPac", false );
-            dataTableToUse.addColumn( "pac.pacuser.field.dateEntree", "dateEntree", false );
+            for ( String field : fields )
+            {
+                dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + field, field, true );
+            }
             dataTableToUse.addFreeColumn( "pac.transverse.title.actions", PARAMETER_MACRO_COLUMN_ACTIONS_BEAN );
         }
     }
@@ -272,5 +285,59 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
         List<List<String>> fileContent = CsvUtils.uploadFile( request, MARK_PACFILE );
         _servicePacuser.doUpload( fileContent );
         return StringUtils.EMPTY;
+    }
+
+    /**
+     * Ask user before make masse action
+     * @param request the http request
+     * @return the url to the confirmation message
+     */
+    public String getMasseAction( HttpServletRequest request )
+    {
+        String action = request.getParameter( PacConstants.MARK_MASSE_ACTION );
+        String[] ids = request.getParameterValues( PacConstants.MARK_ID );
+        String strIds = ArrayUtils.concat( PacConstants.CHAR_COMMA, ids );
+        Map<String, Object> params = new HashMap<String, Object>( );
+        params.put( PacConstants.MARK_MASSE_ACTION, action );
+        params.put( PacConstants.MARK_ID, strIds );
+        String url = AdminMessageService.getMessageUrl( request, "pac.pacuser.message.action.confirmation",
+                new String[] { I18nService.getLocalizedString( MARK_ACTIONS_PREFIX + action, request.getLocale( ) ) },
+                "pac.pacuser.message.action.title", PacConfigs.JSP_PACUSER_DO_MASSE_ACTION, "",
+                AdminMessage.TYPE_CONFIRMATION, params, getHomeUrl( request ) );
+        return url;
+    }
+
+    /**
+     * Make the masse action
+     * @param request the http request
+     * @return the url to back
+     */
+    public String doMasseAction( HttpServletRequest request )
+    {
+        String action = request.getParameter( PacConstants.MARK_MASSE_ACTION );
+        String idConcat = request.getParameter( PacConstants.MARK_ID );
+        String[] unconcatId = ArrayUtils.unconcat( PacConstants.CHAR_COMMA, idConcat );
+        if ( PacConstants.ACTION_WARN_MAIL.equals( action ) )
+        {
+            for ( String strId : unconcatId )
+            {
+                sendMailPac( strId, request.getLocale( ) );
+            }
+        }
+        String url = getHomeUrl( request );
+        return url;
+    }
+
+    private void sendMailPac( String strId, Locale locale )
+    {
+        AppLogService.info( "Send mail to id : " + strId );
+        Pacuser user = _servicePacuser.findByStrPrimaryKey( strId );
+        PacuserDTO userDto = PacuserDTO.convert( user );
+        Map<String, Object> model = new HashMap<String, Object>( );
+        model.put( MARK_BEAN, userDto );
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MAIL_YOUR_NEXT_PAC, locale, model );
+
+        //        MailService.sendMailHtml( userDto.getEmail( ), "florian.cardineau@sopra.com", "jeremy.chaline@sopragroup.com",
+        //                "The Pac Company", "noreply@nowhere.com", "Votre prochain PAC", template.getHtml( ) );
     }
 }
