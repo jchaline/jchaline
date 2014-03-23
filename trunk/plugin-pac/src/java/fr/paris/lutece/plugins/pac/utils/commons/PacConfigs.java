@@ -26,6 +26,8 @@ public final class PacConfigs
     public static final String JSP_SAVE_PACDATE = "jsp/admin/plugins/pac/pacdate/SavePacdate.jsp";
     public static final String JSP_DO_DELETE_PACDATE = "jsp/admin/plugins/pacdate/conge/DoDeletePacdate.jsp";
     public static final String JSP_MANAGE_PACDATE = "jsp/admin/plugins/pac/pacdate/ManagePacdate.jsp";
+    public static final String JSP_PACUSER_MASSE_ACTION = "jsp/admin/plugins/pac/pacuser/MasseAction.jsp";
+    public static final String JSP_PACUSER_DO_MASSE_ACTION = "jsp/admin/plugins/pac/pacuser/DoMasseAction.jsp";
 
     /* TEMPLATE DEFINITION */
     public static final String TEMPLATE_SAVE_PACUSER = "admin/plugins/pac/bean/pacuser/save_pacuser.html";
