@@ -1,41 +1,6 @@
-/*
- * Copyright (c) 2002-2013, Mairie de Paris
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *  1. Redistributions of source code must retain the above copyright notice
- *     and the following disclaimer.
- *
- *  2. Redistributions in binary form must reproduce the above copyright notice
- *     and the following disclaimer in the documentation and/or other materials
- *     provided with the distribution.
- *
- *  3. Neither the name of 'Mairie de Paris' nor 'Lutece' nor the names of its
- *     contributors may be used to endorse or promote products derived from
- *     this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * License 1.0
- */
-package fr.paris.lutece.plugins.pac.web;
+package fr.paris.lutece.plugins.pac.service.datatable;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,41 +9,27 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 
 import fr.paris.lutece.plugins.pac.bean.Closure;
-import fr.paris.lutece.plugins.pac.bean.GenericJPABean;
 import fr.paris.lutece.plugins.pac.bean.GenericJPAFilter;
 import fr.paris.lutece.plugins.pac.dao.commons.PaginationProperties;
 import fr.paris.lutece.plugins.pac.dao.commons.PaginationPropertiesAdapterDataTable;
 import fr.paris.lutece.plugins.pac.dao.commons.PaginationPropertiesImpl;
 import fr.paris.lutece.plugins.pac.dao.commons.ResultList;
 import fr.paris.lutece.plugins.pac.service.IPacService;
-import fr.paris.lutece.portal.service.util.AppPathService;
-import fr.paris.lutece.portal.web.admin.PluginAdminPageJspBean;
 import fr.paris.lutece.util.datatable.DataTableManager;
 import fr.paris.lutece.util.datatable.DataTablePaginationProperties;
 import fr.paris.lutece.util.html.Paginator;
 
-
 /**
- * The abstract class JspBean
- * @param <K> the bean primary key
- * @param <E> the bean class
+ * 
+ * @author jchaline
+ *
  */
-public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends PluginAdminPageJspBean
+public class DatatableService
 {
-    public static final Logger LOGGER = Logger.getLogger( GenericJPAJspBean.class );
-
-    private static final long serialVersionUID = 8195930894349438376L;
-
-    protected static final String MARK_BEAN_ID = "bean_id";
-    protected static final String MARK_BEAN = "bean";
-    protected static final String MARK_DATA_TABLE_BEAN = "dataTableBean";
-    protected static final String PARAMETER_CANCEL = "cancel";
-    protected static final String PARAMETER_MACRO_COLUMN_ACTIONS_BEAN = "columnActionsBean";
-    protected static final String MARK_DATA_TABLE_MANAGER = "dataTableManager";
-    protected static final String MARK_FILTER = "filter";
-    protected static final String MARK_BACK_URL = "backUrl";
-    protected static final String MARK_LOCAL = "local";
-    protected static final String MARK_PLUGIN_NAME = "plugin_name";
+    private static final Logger LOGGER = Logger.getLogger( DatatableService.class );
+    private static final String MARK_DATA_TABLE_MANAGER = "dataTableManager";
+    private static final String MARK_FILTER = "filter";
+    private static final String MARK_PLUGIN_NAME = "plugin_name";
 
     private static final int N_DEFAULT_ITEMS_PER_PAGE = 50;
     protected int _nItemsPerPage;
@@ -92,7 +43,8 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
      */
     protected PaginationProperties getPaginationProperties( HttpServletRequest request )
     {
-        String strPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX, PARAMETER_CURRENT_PAGEINDEX );
+        String strPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
+                PARAMETER_CURRENT_PAGEINDEX );
         int nCurrentPageIndex = 1;
 
         if ( StringUtils.isNotEmpty( strPageIndex ) )
@@ -116,7 +68,7 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
      * @param type the class type
      * @return the DataTableManager
      */
-    protected static <T> DataTableManager<T> getAbstractDataTableManager( HttpServletRequest request,
+    public <T> DataTableManager<T> getAbstractDataTableManager( HttpServletRequest request,
             IPacService service, GenericJPAFilter filter, String keyDataTable, String jspManage )
     {
         //si un objet est déjà présent en session, on l'utilise
@@ -150,7 +102,7 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
      * @param type the class type
      * @return the DataTableManager
      */
-    protected static <E, D> DataTableManager<D> getAbstractDataTableManager( HttpServletRequest request,
+    public <E, D> DataTableManager<D> getAbstractDataTableManager( HttpServletRequest request,
             IPacService service, Closure converter, GenericJPAFilter filter, String keyDataTable, String jspManage )
     {
         //si un objet est déjà présent en session, on l'utilise
@@ -175,61 +127,6 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
     }
 
     /**
-     * Get model for create beans
-     * @param request the http request
-     * @return the abstract model
-     */
-    public Map<String, Object> getSaveBeanModel( HttpServletRequest request )
-    {
-        Map<String, Object> model = new HashMap<String, Object>( );
-        loadCommonData( request, model );
-        String primaryKey = request.getParameter( MARK_BEAN_ID );
-        if ( StringUtils.isNotBlank( primaryKey ) )
-        {
-            E bean = getBeanService( ).findByStrPrimaryKey( primaryKey );
-            model.put( MARK_BEAN, bean );
-        }
-        return model;
-    }
-
-    /**
-     * Get model for manage beans
-     * @param request the http request
-     * @return the abstract model
-     */
-    public Map<String, Object> getManageBeanModel( HttpServletRequest request )
-    {
-        Map<String, Object> model = new HashMap<String, Object>( );
-        loadCommonData( request, model );
-
-        return model;
-    }
-
-    /**
-     * Load common data usable in all the applications
-     * @param request the http request
-     * @param model the data model
-     */
-    private void loadCommonData( HttpServletRequest request, Map<String, Object> model )
-    {
-        model.put( MARK_LOCAL, request.getLocale( ).getDisplayCountry( ) );
-    }
-
-    /**
-     * Return the url of the JSP which called the last action.
-     * 
-     * @param request The Http request
-     * @return The url of the last JSP
-     */
-    protected String doGoBack( HttpServletRequest request, String JSP_MANAGE_BEAN )
-    {
-        String strJspBack = request.getParameter( MARK_BACK_URL );
-
-        return StringUtils.isNotBlank( strJspBack ) ? ( AppPathService.getBaseUrl( request ) + strJspBack )
-                : AppPathService.getBaseUrl( request ) + JSP_MANAGE_BEAN;
-    }
-
-    /**
      * Get the correct filter to use with data table manager
      * @param request the http request
      * @param filter the bean filter get with request
@@ -238,7 +135,7 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
      * @param <E> the bean filter type
      * @return the filter to use
      */
-    protected static <T> GenericJPAFilter getFilterToUse( HttpServletRequest request, GenericJPAFilter filter,
+    private static <T> GenericJPAFilter getFilterToUse( HttpServletRequest request, GenericJPAFilter filter,
             String markFilter, DataTableManager<T> dataTable )
     {
 
@@ -261,7 +158,7 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
      * @param <T> the bean filter type
      * @return the DataTableManager
      */
-    protected static <T> DataTableManager<T> getDataTableToUse( HttpServletRequest request, String markFilter,
+    private static <T> DataTableManager<T> getDataTableToUse( HttpServletRequest request, String markFilter,
             String jspManage )
     {
         DataTableManager<T> dataTableFromSession = loadDataTableFromSession( request, markFilter );
@@ -279,7 +176,7 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
      * @return the DataTableManager keep in session
      */
     @SuppressWarnings( "unchecked" )
-    protected static <T> DataTableManager<T> loadDataTableFromSession( HttpServletRequest request, String key )
+    private static <T> DataTableManager<T> loadDataTableFromSession( HttpServletRequest request, String key )
     {
         DataTableManager<T> dataTable = null;
 
@@ -309,53 +206,9 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
      * @param key the datatable key
      * @param <T> Type of data
      */
-    protected <T> void saveDataTableInSession( HttpServletRequest request, DataTableManager<T> dataTable, String key )
+    public static <T> void saveDataTableInSession( HttpServletRequest request, DataTableManager<T> dataTable, String key )
     {
         request.getSession( ).setAttribute( StringUtils.isNotBlank( key ) ? key : MARK_DATA_TABLE_MANAGER, dataTable );
     }
 
-    /**
-     * Delete a bean object
-     * 
-     * @param request The Http request
-     * @return the html code message
-     */
-    public abstract String doDeleteBean( HttpServletRequest request );
-
-    /**
-     * Returns the confirmation message to delete a bean
-     * 
-     * @param request The Http request
-     * @return the html code message
-     */
-    public abstract String getDeleteBean( HttpServletRequest request );
-
-    /**
-     * Save (create or update a bean object
-     * @param request the http request
-     * @return the bean manage page
-     */
-    public abstract String doSaveBean( HttpServletRequest request );
-
-    /**
-     * Get the create bean page
-     * 
-     * @param request http the request
-     * @return the page with bean list
-     */
-    public abstract String getSaveBean( HttpServletRequest request );
-
-    /**
-     * Get the manage bean page
-     * 
-     * @param request http the request
-     * @return the page with bean list
-     */
-    public abstract String getManageBean( HttpServletRequest request );
-
-    /**
-     * Get the bean service
-     * @return the bean service
-     */
-    protected abstract IPacService<K, E> getBeanService( );
 }
