@@ -3,7 +3,7 @@ package fr.chaline.scala.myproject
 import org.apache.commons.lang.{ StringUtils => ApacheStringUtils }
 import org.apache.commons.lang.{ StringUtils => ApacheStringUtils }
 
-class Person(val firstName: String, val lastName: String = "Valjean") {}
+class Person(val firstName: String, val lastName: String ) {}
 
 object MyApp {
   def main(args: Array[String]) {
@@ -13,7 +13,7 @@ object MyApp {
     println("test not empty : " + ApacheStringUtils.isNotBlank(strTest))
     println("test empty : " + ApacheStringUtils.isNotBlank(strTestEmpty))
 
-    val jean1 = new Person("jean")
+    val jean1 = new Person("jean","valjean")
     val jean2 = new Person("bob", "morane")
     println(jean1.firstName + " " + jean1.lastName)
     println(jean2.firstName + " " + jean2.lastName)
