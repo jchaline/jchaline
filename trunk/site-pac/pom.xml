@@ -40,6 +40,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>fr.paris.lutece.plugins</groupId>
+			<artifactId>plugin-helpdesk</artifactId>
+			<type>lutece-plugin</type>
+			<version>3.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<pluginRepositories>
