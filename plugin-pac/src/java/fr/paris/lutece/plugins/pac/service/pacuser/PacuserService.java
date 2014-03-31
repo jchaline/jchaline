@@ -295,7 +295,7 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
     public List<Pacuser> findUserPresent( Date day )
     {
         PacuserFilter filter = new PacuserFilter();
-        filter.setDayPresent( "28/04/2014" );
+        filter.setDayPresent( day );
         ResultList<Pacuser> result = _daoPacuser.find( filter,null);
         return result;
     }

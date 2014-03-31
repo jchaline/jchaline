@@ -1,5 +1,7 @@
 package fr.paris.lutece.plugins.pac.bean.pacuser;
 
+import java.util.Date;
+
 import fr.paris.lutece.plugins.pac.bean.GenericJPAFilter;
 
 
@@ -14,7 +16,7 @@ public class PacuserFilter extends GenericJPAFilter<Integer>
     private String guid;
     private String _nom;
     private String _prenom;
-    private String _dayPresent;
+    private Date _dayPresent;
     
     /**
      * @return the guid
@@ -61,14 +63,14 @@ public class PacuserFilter extends GenericJPAFilter<Integer>
     /**
      * @return the dayPresent
      */
-    public String getDayPresent( )
+    public Date getDayPresent( )
     {
         return _dayPresent;
     }
     /**
      * @param dayPresent the dayPresent to set
      */
-    public void setDayPresent( String dayPresent )
+    public void setDayPresent( Date dayPresent )
     {
         this._dayPresent = dayPresent;
     }
