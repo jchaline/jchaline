@@ -14,6 +14,7 @@ public class PacuserFilter extends GenericJPAFilter<Integer>
     private String guid;
     private String _nom;
     private String _prenom;
+    private String _dayPresent;
     
     /**
      * @return the guid
@@ -57,5 +58,21 @@ public class PacuserFilter extends GenericJPAFilter<Integer>
     {
         this._prenom = prenom;
     }
+    /**
+     * @return the dayPresent
+     */
+    public String getDayPresent( )
+    {
+        return _dayPresent;
+    }
+    /**
+     * @param dayPresent the dayPresent to set
+     */
+    public void setDayPresent( String dayPresent )
+    {
+        this._dayPresent = dayPresent;
+    }
+    
+    
 
 }

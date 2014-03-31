@@ -51,4 +51,11 @@ public interface IPacuserService extends IPacService<Integer, Pacuser>
      * @param fileContent the data from csv file
      */
     void doUpload( List<List<String>> fileContent );
+
+    /**
+     * Get the list of user present for any day
+     * @param day the date for find user
+     * @return the list of users present at this day
+     */
+    List<Pacuser> findUserPresent( Date day);
 }
