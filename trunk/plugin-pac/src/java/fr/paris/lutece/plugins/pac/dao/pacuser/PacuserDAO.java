@@ -1,14 +1,11 @@
 package fr.paris.lutece.plugins.pac.dao.pacuser;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Fetch;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -53,11 +50,16 @@ public class PacuserDAO extends AbstractPacDAO<Integer, Pacuser> implements IPac
                         SQLUtils.addPercentEnclosing( filter.getNom( ) ) ) );
             }
 
-            if ( true ||StringUtils.isNotBlank( filter.getDayPresent( ) ) )
+            if ( true || filter.getDayPresent( ) != null )
             {
-                SetJoin<Pacuser, Set<Pacdate>> join = root.join( Pacuser_._joursConges );
+                /**/
+                //                SetJoin<Pacuser, Pacdate> join = root.join( Pacuser_._joursConges );
+                //                Path<Date> path = join.get( Pacdate_._date );
+                //                
+                //                Predicate lessThan = cb.lessThan( path, new Date() );
                 //Fetch<Object, Object> fetch = root.fetch("_joursConges" );
-                System.out.println("test");
+                //listPredicates.add( lessThan );
+                /* System.out.println( "test" ); */
             }
 
             if ( !listPredicates.isEmpty( ) )
