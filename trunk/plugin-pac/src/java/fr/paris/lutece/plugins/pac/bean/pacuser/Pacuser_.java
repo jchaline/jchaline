@@ -1,8 +1,9 @@
 package fr.paris.lutece.plugins.pac.bean.pacuser;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
+import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -21,5 +22,5 @@ public class Pacuser_ {
 	public static volatile SingularAttribute<Pacuser, Date> _dernierPac;
 	public static volatile SingularAttribute<Pacuser, Date> _dateSortie;
 	public static volatile SingularAttribute<Pacuser, Date> _dateEntree;
-	public static volatile SingularAttribute<Pacuser, List<Pacdate>> _dates;
+	public static volatile SetAttribute<Pacuser, Set<Pacdate>> _joursConges;
 }

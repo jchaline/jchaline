@@ -19,7 +19,9 @@ import fr.paris.lutece.plugins.pac.bean.Closure;
 import fr.paris.lutece.plugins.pac.bean.pacconfig.Pacconfig;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
 import fr.paris.lutece.plugins.pac.bean.pacuser.PacuserComparator;
+import fr.paris.lutece.plugins.pac.bean.pacuser.PacuserFilter;
 import fr.paris.lutece.plugins.pac.dao.IPacDAO;
+import fr.paris.lutece.plugins.pac.dao.commons.ResultList;
 import fr.paris.lutece.plugins.pac.dao.pacuser.IPacuserDAO;
 import fr.paris.lutece.plugins.pac.dto.pacuser.PacuserDTO;
 import fr.paris.lutece.plugins.pac.service.AbstractPacService;
@@ -287,5 +289,14 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
                 doSaveBean( dto.convert( ) );
             }
         }
+    }
+
+    @Override
+    public List<Pacuser> findUserPresent( Date day )
+    {
+        PacuserFilter filter = new PacuserFilter();
+        filter.setDayPresent( "28/04/2014" );
+        ResultList<Pacuser> result = _daoPacuser.find( filter,null);
+        return result;
     }
 }

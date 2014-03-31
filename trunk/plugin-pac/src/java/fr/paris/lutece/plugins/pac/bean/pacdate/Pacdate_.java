@@ -11,5 +11,5 @@ public class Pacdate_
     public static volatile SingularAttribute<Pacdate, Integer> _id;
     public static volatile SingularAttribute<Pacdate, Integer> _idOwner;
     public static volatile SingularAttribute<Pacdate, String> _type;
-    public static volatile SingularAttribute<Pacdate, Date> _dateConge;
+    public static volatile SingularAttribute<Pacdate, Date> _date;
 }

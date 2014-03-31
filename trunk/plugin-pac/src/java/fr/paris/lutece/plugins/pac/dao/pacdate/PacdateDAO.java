@@ -43,6 +43,16 @@ public class PacdateDAO extends AbstractPacDAO<Integer, Pacdate> implements IPac
                 listPredicates.add( cb.equal( root.get( Pacdate_._type ), filter.getType( ) ) );
             }
 
+            if ( filter.getDateMax( ) != null )
+            {
+                listPredicates.add( cb.lessThan( root.get( Pacdate_._date ), filter.getDateMax( ) ) );
+            }
+            
+            if ( filter.getDateMin( ) != null )
+            {
+                listPredicates.add( cb.greaterThan( root.get( Pacdate_._date ), filter.getDateMin( ) ) );
+            }
+
             if ( !listPredicates.isEmpty( ) )
             {
                 cq.where( listPredicates.toArray( new Predicate[listPredicates.size( )] ) );

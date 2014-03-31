@@ -20,6 +20,7 @@ import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.web.xpages.XPage;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
+
 public class NextPacApp extends AbstractPacApp
 {
     private static final long serialVersionUID = 7755916155092089155L;
@@ -37,12 +38,10 @@ public class NextPacApp extends AbstractPacApp
         List<PacuserDTO> listDTO = PacuserDTO.convert( listPacuser );
         Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_LIST_PACUSER, listDTO );
-        
-        
-        
-        SessionMessage.pushMessage( request, SessionMessage.CODE_ALERTE, "pac.pacuser.field.prochainPac" );
-        model.put( SessionMessage.MARK_SESSION_MESSAGE, SessionMessage.popMessage( request ) );
-        
+
+        //        SessionMessage.pushMessage( request, SessionMessage.CODE_ALERTE, "pac.pacuser.field.prochainPac" );
+        //        model.put( SessionMessage.MARK_SESSION_MESSAGE, SessionMessage.popMessage( request ) );
+
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_NEXTPAC, request.getLocale( ), model );
 
         XPage page = new XPage( );
