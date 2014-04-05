@@ -8,9 +8,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.ConstraintViolation;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
@@ -245,19 +247,17 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
         try
         {
             pacuser.setId( Integer.valueOf( line.get( i++ ) ) );
-            pacuser.setNom( line.get( i++ ) );
-            pacuser.setPrenom( line.get( i++ ) );
-            pacuser.setEmail( line.get( i++ ) );
-            pacuser.setDateEntree( line.get( i++ ) );
-            pacuser.setDateSortie( line.get( i++ ) );
-            pacuser.setJoursConges( line.get( i++ ) );
-            pacuser.setProchainPac( line.get( i++ ) );
         }
         catch ( NumberFormatException e )
         {
-            AppLogService.info( "Error while getting PacuserDTO from List<String>" );
-            pacuser = null;
         }
+        pacuser.setNom( line.get( i++ ) );
+        pacuser.setPrenom( line.get( i++ ) );
+        pacuser.setEmail( line.get( i++ ) );
+        pacuser.setDateEntree( line.get( i++ ) );
+        pacuser.setDateSortie( line.get( i++ ) );
+        pacuser.setJoursConges( line.get( i++ ) );
+        pacuser.setProchainPac( line.get( i++ ) );
         return pacuser;
     }
 
@@ -283,10 +283,18 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
         for ( List<String> line : lines )
         {
             PacuserDTO dto = transform( line );
-            if ( dto != null && BeanValidationUtil.validate( dto ).isEmpty( ) )
+            Set<ConstraintViolation<PacuserDTO>> validate = BeanValidationUtil.validate( dto );
+            if ( dto != null && validate.isEmpty( ) )
             {
 
                 doSaveBean( dto.convert( ) );
+            }
+            else
+            {
+                for ( ConstraintViolation<PacuserDTO> violation : validate )
+                {
+                    AppLogService.error( violation );
+                }
             }
         }
     }
@@ -294,9 +302,9 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
     @Override
     public List<Pacuser> findUserPresent( Date day )
     {
-        PacuserFilter filter = new PacuserFilter();
+        PacuserFilter filter = new PacuserFilter( );
         filter.setDayPresent( day );
-        ResultList<Pacuser> result = _daoPacuser.find( filter,null);
+        ResultList<Pacuser> result = _daoPacuser.find( filter, null );
         return result;
     }
 }

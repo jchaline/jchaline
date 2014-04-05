@@ -283,8 +283,10 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
     public String doUpload( HttpServletRequest request )
     {
         List<List<String>> fileContent = CsvUtils.uploadFile( request, MARK_PACFILE );
+        //remove first line with label header
+        fileContent.remove( 0 );
         _servicePacuser.doUpload( fileContent );
-        return StringUtils.EMPTY;
+        return getHomeUrl( request );
     }
 
     /**
@@ -324,21 +326,41 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
                 sendMailPac( strId, request.getLocale( ) );
             }
         }
+        else if ( PacConstants.ACTION_DELETE.equals( action ) )
+        {
+            for ( String strId : unconcatId )
+            {
+                try
+                {
+                    Integer id = Integer.valueOf( strId );
+                    _servicePacuser.doDeleteBean( id );
+                }
+                catch ( NumberFormatException e )
+                {
+                    AppLogService.error( e );
+                }
+            }
+        }
         String url = getHomeUrl( request );
         return url;
     }
 
+    /**
+     * Send mail to the user matching id
+     * @param strId the user id
+     * @param locale the locale
+     */
     private void sendMailPac( String strId, Locale locale )
     {
         AppLogService.info( "Send mail to id : " + strId );
         Pacuser user = _servicePacuser.findByStrPrimaryKey( strId );
-        _servicePacuser.findUserPresent(user.getProchainPac( ));
+        _servicePacuser.findUserPresent( user.getProchainPac( ) );
         PacuserDTO userDto = PacuserDTO.convert( user );
         Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_BEAN, userDto );
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MAIL_YOUR_NEXT_PAC, locale, model );
 
-        MailService.sendMailHtml( userDto.getEmail( ), "florian.cardineau@sopra.com", "jeremy.chaline@sopragroup.com",
-                "The Pac Company", "noreply@nowhere.com", "Votre prochain PAC", template.getHtml( ) );
+        MailService.sendMailHtml( userDto.getEmail( ), "jeremy.chaline@sopragroup.com", null, "The Pac Company",
+                "noreply@nowhere.com", "Votre prochain PAC", template.getHtml( ) );
     }
 }
