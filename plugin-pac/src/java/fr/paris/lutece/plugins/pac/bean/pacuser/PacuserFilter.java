@@ -17,7 +17,7 @@ public class PacuserFilter extends GenericJPAFilter<Integer>
     private String _nom;
     private String _prenom;
     private Date _dayPresent;
-    
+
     /**
      * @return the guid
      */
@@ -25,6 +25,7 @@ public class PacuserFilter extends GenericJPAFilter<Integer>
     {
         return guid;
     }
+
     /**
      * @param guid the guid to set
      */
@@ -32,6 +33,7 @@ public class PacuserFilter extends GenericJPAFilter<Integer>
     {
         this.guid = guid;
     }
+
     /**
      * @return the nom
      */
@@ -39,6 +41,7 @@ public class PacuserFilter extends GenericJPAFilter<Integer>
     {
         return _nom;
     }
+
     /**
      * @param nom the nom to set
      */
@@ -46,6 +49,7 @@ public class PacuserFilter extends GenericJPAFilter<Integer>
     {
         this._nom = nom;
     }
+
     /**
      * @return the prenom
      */
@@ -53,6 +57,7 @@ public class PacuserFilter extends GenericJPAFilter<Integer>
     {
         return _prenom;
     }
+
     /**
      * @param prenom the prenom to set
      */
@@ -60,6 +65,7 @@ public class PacuserFilter extends GenericJPAFilter<Integer>
     {
         this._prenom = prenom;
     }
+
     /**
      * @return the dayPresent
      */
@@ -67,6 +73,7 @@ public class PacuserFilter extends GenericJPAFilter<Integer>
     {
         return _dayPresent;
     }
+
     /**
      * @param dayPresent the dayPresent to set
      */
@@ -74,7 +81,5 @@ public class PacuserFilter extends GenericJPAFilter<Integer>
     {
         this._dayPresent = dayPresent;
     }
-    
-    
 
 }

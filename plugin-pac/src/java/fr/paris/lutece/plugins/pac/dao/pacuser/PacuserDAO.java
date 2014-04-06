@@ -1,7 +1,6 @@
 package fr.paris.lutece.plugins.pac.dao.pacuser;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -48,19 +47,21 @@ public class PacuserDAO extends AbstractPacDAO<Integer, Pacuser> implements IPac
             if ( StringUtils.isNotBlank( filter.getPrenom( ) ) )
             {
                 listPredicates.add( cb.like( root.get( Pacuser_._strPrenom ),
-                        SQLUtils.addPercentEnclosing( filter.getNom( ) ) ) );
+                        SQLUtils.addPercentEnclosing( filter.getPrenom( ) ) ) );
             }
 
-            if ( true || filter.getDayPresent( ) != null )
+            if ( filter.getDayPresent( ) != null )
             {
                 SetJoin<Pacuser, Pacdate> pacdateJoin = root.join( Pacuser_._joursConges, JoinType.LEFT );
-                Predicate containDay = cb.equal( pacdateJoin.get( Pacdate_._date ), new Date( ) );
+                //                Calendar calendar = new GregorianCalendar( );
+                //                calendar.set( 2014, Calendar.APRIL, 3 );
+                //                Date time = calendar.getTime( );
+                // must convert into SQL date ? or remove second after day (hour, minutes, second)
+                Predicate containDay = cb.equal( pacdateJoin.get( Pacdate_._date ), filter.getDayPresent( ) );
                 Predicate isCongeDay = cb.equal( pacdateJoin.get( Pacdate_._type ), PacConstants.TYPE_DATE_CONGE );
                 Predicate containCongeDay = cb.and( containDay, isCongeDay );
 
-                Predicate hasNotDay = cb.equal( cb.count( pacdateJoin.get( Pacdate_._date ) ), 0 );
-
-                //listPredicates.add( isCongeDay );
+                //listPredicates.add( cb.not( cb.in( containCongeDay ) ) );
             }
 
             if ( !listPredicates.isEmpty( ) )
