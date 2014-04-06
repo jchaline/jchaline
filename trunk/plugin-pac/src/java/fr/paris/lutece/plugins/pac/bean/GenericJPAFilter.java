@@ -34,7 +34,7 @@
 package fr.paris.lutece.plugins.pac.bean;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,8 +45,8 @@ import java.util.List;
 public abstract class GenericJPAFilter<K> implements Serializable
 {
     private static final long serialVersionUID = -2029442617417680733L;
-    private Boolean _orderAsc;
-    private List<String> _orders;
+    private Boolean _orderAsc = true;
+    private List<String> _orders = new ArrayList<String>();
     private K _id;
 
     /**

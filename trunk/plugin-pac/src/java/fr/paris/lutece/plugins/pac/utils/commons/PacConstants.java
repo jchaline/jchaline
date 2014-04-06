@@ -7,6 +7,8 @@ public final class PacConstants
     public static final String MARK_MASSE_ACTION = "masseAction";
 
     public static final String CHAR_COMMA = ",";
+    public static final String TRUE = "true";
+    public static final String FALSE = "false";
 
     public static final String PARAMETER_STR_DATE_SEPARATOR = ", ";
     public static final String PARAMETER_CSV_SEPARATOR = ";";

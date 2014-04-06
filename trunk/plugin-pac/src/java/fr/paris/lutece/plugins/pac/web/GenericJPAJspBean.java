@@ -51,6 +51,7 @@ import fr.paris.lutece.plugins.pac.dao.commons.PaginationPropertiesAdapterDataTa
 import fr.paris.lutece.plugins.pac.dao.commons.PaginationPropertiesImpl;
 import fr.paris.lutece.plugins.pac.dao.commons.ResultList;
 import fr.paris.lutece.plugins.pac.service.IPacService;
+import fr.paris.lutece.plugins.pac.utils.commons.PacConstants;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.web.admin.PluginAdminPageJspBean;
 import fr.paris.lutece.util.datatable.DataTableManager;
@@ -65,6 +66,7 @@ import fr.paris.lutece.util.html.Paginator;
  */
 public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends PluginAdminPageJspBean
 {
+
     public static final Logger LOGGER = Logger.getLogger( GenericJPAJspBean.class );
 
     private static final long serialVersionUID = 8195930894349438376L;
@@ -79,6 +81,8 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
     protected static final String MARK_BACK_URL = "backUrl";
     protected static final String MARK_LOCAL = "local";
     protected static final String MARK_PLUGIN_NAME = "plugin_name";
+    protected static final String MARK_SORTED_ATTRIBUTE_NAME = "sorted_attribute_name";
+    protected static final String MARK_ASC_SORT = "asc_sort";
 
     private static final int N_DEFAULT_ITEMS_PER_PAGE = 50;
     protected int _nItemsPerPage;
@@ -92,7 +96,8 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
      */
     protected PaginationProperties getPaginationProperties( HttpServletRequest request )
     {
-        String strPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX, PARAMETER_CURRENT_PAGEINDEX );
+        String strPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
+                PARAMETER_CURRENT_PAGEINDEX );
         int nCurrentPageIndex = 1;
 
         if ( StringUtils.isNotEmpty( strPageIndex ) )
@@ -151,25 +156,40 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
      * @return the DataTableManager
      */
     protected static <E, D> DataTableManager<D> getAbstractDataTableManager( HttpServletRequest request,
-            IPacService service, Closure converter, GenericJPAFilter filter, String keyDataTable, String jspManage )
+            IPacService service, Closure converter, GenericJPAFilter filter, String keyDataTable, String jspManage,
+            boolean automatic )
     {
         //si un objet est déjà présent en session, on l'utilise
         DataTableManager<D> dataTableToUse = getDataTableToUse( request, keyDataTable, jspManage );
 
-        //determination de l'utilisation d'un nouveau filtre (recherche) ou de celui présent en session (changement de page)
-        GenericJPAFilter filterToUse = getFilterToUse( request, filter, MARK_FILTER, dataTableToUse );
-        BeanUtils.copyProperties( filterToUse, filter );
+        ResultList<E> listAllBean = null;
+        if ( automatic )
+        {
+            listAllBean = service.findAll( null );
+        }
+        else
+        {
+            //determination de l'utilisation d'un nouveau filtre (recherche) ou de celui présent en session (changement de page)
+            GenericJPAFilter manualFilter = getFilterToUse( request, filter, MARK_FILTER, dataTableToUse );
+            BeanUtils.copyProperties( manualFilter, filter );
+            //mise à jour de la pagination dans le data table pour l'afficahge de la page courante et du nombre d'items
+            DataTablePaginationProperties updatePaginator = dataTableToUse.getAndUpdatePaginator( request );
 
-        //mise à jour de la pagination dans le data table pour l'afficahge de la page courante et du nombre d'items
-        DataTablePaginationProperties updatePaginator = dataTableToUse.getAndUpdatePaginator( request );
-
-        //obtention manuel des beans à afficher
-        PaginationProperties paginationProperties = new PaginationPropertiesAdapterDataTable( updatePaginator );
-
-        ResultList<E> listAllBean = service.find( filterToUse, paginationProperties );
+            //obtention manuel des beans à afficher
+            PaginationProperties paginationProperties = new PaginationPropertiesAdapterDataTable( updatePaginator );
+            listAllBean = service.find( filter, paginationProperties );
+        }
         List<D> listDTO = (List<D>) converter.process( listAllBean );
         request.getSession( ).setAttribute( MARK_FILTER, filter );
-        dataTableToUse.setItems( listDTO, listAllBean.getTotalResult( ) );
+
+        if ( automatic )
+        {
+            dataTableToUse.filterSortAndPaginate( request, listDTO );
+        }
+        else
+        {
+            dataTableToUse.setItems( listDTO, listAllBean.getTotalResult( ) );
+        }
 
         return dataTableToUse;
     }
@@ -250,6 +270,16 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
         GenericJPAFilter filterToUse = request.getParameter( MARK_FILTER ) != null || filterFromSession == null
                 || !filterFromSession.getClass( ).isAssignableFrom( filter.getClass( ) ) ? dataTable
                 .getAndUpdateFilter( request, filter ) : filterFromSession;
+
+        String sortedAttr = request.getParameter( MARK_SORTED_ATTRIBUTE_NAME );
+        String ascSort = request.getParameter( MARK_ASC_SORT );
+        if ( StringUtils.isNotBlank( sortedAttr ) && StringUtils.isNotBlank( ascSort ) )
+        {
+            sortedAttr = "_" + sortedAttr;
+            filterToUse.getOrders( ).clear( );
+            filterToUse.setOrderAsc( ascSort.toLowerCase( ).equals( PacConstants.TRUE ) );
+            filterToUse.getOrders( ).add( sortedAttr );
+        }
         return filterToUse;
     }
 

@@ -61,8 +61,6 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
 
     private IPacuserService _servicePacuser;
 
-    private static final String[] fields = { "nom", "prenom", "prochainPac", "dernierPac", "dateEntree" };
-
     @Override
     public void init( HttpServletRequest request, String strRight ) throws AccessDeniedException
     {
@@ -206,7 +204,7 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
     {
         Closure converter = PacuserService.getFuncConverter( );
         DataTableManager<PacuserDTO> dataTableToUse = getAbstractDataTableManager( request, _servicePacuser, converter,
-                filter, MARK_DATA_TABLE_BEAN, PacConfigs.JSP_MANAGE_PACUSER );
+                filter, MARK_DATA_TABLE_BEAN, PacConfigs.JSP_MANAGE_PACUSER, false );
 
         addDatatableColumns( dataTableToUse );
         saveDataTableInSession( request, dataTableToUse, MARK_DATA_TABLE_BEAN );
@@ -222,10 +220,13 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
         if ( dataTableToUse.getListColumn( ).isEmpty( ) )
         {
             dataTableToUse.addFreeColumn( "", "columnSelectBean" );
-            for ( String field : fields )
-            {
-                dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + field, field, true );
-            }
+
+            dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + "nom", "nom", false );
+            dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + "prenom", "prenom", false );
+            dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + "prochainPac", "prochainPac", true );
+            dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + "dernierPac", "dernierPac", true );
+            dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + "dateEntree", "dateEntree", true );
+
             dataTableToUse.addFreeColumn( "pac.transverse.title.actions", PARAMETER_MACRO_COLUMN_ACTIONS_BEAN );
         }
     }
