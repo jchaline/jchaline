@@ -47,38 +47,63 @@ public class Repository implements Serializable
      */
     public void add( Project artifact )
     {
-        if ( !getArtifacts( ).containsKey( artifact.getGroupId( ) ) )
+        if ( !artifacts.containsKey( artifact.getGroupId( ) ) )
         {
-            getArtifacts( ).put( artifact.getGroupId( ), new HashMap<String, Map<String, Project>>( ) );
+            artifacts.put( artifact.getGroupId( ), new HashMap<String, Map<String, Project>>( ) );
         }
-        if ( !getArtifacts( ).get( artifact.getGroupId( ) ).containsKey( artifact.getArtifactId( ) ) )
+        if ( !artifacts.get( artifact.getGroupId( ) ).containsKey( artifact.getArtifactId( ) ) )
         {
-            getArtifacts( ).get( artifact.getGroupId( ) ).put( artifact.getArtifactId( ),
-                    new HashMap<String, Project>( ) );
+            artifacts.get( artifact.getGroupId( ) ).put( artifact.getArtifactId( ), new HashMap<String, Project>( ) );
         }
-        getArtifacts( ).get( artifact.getGroupId( ) ).get( artifact.getArtifactId( ) )
-                .put( artifact.getVersion( ), artifact );
+        artifacts.get( artifact.getGroupId( ) ).get( artifact.getArtifactId( ) ).put( artifact.getVersion( ), artifact );
     }
 
     /**
-     * @return the artifacts
+     * Get exactly artifact with coordonates
+     * @param groupId
+     * @param artifactId
+     * @param version
+     * @return
      */
-    public Map<String, Map<String, Map<String, Project>>> getArtifacts( )
+    public Project get( String groupId, String artifactId, String version )
     {
-        return artifacts;
+        Project project = null;
+        if ( artifacts.containsKey( groupId ) && artifacts.get( groupId ).containsKey( artifactId ) )
+        {
+            project = artifacts.get( groupId ).get( artifactId ).get( version );
+        }
+        return project;
     }
 
     /**
-     * @param artifacts the artifacts to set
+     * Get the dependency corresponding to the coordonate
+     * @param groupId
+     * @param artifactId
+     * @param version
+     * @return
      */
-    public void setArtifacts( Map<String, Map<String, Map<String, Project>>> artifacts )
-    {
-        this.artifacts = artifacts;
-    }
-
     public Project findDependency( String groupId, String artifactId, String version )
     {
         Project dependency = null;
+        List<String> listVersion = getListVersionsAvailable( groupId, artifactId );
+
+        if ( !listVersion.isEmpty( ) )
+        {
+            dependency = get( groupId, artifactId, listVersion.get( 0 ) );
+        }
+
+        return dependency;
+    }
+
+    /**
+     * Get the list ordered of the available versions for any artifact
+     * @param groupId
+     * @param artifactId
+     * @return the ordered list of the artifacts
+     */
+    private List<String> getListVersionsAvailable( String groupId, String artifactId )
+    {
+        List<String> listVersion = new ArrayList<String>( );
         if ( this.artifacts.containsKey( groupId ) )
         {
             Map<String, Map<String, Project>> group = this.artifacts.get( groupId );
@@ -86,12 +111,10 @@ public class Repository implements Serializable
             {
                 Map<String, Project> versions = group.get( artifactId );
                 Set<String> keySet = versions.keySet( );
-                List<String> listVersion = new ArrayList<String>(keySet);
+                listVersion.addAll( keySet );
                 Collections.sort( listVersion, new ArtifactComparator( ) );
-                System.out.println(listVersion);
             }
         }
-
-        return dependency;
+        return listVersion;
     }
 }

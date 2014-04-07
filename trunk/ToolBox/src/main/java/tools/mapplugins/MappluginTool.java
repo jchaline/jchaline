@@ -133,6 +133,8 @@ public class MappluginTool implements Tool
         {
             logger.error( "Error while create serializable file" );
         }
+        
+        Project dependency = repo.findDependency( "fr.paris.lutece.plugins", "plugin-html", "2.1.2-SNAPSHOT");
 
         //derniere etape, generer le fichier SQL permettant de créer la bdd
         String sqlPath = PropertiesService.getProperty( MappluginConstants.MARK_SQL_FILE );
