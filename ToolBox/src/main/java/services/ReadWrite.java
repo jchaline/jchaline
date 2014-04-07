@@ -13,9 +13,12 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
 
 public class ReadWrite
 {
+    private static final Logger logger = Logger.getLogger( ReadWrite.class );
 
     private ReadWrite( )
     {
@@ -39,7 +42,7 @@ public class ReadWrite
         }
         catch ( FileNotFoundException e )
         {
-            e.printStackTrace( );
+            logger.error( e );
         }
         while ( scanner.hasNextLine( ) )
         {
@@ -78,7 +81,7 @@ public class ReadWrite
         }
         catch ( IOException ioe )
         {
-            ioe.printStackTrace( );
+            logger.error( ioe );
         }
     }
 
@@ -143,7 +146,8 @@ public class ReadWrite
     }
 
     /**
-     * Make a copy of the original file, rename it and insert in the new file the content given at the bigining
+     * Make a copy of the original file, rename it and insert in the new file
+     * the content given at the bigining
      * @param filename the path to the file
      * @param offset the position to insert content
      * @param content the content to insert

@@ -47,9 +47,11 @@ public class ToolLauncher
             Tool tool = toolsItr.next( );
             if ( tool.getId( ).equals( toolId ) )
             {
-                logger.debug( "Tool running ! " );
+                logger.info( "Tool running ! " );
+                logger.info( "Use conf : " );
+                logger.info( tool.getConf( ) );
                 int status = tool.run( );
-                logger.debug( "Tool exit with status " + status );
+                logger.info( "Tool exit with status " + status );
             }
         }
     }

@@ -211,7 +211,7 @@ public class Svn
         if ( "FOLDER".equalsIgnoreCase( this.check( path ) ) )
         {
             Collection entries = this.repository.getDir( path, -1, null, (Collection) null );
-            logger.debug( "At " + path + ", found " + entries.size( ) + " entries" );
+            logger.debug( "At " + url+path + ", found " + entries.size( ) + " entries" );
             Iterator iterator = entries.iterator( );
             while ( iterator.hasNext( ) )
             {

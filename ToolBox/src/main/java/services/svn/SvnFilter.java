@@ -5,18 +5,21 @@ import java.util.List;
 
 import org.tmatesoft.svn.core.SVNNodeKind;
 
+
 public class SvnFilter
 {
     private SVNNodeKind kind;
     /**
-     * The white list for the dir. If not empty, only go into dir present in this list
+     * The white list for the dir. If not empty, only go into dir present in
+     * this list
      */
-    private List<String> whiteList = new ArrayList<String>();
-    
+    private List<String> whiteList = new ArrayList<String>( );
+
     /**
-     * The black list for the dir. If not empty, don't go into dir present in this list
+     * The black list for the dir. If not empty, don't go into dir present in
+     * this list
      */
-    private List<String> blackList = new ArrayList<String>();
+    private List<String> blackList = new ArrayList<String>( );
 
     /**
      * @return the kind
