@@ -21,6 +21,7 @@ import services.svn.SvnFilter;
 import tools.Tool;
 import tools.mapplugins.bean.Repository;
 import tools.mapplugins.commons.MappluginConstants;
+import tools.mapplugins.service.MavenService;
 import tools.mapplugins.service.SqlService;
 import tools.mapplugins.service.SvnService;
 import tools.mapplugins.xml.Project;
@@ -95,7 +96,7 @@ public class MappluginTool implements Tool
                             try
                             {
                                 unmarshal = SvnService.getProject( element.getUrl( ) );
-                                
+
                                 //referencer l'artifact courant
                                 repo.add( unmarshal );
                             }
@@ -133,8 +134,11 @@ public class MappluginTool implements Tool
         {
             logger.error( "Error while create serializable file" );
         }
-        
-        Project dependency = repo.findDependency( "fr.paris.lutece.plugins", "plugin-html", "2.1.2-SNAPSHOT");
+
+        Project dependencySimple = MavenService.findDependency( repo, "fr.paris.lutece.plugins", "plugin-html",
+                "2.1.2-SNAPSHOT" );
+        Project dependencyPlage = MavenService.findDependency( repo, "fr.paris.lutece.plugins", "plugin-html",
+                "[2.0.0-SNAPSHOT,]" );
 
         //derniere etape, generer le fichier SQL permettant de créer la bdd
         String sqlPath = PropertiesService.getProperty( MappluginConstants.MARK_SQL_FILE );
