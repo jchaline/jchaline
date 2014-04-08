@@ -2,11 +2,9 @@ package tools.mapplugins.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import tools.mapplugins.xml.Project;
 
@@ -18,6 +16,7 @@ import tools.mapplugins.xml.Project;
 public class Repository implements Serializable
 {
     private static final long serialVersionUID = 8115463804253023495L;
+
     /**
      * Reference all the artifact, getting by group id, id, and version
      */
@@ -30,7 +29,7 @@ public class Repository implements Serializable
     public List<Project> getProjectsList( )
     {
         List<Project> list = new ArrayList<Project>( );
-        for ( Map<String, Map<String, Project>> groups : artifacts.values( ) )
+        for ( Map<String, Map<String, Project>> groups : getArtifacts().values( ) )
         {
             for ( Map<String, Project> versions : groups.values( ) )
             {
@@ -47,15 +46,15 @@ public class Repository implements Serializable
      */
     public void add( Project artifact )
     {
-        if ( !artifacts.containsKey( artifact.getGroupId( ) ) )
+        if ( !getArtifacts().containsKey( artifact.getGroupId( ) ) )
         {
-            artifacts.put( artifact.getGroupId( ), new HashMap<String, Map<String, Project>>( ) );
+            getArtifacts().put( artifact.getGroupId( ), new HashMap<String, Map<String, Project>>( ) );
         }
-        if ( !artifacts.get( artifact.getGroupId( ) ).containsKey( artifact.getArtifactId( ) ) )
+        if ( !getArtifacts().get( artifact.getGroupId( ) ).containsKey( artifact.getArtifactId( ) ) )
         {
-            artifacts.get( artifact.getGroupId( ) ).put( artifact.getArtifactId( ), new HashMap<String, Project>( ) );
+            getArtifacts().get( artifact.getGroupId( ) ).put( artifact.getArtifactId( ), new HashMap<String, Project>( ) );
         }
-        artifacts.get( artifact.getGroupId( ) ).get( artifact.getArtifactId( ) ).put( artifact.getVersion( ), artifact );
+        getArtifacts().get( artifact.getGroupId( ) ).get( artifact.getArtifactId( ) ).put( artifact.getVersion( ), artifact );
     }
 
     /**
@@ -68,53 +67,26 @@ public class Repository implements Serializable
     public Project get( String groupId, String artifactId, String version )
     {
         Project project = null;
-        if ( artifacts.containsKey( groupId ) && artifacts.get( groupId ).containsKey( artifactId ) )
+        if ( getArtifacts().containsKey( groupId ) && getArtifacts().get( groupId ).containsKey( artifactId ) )
         {
-            project = artifacts.get( groupId ).get( artifactId ).get( version );
+            project = getArtifacts().get( groupId ).get( artifactId ).get( version );
         }
         return project;
     }
 
     /**
-     * Get the dependency corresponding to the coordonate
-     * @param groupId
-     * @param artifactId
-     * @param version
-     * @return
+     * @return the artifacts
      */
-    public Project findDependency( String groupId, String artifactId, String version )
+    public Map<String, Map<String, Map<String, Project>>> getArtifacts( )
     {
-        Project dependency = null;
-        List<String> listVersion = getListVersionsAvailable( groupId, artifactId );
-
-        if ( !listVersion.isEmpty( ) )
-        {
-            dependency = get( groupId, artifactId, listVersion.get( 0 ) );
-        }
-
-        return dependency;
+        return artifacts;
     }
 
     /**
-     * Get the list ordered of the available versions for any artifact
-     * @param groupId
-     * @param artifactId
-     * @return the ordered list of the artifacts
+     * @param artifacts the artifacts to set
      */
-    private List<String> getListVersionsAvailable( String groupId, String artifactId )
+    public void setArtifacts( Map<String, Map<String, Map<String, Project>>> artifacts )
     {
-        List<String> listVersion = new ArrayList<String>( );
-        if ( this.artifacts.containsKey( groupId ) )
-        {
-            Map<String, Map<String, Project>> group = this.artifacts.get( groupId );
-            if ( group.containsKey( artifactId ) )
-            {
-                Map<String, Project> versions = group.get( artifactId );
-                Set<String> keySet = versions.keySet( );
-                listVersion.addAll( keySet );
-                Collections.sort( listVersion, new ArtifactComparator( ) );
-            }
-        }
-        return listVersion;
+        this.artifacts = artifacts;
     }
 }
