@@ -13,6 +13,9 @@ import tools.mapplugins.bean.ArtifactComparator;
 import tools.mapplugins.bean.Repository;
 import tools.mapplugins.xml.Project;
 
+import com.google.gwt.thirdparty.guava.common.base.Predicate;
+import com.google.gwt.thirdparty.guava.common.collect.Iterables;
+
 
 public class MavenService
 {
@@ -53,40 +56,16 @@ public class MavenService
      * @param groupId
      * @param artifactId
      * @param version
-     * @return
+     * @return the dependency
      */
     public static Project findDependency( Repository repo, String groupId, String artifactId, String version )
     {
         Project dependency = null;
 
         //traitement d'une plage de version
-        if ( MARK_PARENTHESE_OPEN==( version.charAt( 0 ) ) || MARK_HOOK_OPEN==( version.charAt( 0 ) ) )
+        if ( MARK_PARENTHESE_OPEN == ( version.charAt( 0 ) ) || MARK_HOOK_OPEN == ( version.charAt( 0 ) ) )
         {
-            List<String> listVersion = getListVersionsAvailable( repo, groupId, artifactId );
-            String[] plages = version.split( MARK_COMMA );
-
-            char firstChar = plages[0].charAt( 0 );
-            char lastChar = plages[1].charAt( plages[1].length( ) - 1 );
-
-            String minVersion = StringUtils.EMPTY;
-            String maxVersion = StringUtils.EMPTY;
-            if ( plages[0].length( ) > 1 )
-            {
-                minVersion = plages[0].substring( 1 );
-            }
-            else
-            {
-                minVersion = listVersion.get( 0 );
-            }
-            if ( plages[1].length( ) > 1 )
-            {
-                maxVersion = plages[1].substring( 0, plages[1].length( ) - 2 );
-            }
-            else
-            {
-                maxVersion = listVersion.get( listVersion.size( ) - 1 );
-            }
-            logger.debug( "Use minVersion:" + minVersion + ", maxVersion:" + maxVersion );
+            dependency = findDependencyWithRange( repo, groupId, artifactId, version );
         }
         else
         {
@@ -95,4 +74,56 @@ public class MavenService
 
         return dependency;
     }
+
+    /**
+     * Get the dependency corresponding to the coordonate
+     * @param groupId the group id
+     * @param artifactId the artifact id
+     * @param version the range version
+     * @return the dependency
+     */
+    private static Project findDependencyWithRange( Repository repo, String groupId, String artifactId, String version )
+    {
+        List<String> listVersions = getListVersionsAvailable( repo, groupId, artifactId );
+        String[] plages = version.split( MARK_COMMA );
+
+        char firstChar = plages[0].charAt( 0 );
+        char lastChar = plages[1].charAt( plages[1].length( ) - 1 );
+
+        //get the using min and max version
+        String minVersion = plages[0].length( ) > 1 ? plages[0].substring( 1 ) : listVersions.get( 0 );
+        String maxVersion = plages[1].length( ) > 1 ? plages[1].substring( 0, plages[1].length( ) - 1 ) : listVersions
+                .get( listVersions.size( ) - 1 );
+        
+        Predicate<String> predicateAcceptVersion = getAcceptVersionMethod( minVersion, maxVersion, firstChar, lastChar );
+        Iterable<String> iterablePortfolio = Iterables.filter( listVersions, predicateAcceptVersion );
+        logger.debug( "Use minVersion:" + minVersion + ", maxVersion:" + maxVersion );
+
+        return null;
+    }
+
+    /**
+     * Get the predicate method to filter version list
+     * @param min the mininum version accepted
+     * @param max the maximum version accepted
+     * @param bornMin the min born
+     * @param bornMax the max born
+     * @return the accepted predicate
+     */
+    private static Predicate<String> getAcceptVersionMethod( String min, String max, char bornMin, char bornMax )
+    {
+        Predicate<String> acceptMethod = new Predicate<String>( )
+        {
+            @Override
+            public boolean apply( String o )
+            {
+                if ( o == null )
+                    return false;
+                String tested = (String) o;
+                return tested.equals( "2.0.2" );
+            }
+        };
+        return acceptMethod;
+    }
+
 }
