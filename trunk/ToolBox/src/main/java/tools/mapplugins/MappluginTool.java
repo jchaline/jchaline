@@ -138,7 +138,7 @@ public class MappluginTool implements Tool
         Project dependencySimple = MavenService.findDependency( repo, "fr.paris.lutece.plugins", "plugin-html",
                 "2.1.2-SNAPSHOT" );
         Project dependencyPlage = MavenService.findDependency( repo, "fr.paris.lutece.plugins", "plugin-html",
-                "[2.0.0-SNAPSHOT,]" );
+                "[2.0.2-SNAPSHOT,2.4.0]" );
 
         //derniere etape, generer le fichier SQL permettant de créer la bdd
         String sqlPath = PropertiesService.getProperty( MappluginConstants.MARK_SQL_FILE );
