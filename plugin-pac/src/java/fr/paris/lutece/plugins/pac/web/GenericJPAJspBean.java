@@ -33,8 +33,9 @@
  */
 package fr.paris.lutece.plugins.pac.web;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +44,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 
-import fr.paris.lutece.plugins.pac.bean.Closure;
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+
 import fr.paris.lutece.plugins.pac.bean.GenericJPABean;
 import fr.paris.lutece.plugins.pac.bean.GenericJPAFilter;
 import fr.paris.lutece.plugins.pac.dao.commons.PaginationProperties;
@@ -114,58 +117,27 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
     /**
      * Abstract implementation to generate DataTableManager
      * @param request the http request
+     * @param service the bean service
      * @param filter the bean filter
      * @param keyDataTable the key to save DataTableManager in Session
      * @param jspManage the url to the manage page
-     * @param service the bean service
-     * @param type the class type
-     * @return the DataTableManager
-     */
-    protected static <T> DataTableManager<T> getAbstractDataTableManager( HttpServletRequest request,
-            IPacService service, GenericJPAFilter filter, String keyDataTable, String jspManage )
-    {
-        //si un objet est déjà présent en session, on l'utilise
-        DataTableManager<T> dataTableToUse = getDataTableToUse( request, keyDataTable, jspManage );
-
-        //determination de l'utilisation d'un nouveau filtre (recherche) ou de celui présent en session (changement de page)
-        GenericJPAFilter filterToUse = getFilterToUse( request, filter, MARK_FILTER, dataTableToUse );
-        BeanUtils.copyProperties( filterToUse, filter );
-
-        //mise à jour de la pagination dans le data table pour l'afficahge de la page courante et du nombre d'items
-        DataTablePaginationProperties updatePaginator = dataTableToUse.getAndUpdatePaginator( request );
-
-        //obtention manuel des beans à afficher
-        PaginationProperties paginationProperties = new PaginationPropertiesAdapterDataTable( updatePaginator );
-
-        ResultList<T> listAllBean = service.find( filterToUse, paginationProperties );
-        request.getSession( ).setAttribute( MARK_FILTER, filter );
-        dataTableToUse.setItems( listAllBean, listAllBean.getTotalResult( ) );
-
-        return dataTableToUse;
-    }
-
-    /**
-     * Abstract implementation to generate DataTableManager
-     * @param request the http request
-     * @param filter the bean filter
-     * @param keyDataTable the key to save DataTableManager in Session
-     * @param jspManage the url to the manage page
-     * @param service the bean service
-     * @param converter the converter closure for the bean list
-     * @param type the class type
+     * @param automatic true to use automatic datatable method, false to use
+     *            specific implementation
+     * @param converter the bean to dto converter function, can be null if you
+     *            don't want to use dto
      * @return the DataTableManager
      */
     protected static <E, D> DataTableManager<D> getAbstractDataTableManager( HttpServletRequest request,
-            IPacService service, Closure converter, GenericJPAFilter filter, String keyDataTable, String jspManage,
-            boolean automatic )
+            IPacService service, GenericJPAFilter filter, String keyDataTable, String jspManage, boolean automatic,
+            Function<E, D> converter )
     {
         //si un objet est déjà présent en session, on l'utilise
-        DataTableManager<D> dataTableToUse = getDataTableToUse( request, keyDataTable, jspManage );
+        DataTableManager dataTableToUse = getDataTableToUse( request, keyDataTable, jspManage );
 
-        ResultList<E> listAllBean = null;
+        ResultList<E> listBean = null;
         if ( automatic )
         {
-            listAllBean = service.findAll( null );
+            listBean = service.findAll( null );
         }
         else
         {
@@ -177,18 +149,19 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
 
             //obtention manuel des beans à afficher
             PaginationProperties paginationProperties = new PaginationPropertiesAdapterDataTable( updatePaginator );
-            listAllBean = service.find( filter, paginationProperties );
+            listBean = service.find( filter, paginationProperties );
         }
-        List<D> listDTO = (List<D>) converter.process( listAllBean );
+        Collection listDTO = converter != null ? new ArrayList<D>( Collections2.transform( listBean, converter ) )
+                : listBean;
         request.getSession( ).setAttribute( MARK_FILTER, filter );
 
         if ( automatic )
         {
-            dataTableToUse.filterSortAndPaginate( request, listDTO );
+            dataTableToUse.filterSortAndPaginate( request, new ArrayList<D>( listDTO ) );
         }
         else
         {
-            dataTableToUse.setItems( listDTO, listAllBean.getTotalResult( ) );
+            dataTableToUse.setItems( new ArrayList<D>( listDTO ), listBean.getTotalResult( ) );
         }
 
         return dataTableToUse;
