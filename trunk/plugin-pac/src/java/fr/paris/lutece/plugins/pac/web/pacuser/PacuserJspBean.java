@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 
-import fr.paris.lutece.plugins.pac.bean.Closure;
+import com.google.common.base.Function;
+
 import fr.paris.lutece.plugins.pac.bean.GenericJPABean;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
 import fr.paris.lutece.plugins.pac.bean.pacuser.PacuserFilter;
 import fr.paris.lutece.plugins.pac.dto.pacuser.PacuserDTO;
 import fr.paris.lutece.plugins.pac.service.IPacService;
 import fr.paris.lutece.plugins.pac.service.pacuser.IPacuserService;
-import fr.paris.lutece.plugins.pac.service.pacuser.PacuserService;
 import fr.paris.lutece.plugins.pac.utils.commons.ArrayUtils;
 import fr.paris.lutece.plugins.pac.utils.commons.CsvUtils;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConfigs;
@@ -202,9 +202,16 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
     private DataTableManager<PacuserDTO> getDataTable( HttpServletRequest request, PacuserFilter filter )
             throws SecurityException, NoSuchMethodException
     {
-        Closure converter = PacuserService.getFuncConverter( );
-        DataTableManager<PacuserDTO> dataTableToUse = getAbstractDataTableManager( request, _servicePacuser, converter,
-                filter, MARK_DATA_TABLE_BEAN, PacConfigs.JSP_MANAGE_PACUSER, false );
+        Function<Pacuser, PacuserDTO> dtoConverter = new Function<Pacuser, PacuserDTO>( )
+        {
+            @Override
+            public PacuserDTO apply( Pacuser input )
+            {
+                return input == null ? null : PacuserDTO.convert( input );
+            }
+        };
+        DataTableManager<PacuserDTO> dataTableToUse = getAbstractDataTableManager( request, _servicePacuser, filter,
+                MARK_DATA_TABLE_BEAN, PacConfigs.JSP_MANAGE_PACUSER, false, dtoConverter );
 
         addDatatableColumns( dataTableToUse );
         saveDataTableInSession( request, dataTableToUse, MARK_DATA_TABLE_BEAN );
