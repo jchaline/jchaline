@@ -88,11 +88,6 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
         {
             SessionMessage.pushMessage( request, SessionMessage.CODE_ALERTE, PacConfigs.I18N_ERROR_OCCUR );
         }
-        catch ( NoSuchMethodException e )
-
-        {
-            SessionMessage.pushMessage( request, SessionMessage.CODE_ALERTE, PacConfigs.I18N_ERROR_OCCUR );
-        }
 
         List<String[]> listChoices = new ArrayList<String[]>( );
         listChoices.add( new String[] { PacConstants.ACTION_WARN_MAIL,
@@ -200,7 +195,6 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
      * @throws SecurityException exception when canno't invoke the method
      */
     private DataTableManager<PacuserDTO> getDataTable( HttpServletRequest request, PacuserFilter filter )
-            throws SecurityException, NoSuchMethodException
     {
         Function<Pacuser, PacuserDTO> dtoConverter = new Function<Pacuser, PacuserDTO>( )
         {
