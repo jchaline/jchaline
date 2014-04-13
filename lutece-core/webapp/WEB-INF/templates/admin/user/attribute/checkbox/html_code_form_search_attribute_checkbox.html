@@ -1,0 +1,32 @@
+<#function isSelected nIdField default_values_list>
+	<#list default_values_list as default_value>
+		<#if default_value.attributeField?exists && default_value.attributeField.idField = nIdField && default_value.value != "">  		
+			<#return true>
+		</#if>
+	</#list>
+	<#return false>
+</#function>
+<label class="control-label" for="attribute_${attribute.idAttribute}">
+	${attribute.title} : 
+</label>
+<#if attribute.fieldInLine>
+	<div class="controls">
+</#if>
+<#list attribute.listAttributeFields as attributeField>
+	<#if attributeField.title?exists && attributeField.value != "">
+		<#if !attribute.fieldInLine>
+			<div class="controls">
+		</#if>
+		<input type="checkbox" name="attribute_${attribute.idAttribute}" value="${attributeField.idField}"
+			<#if default_values_list?has_content && isSelected( attributeField.idField,default_values_list ) >
+				checked="checked"
+			</#if>
+		/> ${attributeField.title}
+		<#if !attribute.fieldInLine>
+			</div>
+		</#if>
+	</#if>
+</#list>
+<#if attribute.fieldInLine>
+	</div>
+</#if>

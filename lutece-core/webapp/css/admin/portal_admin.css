@@ -1,0 +1,132 @@
+/********************************
+/* Lutece core admin styles    *
+********************************/
+/* Fix for fixed-nav-bar*/
+body{padding-top:60px;}
+textarea{width:100%;}
+
+/* Fix accessibility issue on links */
+a:hover,a:active { outline:thin dotted;}
+
+/* Header */ 
+/* Logo */
+.logo{height:16px;float:left;margin:0 2px;}
+.logo-min{height:16px;float:left;margin:0 2px;}
+h1.header{display:none;}
+
+/* Button space */
+.spaced{margin:0 2px;}
+
+.navbar-inverse .nav-collapse .nav > li.home{background-color:#3399FF;} 
+
+/* Footer */
+#footer{background: none repeat scroll 0 0 #000;color: #fff;padding: 1px 5px 1px;height:24px;}
+#footer > a{color: #fff;font-size:80%;}
+
+/* Admin message */
+.msg-admin{margin:10em 0; }
+
+/* Image lists */
+img.thumblist{width:24px;}
+img.thumblist-wide{width:128px;}
+
+
+/* Portlets admin */
+#content-portlet{padding:0 10px;}
+/* Button to toggle full portlet view */
+a#trigger{
+position: fixed;
+text-decoration: none;
+top:61px; left: 0;
+padding: 2px 10px;
+background:#F5F5F5 url("../img/glyphicons-halflings.png") 2px -92px no-repeat;
+-webkit-border-top-right-radius: 20px;
+-webkit-border-bottom-right-radius: 20px;
+-moz-border-radius-topright: 20px;
+-moz-border-radius-bottomright: 20px;
+border-top-right-radius: 20px;
+border-bottom-right-radius: 20px;
+border:1px #E4E4E4 solid;
+display: block;
+}
+a#trigger.active {
+background:#F5F5F5 url("../img/glyphicons-halflings.png") -22px -92px no-repeat;
+-webkit-border-top-right-radius: 0px;
+-webkit-border-bottom-right-radius: 0px;
+-moz-border-radius-topright: 0px;
+-moz-border-radius-bottomright: 0px;
+border-top-right-radius: 0px;
+border-bottom-right-radius: 0px;
+-webkit-border-top-left-radius: 20px;
+-webkit-border-bottom-left-radius: 20px;
+-moz-border-radius-topleft: 20px;
+-moz-border-radius-bottomleft: 20px;
+border-top-left-radius: 20px;
+border-bottom-left-radius: 20px;
+}
+
+
+/* Lutece extra-icons */
+[class^="icon-lutece-"],[class*=" icon-lutece-"] {
+    display:inline-block;
+    width:14px;height:14px;
+    *margin-right:.3em;
+    line-height:14px;
+    vertical-align:text-top;
+    background-image:url("../img/lutece-icons.png");
+    background-repeat:no-repeat;
+}
+
+[class^="icon-lutece-"]:last-child,[class*=" icon-lutece-"]:last-child {
+    *margin-left:0;
+}
+.icon-lutece-external-link-white{ background-position: 0 0; width: 10px; height: 10px; } 
+.icon-lutece-external-link{ background-position: -32px 0; width: 10px; height: 10px; } 
+.icon-lutece-logo{ background-position: -64px 0; width: 18px; height: 18px; } 
+.icon-lutece-page-template-document0{ background-position: -104px 0; width: 24px; height: 24px; } 
+.icon-lutece-page-template-document1{ background-position: -150px 0; width: 24px; height: 24px; } 
+.icon-lutece-page-template-document2{ background-position: -196px 0; width: 24px; height: 24px; } 
+.icon-lutece-add-shopping-cart { background-position: -360px -120px;}
+
+/* Plugins admin added styles */
+
+/* plugin document*/
+/* Fix thumbnail list */
+ul.thumbnails li.span4:nth-child(3n + 4) {margin-left : 0px;}
+
+/* plugin extend*/
+.form-submenu{margin: 0px;}
+.dropdown-menu p{padding: 3px 20px;}
+.submenu-left{right: 100% !important;left: auto !important;}
+
+/* plugin theme preview*/
+#preview-frame-container{display:none;}
+#back-to-preview{position:fixed;background: #000;box-shadow: 0 0 10px #000;left:0;top:150px;width:auto;z-index:99;}
+#back-to-preview a {display: block;float:left; margin:2px; padding: 5px 20px; background: #FFCC00;color:#000;text-decoration: none;}
+#back-to-preview a:hover { color: #fff;}
+#preview-frame{position:fixed;background:#000;box-shadow:10px #000;margin:5px;width:98%;height:100%;top:60px;left:0; overflow: auto; z-index: 99;}
+.oyh {overflow-y: hidden;}
+
+/* plugin digg */
+.f-nav{ z-index: 9999; position: fixed; left:0; top:4.4%;background-color:#fff;padding:1% 2% 1% 2%;
+-moz-box-shadow: 0px 5px 5px 0px #656565;
+-webkit-box-shadow: 0px 5px 5px 0px #656565;
+-o-box-shadow: 0px 5px 5px 0px #656565;
+box-shadow: 0px 5px 5px 0px #656565;
+filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=180, Strength=5);
+} /* this make our menu fixed top */
+
+.span-fixed {z-index:9998;position:fixed;} /* this make our menu fixed top */
+
+.badge-waiting {
+  border-radius: 20px 20px 20px 20px;
+  font-size: 15px;
+  padding: 5px 9px;
+  -moz-box-shadow: 0px 5px 5px 0px #656565;
+-webkit-box-shadow: 0px 5px 5px 0px #656565;
+-o-box-shadow: 0px 5px 5px 0px #656565;
+box-shadow: 0px 5px 5px 0px #656565;
+filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=180, Strength=5);
+}
+
+.modal-top{top:20% !important;}
