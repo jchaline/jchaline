@@ -54,6 +54,7 @@ import fr.paris.lutece.plugins.pac.dao.commons.PaginationPropertiesAdapterDataTa
 import fr.paris.lutece.plugins.pac.dao.commons.PaginationPropertiesImpl;
 import fr.paris.lutece.plugins.pac.dao.commons.ResultList;
 import fr.paris.lutece.plugins.pac.service.IPacService;
+import fr.paris.lutece.plugins.pac.service.IPluginService;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConstants;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.web.admin.PluginAdminPageJspBean;
@@ -128,7 +129,7 @@ public abstract class GenericJPAJspBean<K, E extends GenericJPABean<K>> extends 
      * @return the DataTableManager
      */
     protected static <E, D> DataTableManager<D> getAbstractDataTableManager( HttpServletRequest request,
-            IPacService service, GenericJPAFilter filter, String keyDataTable, String jspManage, boolean automatic,
+            IPluginService service, GenericJPAFilter filter, String keyDataTable, String jspManage, boolean automatic,
             Function<E, D> converter )
     {
         //si un objet est déjà présent en session, on l'utilise
