@@ -1,0 +1,65 @@
+<div class="row-fluid">
+  <div class="span12">
+	<ul class="nav nav-tabs">
+        <li>
+            <a href="jsp/admin/features/DispatchFeatures.jsp" >
+                #i18n{portal.features.manage_features.featureDispatch.label}
+            </a>
+        </li>
+        <li class="active">
+            <a href="jsp/admin/features/ManageGroups.jsp">#i18n{portal.features.manage_features.groupManagement.label}</a>
+        </li>
+    </ul>
+    <fieldset>
+		<legend>
+			#i18n{portal.features.manage_groups.title}
+            <a class="btn btn-primary btn-small pull-right" href="jsp/admin/features/CreateGroup.jsp">
+                <i class="icon-plus icon-white"></i>&nbsp;#i18n{portal.features.manage_groups.buttonCreate}
+            </a>
+		</legend>
+		
+        <table class="table table-striped table-condensed">
+		<thead>
+			<tr>
+				<th class="span5">#i18n{portal.features.manage_groups.labelId}</th>
+                <th class="span2">#i18n{portal.features.manage_groups.labelOrder}</th>
+                <th>#i18n{portal.features.manage_groups.labelActions}</th>
+            </tr>
+		</thead>
+        <#list groups_list?sort_by('order') as group>
+		<tbody>
+        <tr>
+			<td>
+				<strong>${group.id}</strong>
+				<br>
+				#i18n{portal.features.manage_groups.labelName}: <em>${group.labelKey}</em>
+				<br>
+				#i18n{portal.features.manage_groups.labelDescription}: <small>${group.descriptionKey}</small>
+            <td>
+				<form method="post" action="jsp/admin/features/DoDispatchFeatureGroup.jsp" class="form-inline">
+                <input type="hidden" name="group_id" value="${group.id}" />
+				<div class="input-append">               
+					<@comboSortedWithParams name="order_id" default_value=group.order?string additionalParameters=" class=\"input-mini\"" items=order_list />
+					<button class="btn btn-primary" type="submit" title="#i18n{portal.features.manage_groups.buttonChangeOrder}" >
+						<i class="icon-refresh icon-white"></i>
+					</button>
+				</div>	
+                </form>
+            </td>
+            <td>
+				<a class="btn btn-primary pull-left btn-small" href="jsp/admin/features/ModifyGroup.jsp?group_id=${group.id}" title="#i18n{portal.util.labelModify} ${group.id}" >
+					<i class="icon-edit icon-white"></i>
+				</a>
+				<form class="inline pull-left spaced" method="post"  action="jsp/admin/features/RemoveGroup.jsp">
+                <input type="hidden" name="group_id" value="${group.id}">
+                <button class="btn btn-danger btn-small" type="submit" title="#i18n{portal.features.manage_groups.buttonDelete}" >
+					<i class="icon-trash icon-white"></i>
+				</button>
+                </form> 
+            </td>
+        </tr>
+        </#list>
+		</tbody>
+		</table>
+	</div>
+</div>
