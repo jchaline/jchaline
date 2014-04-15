@@ -303,8 +303,29 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
     public List<Pacuser> findUserPresent( Date day )
     {
         PacuserFilter filter = new PacuserFilter( );
-        filter.setDayPresent( day );
-        ResultList<Pacuser> result = _daoPacuser.find( filter, null );
+        filter.setDayConge( day );
+
+        ResultList<Pacuser> userAbsents = _daoPacuser.find( filter, null );
+        ResultList<Pacuser> allUsers = _daoPacuser.findAll( null );
+
+        List<Pacuser> result = null;
+        if ( !userAbsents.isEmpty( ) )
+        {
+            result = new ArrayList<Pacuser>( );
+
+            for ( Pacuser user : allUsers )
+            {
+                if ( !userAbsents.contains( user ) )
+                {
+                    result.add( user );
+                }
+            }
+        }
+        else
+        {
+            result = allUsers;
+        }
+
         return result;
     }
 }

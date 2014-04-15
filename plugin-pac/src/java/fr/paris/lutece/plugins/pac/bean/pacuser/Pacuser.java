@@ -70,6 +70,23 @@ public class Pacuser extends GenericJPABean<Integer>
     @OneToMany( cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, mappedBy = "_pacuser" )
     private Set<Pacdate> _joursConges = new HashSet<Pacdate>( 0 );
 
+    @Override
+    public int hashCode( )
+    {
+        return this.getId( ) * this.getNom( ).hashCode( ) * this.getPrenom( ).hashCode( );
+    }
+
+    @Override
+    public boolean equals( final Object other )
+    {
+        boolean equal = false;
+        if ( other != null && other instanceof Pacuser )
+        {
+            equal = this.getId( ).equals( ( (Pacuser) other ).getId( ) );
+        }
+        return equal;
+    }
+
     /**
      * the id setter
      * @param id the id to set

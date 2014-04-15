@@ -356,13 +356,14 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
     {
         AppLogService.info( "Send mail to id : " + strId );
         Pacuser user = _servicePacuser.findByStrPrimaryKey( strId );
-        _servicePacuser.findUserPresent( user.getProchainPac( ) );
+        List<Pacuser> usersPresents = _servicePacuser.findUserPresent( user.getProchainPac( ) );
         PacuserDTO userDto = PacuserDTO.convert( user );
         Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_BEAN, userDto );
+        model.put("users",usersPresents);
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MAIL_YOUR_NEXT_PAC, locale, model );
 
-        MailService.sendMailHtml( userDto.getEmail( ), "jeremy.chaline@sopragroup.com", null, "The Pac Company",
-                "noreply@nowhere.com", "Votre prochain PAC", template.getHtml( ) );
+        //MailService.sendMailHtml( userDto.getEmail( ), "jeremy.chaline@sopragroup.com", null, "The Pac Company",
+        //        "noreply@nowhere.com", "Votre prochain PAC", template.getHtml( ) );
     }
 }
