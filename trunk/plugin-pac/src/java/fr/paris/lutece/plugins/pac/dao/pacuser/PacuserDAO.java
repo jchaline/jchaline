@@ -50,18 +50,15 @@ public class PacuserDAO extends AbstractPacDAO<Integer, Pacuser> implements IPac
                         SQLUtils.addPercentEnclosing( filter.getPrenom( ) ) ) );
             }
 
-            if ( filter.getDayPresent( ) != null )
+            if (filter.getDayConge( ) != null )
             {
                 SetJoin<Pacuser, Pacdate> pacdateJoin = root.join( Pacuser_._joursConges, JoinType.LEFT );
-                //                Calendar calendar = new GregorianCalendar( );
-                //                calendar.set( 2014, Calendar.APRIL, 3 );
-                //                Date time = calendar.getTime( );
-                // must convert into SQL date ? or remove second after day (hour, minutes, second)
-                Predicate containDay = cb.equal( pacdateJoin.get( Pacdate_._date ), filter.getDayPresent( ) );
+
+                Predicate containDay = cb.equal( pacdateJoin.get( Pacdate_._date ), filter.getDayConge( ) );
                 Predicate isCongeDay = cb.equal( pacdateJoin.get( Pacdate_._type ), PacConstants.TYPE_DATE_CONGE );
                 Predicate containCongeDay = cb.and( containDay, isCongeDay );
-
-                //listPredicates.add( cb.not( cb.in( containCongeDay ) ) );
+                
+                listPredicates.add( containCongeDay );
             }
 
             if ( !listPredicates.isEmpty( ) )
