@@ -3,14 +3,18 @@ package fr.paris.lutece.plugins.pac.utils.commons;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.junit.Test;
+
 import fr.paris.lutece.test.LuteceTestCase;
 
+
 /**
- * JUnit for @link{DateUtils} 
+ * JUnit for @link{DateUtils}
  * @author jchaline
  */
 public class DateUtilsTest extends LuteceTestCase
 {
+    @Test
     public void testDateCompare( )
     {
         GregorianCalendar cal = new GregorianCalendar( );

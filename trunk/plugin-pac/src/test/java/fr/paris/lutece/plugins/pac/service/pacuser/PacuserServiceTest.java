@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.commons.lang.time.DateUtils;
+import org.junit.Test;
 
 import fr.paris.lutece.plugins.pac.bean.pacconfig.Pacconfig;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
@@ -23,6 +24,7 @@ public class PacuserServiceTest extends LuteceTestCase
 {
     private static final int NB_USER = 4;
 
+    @Test
     public void testOrderWithDate( )
     {
         List<Pacuser> list = initListPacuser( true );
@@ -34,7 +36,8 @@ public class PacuserServiceTest extends LuteceTestCase
         assertTrue( list.get( 2 ).getId( ).equals( 0 ) );
         assertTrue( list.get( 3 ).getId( ).equals( 3 ) );
     }
-
+    
+    @Test
     public void testOrderWithDelayBeforePac( )
     {
         List<Pacuser> list = initListPacuser( true );
@@ -56,7 +59,7 @@ public class PacuserServiceTest extends LuteceTestCase
         config.setFirstDate( calendar.getTime( ) );
         config.setTeam( "Mairie de Paris" );
 
-        IPacuserService userService = (IPacuserService) SpringContextService.getBean( PacConfigs.BEAN_PACUSER_SERVICE );
+        PacuserService userService = new PacuserService();
 
         userService.associatePacDate( list, new Date( ), config );
     }

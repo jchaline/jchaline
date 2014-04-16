@@ -360,7 +360,7 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
         PacuserDTO userDto = PacuserDTO.convert( user );
         Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_BEAN, userDto );
-        model.put("users",usersPresents);
+        model.put( "numberPresents", usersPresents.size( ) );
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MAIL_YOUR_NEXT_PAC, locale, model );
 
         //MailService.sendMailHtml( userDto.getEmail( ), "jeremy.chaline@sopragroup.com", null, "The Pac Company",
