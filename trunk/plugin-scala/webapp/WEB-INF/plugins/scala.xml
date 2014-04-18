@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<plug-in>
+	<!-- Plugin Informations -->
+	<name>scala</name>
+	<class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation
+	</class>
+	<version>1.0.0-SNAPSHOT</version>
+	<documentation />
+	<installation></installation>
+	<changes />
+	<user-guide />
+	<description></description>
+	<provider>XXXXXXXXX</provider>
+	<provider-url>http://lutece.paris.fr</provider-url>
+	<icon-url></icon-url>
+	<copyright>Copyright 2002-2013 Mairie de Paris</copyright>
+	<db-pool-required>0</db-pool-required>
+
+	<!-- Administration interface parameters -->
+	<admin-features>
+	</admin-features>
+
+	<!-- Applications -->
+	<applications>
+	</applications>
+
+	<!-- Daemons -->
+	<daemons>
+	</daemons>
+
+	<!-- RBAC Resources -->
+	<rbac-resource-types>
+	</rbac-resource-types>
+</plug-in>
