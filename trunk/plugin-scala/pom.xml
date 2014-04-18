@@ -56,6 +56,7 @@
 	<build>
 		<sourceDirectory>src/main/</sourceDirectory>
 		<pluginManagement>
+			<!-- http://davidb.github.io/scala-maven-plugin/plugin-info.html -->
 			<plugins>
 				<plugin>
 					<groupId>net.alchim31.maven</groupId>
