@@ -1,1 +1,0 @@
-# THE PROPERTIES FILE OF ${(plugin.name)!'pluginName'} PLUGIN

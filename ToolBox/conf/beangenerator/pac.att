@@ -1,2 +1,0 @@
-#nameOfBean,trueForDTO[;typeOfAttribut,nameOfAttribut,trueForFilter[...]]
-pacuser,true;integer,id,true;string,guid,true;date,lastPac,true

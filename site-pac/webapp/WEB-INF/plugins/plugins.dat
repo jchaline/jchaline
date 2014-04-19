@@ -1,7 +1,0 @@
-core_extensions.installed=1
-jpa-hibernate.installed=1
-lucene.installed=1
-techos.installed=1
-techos.pool=portal
-pac.installed=1
-pac.pool=portal
