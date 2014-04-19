@@ -1,0 +1,6 @@
+ X pouvoir fournir un service qui fait la convertion bean->DTO
+ - daemon envoi mail pour la personne concerné avec admin en copie (admin prevenu avant si possible)
+ - utilisation generic-jpa
+ - implanter les technos intéressantes pour en faire un projet sandbox
+ - BO (administration des gens) & FO (visualisation pour chaque semaine, filtrage)
+ -  

@@ -1,0 +1,132 @@
+<link rel="stylesheet" href="css/plugins/pac/kalendae/kalendae.css" type="text/css" charset="utf-8">
+<script src="js/plugins/pac/kalendae/kalendae.standalone.js" type="text/javascript" charset="utf-8"></script>
+
+<form class="form-horizontal" method="post" name="save_pacuser" id="save_pacuser" action="jsp/admin/plugins/pac/pacuser/DoSavePacuser.jsp">
+	<fieldset>
+		<legend>#i18n{pac.pacuser.create.title}</legend>
+	</fieldset>
+	<fieldset>
+		<div class="row-fluid">
+			<div class="span6">
+			   	<input type="hidden" id="jsp_back" name="jsp_back" value=""/>
+			       
+				<div class="control-group">
+					<label class="control-label" for="nom" >#i18n{pac.pacuser.field.nom} * :</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-user"></i></span>
+							<input type="text" id="nom" name="nom" class="input-large" maxlength="100" value="${(bean.nom)!}"/>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="prenom" >#i18n{pac.pacuser.field.prenom} * :</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-user"></i></span>
+							<input type="text" id="prenom" name="prenom" class="input-large" maxlength="100" value="${(bean.prenom)!}"/>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="email" >#i18n{pac.pacuser.field.email} * :</label>
+					<div class="controls">
+						<div class="input-prepend input-append">
+							<span class="add-on">@</span>
+							<input type="text" id="email" name="email" class="input-large" maxlength="100" value="${(bean.email)!}"/>
+							<button id="autoSetEmail" class="btn btn-success btn-primary" type="button" style="display:none">
+								<i class="icon-refresh icon-white"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="dateEntree" >#i18n{pac.pacuser.field.dateEntree} * :</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-calendar"></i></span>
+							<input type="text" id="dateEntree" name="dateEntree" class="input-medium datepicker" maxlength="10" value="${(bean.dateEntree)!}"/>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="prochainPac" >#i18n{pac.pacuser.field.prochainPac} :</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-calendar"></i></span>
+							<input type="text" id="prochainPac" name="prochainPac" class="input-medium datepicker" maxlength="10" value="${(bean.prochainPac)!}"/>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="dernierPac" >#i18n{pac.pacuser.field.dernierPac} :</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-calendar"></i></span>
+							<input type="text" id="dernierPac" name="dernierPac" class="input-medium datepicker" maxlength="10" value="${(bean.dernierPac)!}"/>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="dateSortie" >#i18n{pac.pacuser.field.dateSortie} :</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-calendar"></i></span>
+							<input type="text" id="dateSortie" name="dateSortie" class="input-medium datepicker" maxlength="10" value="${(bean.dateSortie)!}"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="span6">
+				<!-- See https://github.com/jorgonn/Kalendae && http://momentjs.com/docs/#/display/format -->
+				<div class="control-group">
+					<label class="control-label">#i18n{pac.pacuser.field.jours.conge}</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-calendar"></i></span>
+							<input type="text" value="${(bean.joursConges)!}" class="input-xlarge" id="joursConges" name="joursConges"/>
+						</div>
+					</div>
+				</div>
+				<div id="kalendar"></div>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset>
+		<div class="form-actions">   
+			<input type="hidden" id="id" name="id" value="${(bean.id)!}"/>
+			
+			<button type="submit" id="save" name="save" class="btn btn-primary btn-small" tabindex="3" >
+				<i class="icon-ok icon-white"></i>&nbsp;
+				#i18n{pac.transverse.save}
+			</button>
+			<button class="btn btn-small" type="submit" id="cancel" name="cancel">
+				<i class="icon-remove-circle"></i>&nbsp;
+				#i18n{pac.transverse.cancel}
+			</button>
+		</div>
+	</fieldset>
+</form>
+
+
+<script src="js/jquery/plugins/ui/ui.datepicker-fr.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#prochainPac').datepicker(); 
+		$('#dernierPac').datepicker(); 
+		$('#dateEntree').datepicker(); 
+		$('#dateSortie').datepicker(); 
+	});
+	$(document).ready(function(){
+		var k = new Kalendae.Input('joursConges',{
+			attachTo:'kalendar',
+			months:3,
+			direction:'today-future',
+			mode:'multiple',
+			weekStart:1,
+			format:'DD/MM/YYYY'
+		});
+	});
+</script>
+ 
+<script src="js/plugins/pac/pacuser/bindEmail.js" type="text/javascript" charset="utf-8"></script>

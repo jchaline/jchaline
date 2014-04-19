@@ -1,0 +1,92 @@
+<#macro columnActionsBean item >
+    <@showButton type="edit" href="jsp/admin/plugins/pac/pacuser/SavePacuser.jsp?bean_id=${item.id}" />
+    <@showButton type="delete" href="jsp/admin/plugins/pac/pacuser/DeletePacuser.jsp?bean_id=${item.id}" />
+</#macro>
+
+<#macro columnSelectBean item >
+    <input type="checkbox" class="checkboxSelectAll" name="id" value="${item.id}" />
+</#macro>
+
+<fieldset>
+	<@showSessionMessage />
+	<legend>
+		#i18n{pac.pacuser.manage.title}
+		<span class="pull-right spaced">
+		  	<a class="btn btn-primary btn-small" href="jsp/admin/plugins/pac/pacuser/SavePacuser.jsp">	    	
+	     		<i class="icon-plus icon-white" ></i>&nbsp;
+	     		<span class="hidden-phone">
+	     			#i18n{pac.pacuser.manage.button.create}
+	     		</span>
+		  	</a>
+		  	<a class="btn btn-success btn-small" href="jsp/admin/plugins/pac/pacuser/DoOrderNextPac.jsp">
+		  		<i class="icon-refresh icon-white"></i>&nbsp;
+		  		<span class="hidden-phone">
+	     			#i18n{pac.pacuser.order.next.pac}
+	     		</span>
+		  	</a>
+		  	<a class="btn btn-success btn-small" href="jsp/admin/plugins/pac/pacuser/DoDownload.jsp">
+		  		<i class="icon-download icon-white"></i>&nbsp;
+		  		<span class="hidden-phone">
+	     			#i18n{pac.transverse.title.download}
+	     		</span>
+		  	</a>
+		</span>
+	</legend>
+	<div class="row-fluid">
+		<div class="span3 well">
+			<form class="form-inline" action="jsp/admin/plugins/pac/pacuser/ManagePacuser.jsp" method="post">
+				<input type="hidden" name="filter" value="filter" />
+				<div class="control-group">
+					<label class="control-label" for="filter_name">#i18n{pac.pacuser.field.nom} : </label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-user"></i></span>
+							<input class="input-medium"  type="text" value="${(filter.nom)!}" name="nom" id="nom" />
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="filter_name">#i18n{pac.pacuser.field.prenom} : </label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-user"></i></span>
+							<input class="input-medium"  type="text" value="${(filter.prenom)!}" name="prenom" id="prenom" />
+						</div>
+					</div>
+				</div>
+				<div class="form-actions">
+					<button class="btn btn-small btn-primary" >
+						<i class="icon-search icon-white"></i>&nbsp;
+						#i18n{pac.transverse.title.search}
+					</button>
+				</div>
+			</form>
+		</div>
+		<div class="span9">
+			<#if dataTableBean??>
+				<@dataTablePac dataTableManager=dataTableBean jspMasseAction=urlMasseAction listChoices=listChoices />
+			</#if>
+		</div>
+	</div>
+</fieldset>
+
+<fieldset>
+	<form id="uploadForm" action="jsp/admin/plugins/pac/pacuser/DoUpload.jsp" enctype="multipart/form-data" method="post"> 
+		<input type="file" name="pacfile" >
+		<button class="btn btn-success btn-small" type="submit" >
+			<i class="icon-upload icon-white"></i>&nbsp;
+	  		<span class="hidden-phone">
+     			#i18n{pac.transverse.title.upload}
+     		</span>
+		</button>
+	</form>
+</fieldset>
+
+<script> 
+    $(document).ready(function() { 
+        // bind upload form and doesn't provide callback function 
+       	bindSelectAll('selectAll','checkboxSelectAll');
+    }); 
+</script>
+
+<script src="js/generic.js"></script>

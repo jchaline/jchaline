@@ -1,0 +1,133 @@
+<#macro getButtonCode link title aspect icon additionalParameters="" >
+	<a ${(additionalParameters)!} href="${link}"
+		title="${title}"
+		class="${aspect}">
+		<i class="${icon}" ></i>
+	</a>
+</#macro>
+
+<#-- macro permettant d'afficher les différents boutons d'ods cp et ma -->
+<#macro showButton type href="" link="" title="" additionalParameters="" >
+	<#if type?? && link?? && title??>
+		<#-- standard aspect -->
+		<#assign aspect="btn btn-small btn-primary" />
+		
+		<#-- map of the icon & title -->
+		<#assign buttonGenerique = "btn btn-small" />
+		<#assign map = {
+				"delete":["pac.transverse.title.delete","btn-danger","icon-trash icon-white"],
+				"edit":["pac.transverse.title.edit","btn-primary","icon-edit icon-white"],
+				"send":["pac.transverse.title.send","btn-primary","icon-envelope icon-white"],
+				"history":["pac.transverse.title.history","btn-primary","icon-book icon-white"],
+				"export":["pac.transverse.title.export","btn-primary","icon-download icon-white"],
+				"up":["pac.transverse.title.up","btn-primary","icon-chevron-up icon-white"],
+				"down":["pac.transverse.title.down","btn-primary","icon-chevron-down icon-white"],
+				"see":["pac.transverse.title.see","btn-primary","icon-eye-open icon-white"],
+				"clone":["pac.transverse.title.clone","btn-primary","icon-plus-sign icon-white"]
+			}>
+
+		<#if !(title?has_content) >
+			<#assign nouveauTitre="${(map[type][0])!}" />
+		</#if>
+		
+		<#-- controle pour supporter le parametre link et le href -->
+		<#if (href?length > 1) >
+			<#assign newHref = "${(href)!}" />
+		<#else>
+			<#assign newHref = "${(link)!}" />
+		</#if>
+		<@getButtonCode link="${(newHref)!}" title="#i18n{${(nouveauTitre)!}}" aspect="${(buttonGenerique)!} ${(map[type][1])!}" icon="${(map[type][2])!}" additionalParameters=additionalParameters />
+	</#if>
+</#macro>
+
+<#macro displayPaginator dataTableManager >
+	<form class="form-inline" method="post" action="${dataTableManager.sortUrl}">
+	    <#if (dataTableManager.paginator.pagesCount > 1) >
+	        <@paginationPageLinks paginator=dataTableManager.paginator />
+	    </#if>
+	    <div class="pull-right">
+			<@paginationItemCount paginator=dataTableManager.paginator combo=1 nb_items_per_page=dataTableManager.paginator.itemsPerPage?string/>
+		</div>
+		<input type="hidden" name="${dataTableManager.id}" id="${dataTableManager.id}" value="${dataTableManager.id}" />
+	</form>
+</#macro>
+
+<#macro dataTablePac dataTableManager actionMacro="" tableClass="table table-striped table-condensed" caption="&nbsp;" summary="data table" jspMasseAction="" listChoices="" >
+	<#if 0 < dataTableManager.items?size >
+		<#if dataTableManager.enablePaginator>
+			<@displayPaginator dataTableManager=dataTableManager />
+		</#if>
+		<form class="form-inline" action="${(jspMasseAction)!}">
+			<table class="${tableClass}" summary="${summary}">
+				<caption>${caption}</caption>
+				<tr>
+					<#list dataTableManager.listColumn as column>
+						<th scope="col">
+							#i18n{${column.titleKey}}
+							<#if !(column.typeColumn = "ACTION") && column.sortable>
+								<@sort jsp_url=dataTableManager.sortUrl attribute=column.parameterName />
+							</#if>
+						</th>
+					</#list>
+				</tr>
+				<#list dataTableManager.items as item>
+					<tr>
+						<#list dataTableManager.listColumn as column>
+							<#if column.typeColumn = "STRING">
+								<#assign propName = "item." + column.parameterName>
+								<#assign value = propName?eval>
+								<td>${value!}</td>
+							<#elseif column.typeColumn = "LABEL">
+								<#assign propName = "item." + column.parameterName>
+								<#assign value = propName?eval>
+								<td>#i18n{${value!}}</td>
+							<#elseif column.typeColumn = "BOOLEAN">
+								<#assign propName = "item." + column.parameterName>
+								<#assign value = propName?eval>
+								<#if value?? && value>
+									<td><span class="label label-success" title="#i18n{${column.labelTrue!}}"><i class="icon-ok-sign icon-white"></i>#i18n{${column.labelTrue!}}</span></td>
+								<#else>
+									<td><span class="label label-important" title="#i18n{${column.labelFalse!}}"><i class="icon-remove-sign icon-white"></i>#i18n{${column.labelFalse!}}</span></td>
+								</#if>
+							<#elseif column.typeColumn = "EMAIL">
+								<#assign propName = "item." + column.parameterName>
+								<#assign value = propName?eval>
+								<td><#if value?? && value != ""><a href="mailto:${value}" title="${value}" >${value}</a></#if></td>
+							<#elseif column.typeColumn = "ACTION">
+								<#if column.parameterName?? && column.parameterName != "">
+									<#assign macroName = column.parameterName>
+								<#elseif actionMacro?? && actionMacro != "">
+									<#assign macroName = actionMacro>
+								</#if>
+								<#if macroName?? && macroName != "">
+									<td><@.vars[macroName] item=item /></td>
+								</#if>
+							</#if>
+						</#list>
+					</tr>
+				</#list>
+			</table>
+			<#if listChoices?has_content>
+				
+					<div class="control-group">
+						<div class="controls">
+							<input type="checkbox" id="selectAll" />
+							<select name="masseAction" class="input-large">
+								<#list listChoices as choice>
+									<option value="${(choice[0])!}">#i18n{${(choice[1])!}}</option>
+								</#list>
+							</select>
+							<button type="submit" class="btn btn-small btn-primary">
+								#i18n{pac.transverse.masse.action}
+							</button>
+						</div>
+					</div>
+			</#if>
+		</form>
+		<#if dataTableManager.enablePaginator>
+			<@displayPaginator dataTableManager=dataTableManager />
+		</#if>
+	<#else>
+		#i18n{portal.util.labelNoItem}
+	</#if>
+</#macro>

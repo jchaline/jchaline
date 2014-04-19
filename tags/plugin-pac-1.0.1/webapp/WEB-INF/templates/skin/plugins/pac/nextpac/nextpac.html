@@ -1,0 +1,47 @@
+<fieldset>
+	<@showSessionMessage />
+</fieldset>
+<#-- remplacer par un tableau dynamique bourré de jquery -->
+<fieldset>
+	<legend>Prochains PAC</legend>
+	<#if listPacuser?? && listPacuser?has_content>
+		<table class="table table-condensed table-stripped">
+			<tr>
+				<th>
+					<i class="icon-user"></i>&nbsp;Collaborateur
+				</th>
+				<th>
+					<i class="icon-calendar"></i>&nbsp;Date dernier pac
+				</th>
+				<th>
+					<i class="icon-calendar"></i>&nbsp;Date prochain pac
+				</th>
+				<th>
+					<i class="icon-calendar"></i>&nbsp;Date Entrée
+				</th>
+				<th>
+					<i class="icon-calendar"></i>&nbsp;Date Sortie
+				</th>
+			</tr>
+			<#list listPacuser as pacuser>
+				<tr>
+					<td>
+						${(pacuser.nom)!} ${(pacuser.prenom)!}
+					</td>
+					<td>
+						${(pacuser.dernierPac)!}
+					</td>
+					<td>
+						${(pacuser.prochainPac)!}
+					</td>
+					<td>
+						${(pacuser.dateEntree)!}
+					</td>
+					<td>
+						${(pacuser.dateSortie)!}
+					</td>
+				</tr>
+			</#list>
+		</table>
+	</#if>
+</fieldset>
