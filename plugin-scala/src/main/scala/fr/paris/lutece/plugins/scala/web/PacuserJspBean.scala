@@ -3,6 +3,8 @@ package fr.paris.lutece.plugins.scala.web
 import fr.paris.lutece.portal.web.system.PluginJspBean
 
 class PacuserJspBean extends PluginJspBean {
+  
+  
 
   def test(): Unit = {
   }
@@ -13,5 +15,4 @@ class PacuserJspBean extends PluginJspBean {
     x = x + dx
     y = y + dy
   }
-  override def toString(): String = "(" + x + ", " + y + ")";
 }
