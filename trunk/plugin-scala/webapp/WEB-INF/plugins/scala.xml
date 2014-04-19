@@ -2,8 +2,7 @@
 <plug-in>
 	<!-- Plugin Informations -->
 	<name>scala</name>
-	<class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation
-	</class>
+	<class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
 	<version>1.0.0-SNAPSHOT</version>
 	<documentation />
 	<installation></installation>
