@@ -1,6 +1,5 @@
 package fr.paris.lutece.plugins.pac.service.pacuser;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -17,7 +16,6 @@ import javax.validation.ConstraintViolation;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 
-import fr.paris.lutece.plugins.pac.bean.Closure;
 import fr.paris.lutece.plugins.pac.bean.pacconfig.Pacconfig;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
 import fr.paris.lutece.plugins.pac.bean.pacuser.PacuserComparator;
@@ -259,22 +257,6 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
         pacuser.setJoursConges( line.get( i++ ) );
         pacuser.setProchainPac( line.get( i++ ) );
         return pacuser;
-    }
-
-    /**
-     * Get the converter function between Pacuser and PacuserDTO as Closure
-     * object
-     * @return the closure
-     * @throws NoSuchMethodException exception when method doesn't exist
-     * @throws SecurityException exception when canno't invoke the method
-     */
-    public static Closure getFuncConverter( ) throws SecurityException, NoSuchMethodException
-    {
-        Closure converter = null;
-        Method convertMethod = null;
-        convertMethod = PacuserDTO.class.getMethod( "convert", List.class );
-        converter = new Closure( PacuserDTO.class, convertMethod );
-        return converter;
     }
 
     @Override
