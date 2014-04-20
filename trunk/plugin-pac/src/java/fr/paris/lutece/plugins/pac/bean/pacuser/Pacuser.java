@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import fr.paris.lutece.plugins.pac.bean.GenericJPABean;
+import fr.paris.lutece.plugins.genericjpa.bean.AbstractBean;
 import fr.paris.lutece.plugins.pac.bean.pacdate.Pacdate;
 
 
@@ -29,7 +29,7 @@ import fr.paris.lutece.plugins.pac.bean.pacdate.Pacdate;
  */
 @Entity
 @Table( name = "pac_pacuser" )
-public class Pacuser extends GenericJPABean<Integer>
+public class Pacuser extends AbstractBean<Integer>
 {
     private static final long serialVersionUID = -921977799714488740L;
 

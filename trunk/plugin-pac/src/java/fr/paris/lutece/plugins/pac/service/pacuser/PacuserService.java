@@ -16,12 +16,12 @@ import javax.validation.ConstraintViolation;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 
+import fr.paris.lutece.plugins.genericjpa.dao.IPluginDAO;
+import fr.paris.lutece.plugins.genericjpa.dao.commons.ResultList;
 import fr.paris.lutece.plugins.pac.bean.pacconfig.Pacconfig;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
 import fr.paris.lutece.plugins.pac.bean.pacuser.PacuserComparator;
 import fr.paris.lutece.plugins.pac.bean.pacuser.PacuserFilter;
-import fr.paris.lutece.plugins.pac.dao.IPacDAO;
-import fr.paris.lutece.plugins.pac.dao.commons.ResultList;
 import fr.paris.lutece.plugins.pac.dao.pacuser.IPacuserDAO;
 import fr.paris.lutece.plugins.pac.dto.pacuser.PacuserDTO;
 import fr.paris.lutece.plugins.pac.service.AbstractPacService;
@@ -71,7 +71,7 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
     }
 
     @Override
-    public IPacDAO<Integer, Pacuser> getPacDao( )
+    public IPluginDAO<Integer, Pacuser> getPluginDao( )
     {
         return _daoPacuser;
     }

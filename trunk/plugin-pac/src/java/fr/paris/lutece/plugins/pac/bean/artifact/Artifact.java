@@ -8,10 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
-import fr.paris.lutece.plugins.pac.bean.GenericJPABean;
+import fr.paris.lutece.plugins.genericjpa.bean.AbstractBean;
 @Entity
 @Table( name = "pac_artifact" )
-public class Artifact extends GenericJPABean<Integer>
+public class Artifact extends AbstractBean<Integer>
 {
     private static final long serialVersionUID = -7285498025200549826L;
     

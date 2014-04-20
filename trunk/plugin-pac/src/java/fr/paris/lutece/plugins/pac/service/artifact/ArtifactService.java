@@ -5,8 +5,9 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
+import fr.paris.lutece.plugins.genericjpa.dao.IPluginDAO;
 import fr.paris.lutece.plugins.pac.bean.artifact.Artifact;
-import fr.paris.lutece.plugins.pac.dao.IPacDAO;
+import fr.paris.lutece.plugins.pac.bean.pacdate.Pacdate;
 import fr.paris.lutece.plugins.pac.dao.artifact.IArtifactDAO;
 import fr.paris.lutece.plugins.pac.service.AbstractPacService;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConfigs;
@@ -37,7 +38,7 @@ public class ArtifactService extends AbstractPacService<Integer, Artifact> imple
     }
 
     @Override
-    public IPacDAO<Integer, Artifact> getPacDao( )
+    public IPluginDAO<Integer, Artifact> getPluginDao( )
     {
         return _daoArtifact;
     }

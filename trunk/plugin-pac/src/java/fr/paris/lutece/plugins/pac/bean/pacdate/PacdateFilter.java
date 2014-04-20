@@ -2,9 +2,9 @@ package fr.paris.lutece.plugins.pac.bean.pacdate;
 
 import java.util.Date;
 
-import fr.paris.lutece.plugins.pac.bean.GenericJPAFilter;
+import fr.paris.lutece.plugins.genericjpa.bean.AbstractFilter;
 
-public class PacdateFilter extends GenericJPAFilter<Integer>
+public class PacdateFilter extends AbstractFilter<Integer>
 {
 
     private static final long serialVersionUID = -85720468687553810L;

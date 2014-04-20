@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
-import fr.paris.lutece.plugins.pac.bean.GenericJPABean;
+import fr.paris.lutece.plugins.genericjpa.bean.AbstractBean;
 
 
 /**
@@ -19,7 +19,7 @@ import fr.paris.lutece.plugins.pac.bean.GenericJPABean;
  */
 @Entity
 @Table( name = "pac_config" )
-public class Pacconfig extends GenericJPABean<Integer>
+public class Pacconfig extends AbstractBean<Integer>
 {
     private static final long serialVersionUID = -6154572655913748217L;
     public static final String TABLE = "pac_config";

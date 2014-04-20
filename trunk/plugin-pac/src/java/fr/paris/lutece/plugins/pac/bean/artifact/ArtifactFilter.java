@@ -1,8 +1,9 @@
 package fr.paris.lutece.plugins.pac.bean.artifact;
 
-import fr.paris.lutece.plugins.pac.bean.GenericJPAFilter;
+import fr.paris.lutece.plugins.genericjpa.bean.AbstractFilter;
 
-public class ArtifactFilter extends GenericJPAFilter<Integer>
+
+public class ArtifactFilter extends AbstractFilter<Integer>
 {
     private static final long serialVersionUID = 8497560292642310890L;
     
