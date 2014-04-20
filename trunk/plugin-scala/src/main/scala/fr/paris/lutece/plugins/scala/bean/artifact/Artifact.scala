@@ -1,4 +1,4 @@
-package fr.paris.lutece.plugins.scala.bean
+package fr.paris.lutece.plugins.scala.bean.artifact
 
 import org.hibernate.validator.constraints.NotEmpty
 import fr.paris.lutece.plugins.genericjpa.bean.AbstractBean

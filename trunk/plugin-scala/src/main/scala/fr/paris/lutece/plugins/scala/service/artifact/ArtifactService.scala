@@ -1,11 +1,11 @@
-package fr.paris.lutece.plugins.scala.service
+package fr.paris.lutece.plugins.scala.service.artifact
 
-import fr.paris.lutece.plugins.genericjpa.service.AbstractService
-import fr.paris.lutece.plugins.scala.dao.ArtifactDAO
-import fr.paris.lutece.plugins.scala.bean.Artifact
 import fr.paris.lutece.plugins.genericjpa.dao.IPluginDAO
+import fr.paris.lutece.plugins.genericjpa.service.AbstractService
+import fr.paris.lutece.plugins.scala.bean.artifact.Artifact
+import fr.paris.lutece.plugins.scala.dao.ArtifactDAO
 
-class ArtifactService extends AbstractService[Int,Artifact]{
+class ArtifactService extends IArtifactService {
 
   var artifactDAO=null:ArtifactDAO
   
@@ -15,5 +15,11 @@ class ArtifactService extends AbstractService[Int,Artifact]{
   
   def findByStrPrimaryKey(key:String):Artifact={
     artifactDAO.findByStrPrimaryKey(key)
+  }
+  
+  def dijkstra(pos :List[Int]):List[Int] = {
+    System.out.println("bonjour")
+    
+    pos
   }
 }
