@@ -5,8 +5,8 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
+import fr.paris.lutece.plugins.genericjpa.dao.IPluginDAO;
 import fr.paris.lutece.plugins.pac.bean.pacdate.Pacdate;
-import fr.paris.lutece.plugins.pac.dao.IPacDAO;
 import fr.paris.lutece.plugins.pac.dao.pacdate.IPacdateDAO;
 import fr.paris.lutece.plugins.pac.service.AbstractPacService;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConfigs;
@@ -20,7 +20,7 @@ public class PacdateService extends AbstractPacService<Integer, Pacdate> impleme
     private IPacdateDAO _daoDate;
 
     @Override
-    public IPacDAO<Integer, Pacdate> getPacDao( )
+    public IPluginDAO<Integer, Pacdate> getPluginDao( )
     {
         return _daoDate;
     }

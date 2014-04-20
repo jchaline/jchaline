@@ -5,16 +5,16 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import fr.paris.lutece.plugins.genericjpa.dto.AbstractDTO;
 import fr.paris.lutece.plugins.pac.bean.pacdate.Pacdate;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
-import fr.paris.lutece.plugins.pac.dto.GenericJPADTO;
 
 
 /**
  * The Pacuser class DTO
  * @author jchaline
  */
-public class PacuserDTO extends GenericJPADTO<Integer, Pacuser>
+public class PacuserDTO extends AbstractDTO<Integer, Pacuser>
 {
     private Integer _id;
     private String _guid;

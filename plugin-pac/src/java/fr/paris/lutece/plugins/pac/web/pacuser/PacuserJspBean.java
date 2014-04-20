@@ -14,21 +14,18 @@ import org.apache.commons.lang.StringUtils;
 
 import com.google.common.base.Function;
 
-import fr.paris.lutece.plugins.pac.bean.GenericJPABean;
+import fr.paris.lutece.plugins.genericjpa.utils.messages.SessionMessage;
+import fr.paris.lutece.plugins.genericjpa.web.AbstractJspBean;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
 import fr.paris.lutece.plugins.pac.bean.pacuser.PacuserFilter;
 import fr.paris.lutece.plugins.pac.dto.pacuser.PacuserDTO;
-import fr.paris.lutece.plugins.pac.service.IPacService;
 import fr.paris.lutece.plugins.pac.service.pacuser.IPacuserService;
 import fr.paris.lutece.plugins.pac.utils.commons.ArrayUtils;
 import fr.paris.lutece.plugins.pac.utils.commons.CsvUtils;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConfigs;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConstants;
-import fr.paris.lutece.plugins.pac.utils.messages.SessionMessage;
-import fr.paris.lutece.plugins.pac.web.AbstractPacJspBean;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.i18n.I18nService;
-import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -44,7 +41,7 @@ import fr.paris.lutece.util.html.HtmlTemplate;
  * The Pacuser Jsp Bean
  * @author jchaline
  */
-public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
+public class PacuserJspBean extends AbstractJspBean<Integer, Pacuser>
 {
 
     public static final String RIGHT_MANAGE_BEAN = "PAC_PACUSER_MANAGEMENT";
@@ -111,7 +108,7 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
     @Override
     public String getSaveBean( HttpServletRequest request )
     {
-        Map<String, Object> model = super.getSaveBeanModel( request, _servicePacuser );
+        Map<String, Object> model = super.getSaveBeanModel( request );
         String id = request.getParameter( MARK_BEAN_ID );
         if ( StringUtils.isNotBlank( id ) )
         {
@@ -230,17 +227,6 @@ public class PacuserJspBean extends AbstractPacJspBean<Integer, Pacuser>
 
             dataTableToUse.addFreeColumn( "pac.transverse.title.actions", PARAMETER_MACRO_COLUMN_ACTIONS_BEAN );
         }
-    }
-
-    @Override
-    protected IPacService<Integer, GenericJPABean<Integer>> getBeanService( )
-    {
-        IPacService service = null;
-        if ( _servicePacuser instanceof IPacuserService )
-        {
-            service = _servicePacuser;
-        }
-        return service;
     }
 
     /**

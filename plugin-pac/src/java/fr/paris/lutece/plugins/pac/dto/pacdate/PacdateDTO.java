@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import fr.paris.lutece.plugins.genericjpa.dto.AbstractDTO;
 import fr.paris.lutece.plugins.pac.bean.pacdate.Pacdate;
-import fr.paris.lutece.plugins.pac.dto.GenericJPADTO;
 import fr.paris.lutece.plugins.pac.dto.pacuser.PacuserDTO;
 
 
-public class PacdateDTO extends GenericJPADTO<Integer, Pacdate>
+public class PacdateDTO extends AbstractDTO<Integer, Pacdate>
 {
     private Integer _id;
     private String _date;

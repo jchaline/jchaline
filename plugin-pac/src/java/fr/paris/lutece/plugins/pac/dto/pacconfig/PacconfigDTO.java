@@ -3,11 +3,11 @@ package fr.paris.lutece.plugins.pac.dto.pacconfig;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.paris.lutece.plugins.genericjpa.dto.AbstractDTO;
 import fr.paris.lutece.plugins.pac.bean.pacconfig.Pacconfig;
-import fr.paris.lutece.plugins.pac.dto.GenericJPADTO;
 
 
-public class PacconfigDTO extends GenericJPADTO<Integer, Pacconfig>
+public class PacconfigDTO extends AbstractDTO<Integer, Pacconfig>
 {
     private Integer _id;
     private Integer _dayFrequency;

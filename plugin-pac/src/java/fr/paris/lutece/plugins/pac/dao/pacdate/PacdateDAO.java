@@ -12,7 +12,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
 
-import fr.paris.lutece.plugins.pac.bean.GenericJPAFilter;
+import fr.paris.lutece.plugins.genericjpa.bean.AbstractFilter;
 import fr.paris.lutece.plugins.pac.bean.pacdate.Pacdate;
 import fr.paris.lutece.plugins.pac.bean.pacdate.PacdateFilter;
 import fr.paris.lutece.plugins.pac.bean.pacdate.Pacdate_;
@@ -23,7 +23,7 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 public class PacdateDAO extends AbstractPacDAO<Integer, Pacdate> implements IPacdateDAO
 {
     @Override
-    protected void buildCriteriaQuery( GenericJPAFilter abstractFilter, Root root, CriteriaQuery cq, CriteriaBuilder cb )
+    protected void buildCriteriaQuery( AbstractFilter<Integer> abstractFilter, Root<Pacdate> root, CriteriaQuery<Pacdate> cq, CriteriaBuilder cb )
     {
         if ( abstractFilter instanceof PacdateFilter )
         {

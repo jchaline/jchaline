@@ -2,8 +2,8 @@ package fr.paris.lutece.plugins.pac.utils.dozer;
 
 import org.dozer.Mapper;
 
+import fr.paris.lutece.plugins.genericjpa.dao.commons.ResultList;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
-import fr.paris.lutece.plugins.pac.dao.commons.ResultList;
 import fr.paris.lutece.plugins.pac.dto.pacuser.PacuserDTO;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConfigs;
 import fr.paris.lutece.portal.service.spring.SpringContextService;

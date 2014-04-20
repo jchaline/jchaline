@@ -12,14 +12,14 @@ import javax.persistence.criteria.SetJoin;
 
 import org.apache.commons.lang.StringUtils;
 
-import fr.paris.lutece.plugins.pac.bean.GenericJPAFilter;
+import fr.paris.lutece.plugins.genericjpa.bean.AbstractFilter;
+import fr.paris.lutece.plugins.genericjpa.dao.commons.SQLUtils;
 import fr.paris.lutece.plugins.pac.bean.pacdate.Pacdate;
 import fr.paris.lutece.plugins.pac.bean.pacdate.Pacdate_;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
 import fr.paris.lutece.plugins.pac.bean.pacuser.PacuserFilter;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser_;
 import fr.paris.lutece.plugins.pac.dao.AbstractPacDAO;
-import fr.paris.lutece.plugins.pac.dao.commons.SQLUtils;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConstants;
 
 
@@ -30,7 +30,7 @@ import fr.paris.lutece.plugins.pac.utils.commons.PacConstants;
 public class PacuserDAO extends AbstractPacDAO<Integer, Pacuser> implements IPacuserDAO
 {
     @Override
-    protected void buildCriteriaQuery( GenericJPAFilter<Integer> abstractFilter, Root<Pacuser> root,
+    protected void buildCriteriaQuery( AbstractFilter<Integer> abstractFilter, Root<Pacuser> root,
             CriteriaQuery<Pacuser> cq, CriteriaBuilder cb )
     {
         if ( abstractFilter instanceof PacuserFilter )

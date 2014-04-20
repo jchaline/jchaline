@@ -33,7 +33,7 @@
  */
 package fr.paris.lutece.plugins.pac.utils.dozer;
 
-import fr.paris.lutece.plugins.pac.dao.commons.ResultList;
+import fr.paris.lutece.plugins.genericjpa.dao.commons.ResultList;
 
 
 /**

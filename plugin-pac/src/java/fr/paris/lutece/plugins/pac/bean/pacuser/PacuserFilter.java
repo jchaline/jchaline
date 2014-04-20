@@ -2,14 +2,14 @@ package fr.paris.lutece.plugins.pac.bean.pacuser;
 
 import java.util.Date;
 
-import fr.paris.lutece.plugins.pac.bean.GenericJPAFilter;
+import fr.paris.lutece.plugins.genericjpa.bean.AbstractFilter;
 
 
 /**
  * The Pacuser class for filter
  * @author jchaline
  */
-public class PacuserFilter extends GenericJPAFilter<Integer>
+public class PacuserFilter extends AbstractFilter<Integer>
 {
 
     private static final long serialVersionUID = 721856727710348068L;
