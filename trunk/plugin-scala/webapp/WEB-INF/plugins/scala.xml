@@ -2,7 +2,8 @@
 <plug-in>
 	<!-- Plugin Informations -->
 	<name>scala</name>
-	<class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
+	<class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation
+	</class>
 	<version>1.0.0-SNAPSHOT</version>
 	<documentation />
 	<installation></installation>
@@ -21,6 +22,10 @@
 
 	<!-- Applications -->
 	<applications>
+		<application>
+			<application-id>respository</application-id>
+			<application-class>fr.paris.lutece.plugins.scala.xpage.RepositoryApp</application-class>
+		</application>
 	</applications>
 
 	<!-- Daemons -->
