@@ -17,9 +17,4 @@ class ArtifactService extends IArtifactService {
     artifactDAO.findByStrPrimaryKey(key)
   }
   
-  def dijkstra(pos :List[Int]):List[Int] = {
-    System.out.println("bonjour")
-    
-    pos
-  }
 }
