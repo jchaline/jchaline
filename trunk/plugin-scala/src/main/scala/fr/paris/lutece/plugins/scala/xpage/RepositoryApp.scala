@@ -21,12 +21,6 @@ class RepositoryApp extends AbstractXPageApplication {
     
     var listPos =List(2,4,3,5,7,2)
     
-    var res = artifactService.dijkstra(listPos)
-    
-    var dijkstra = artifactService dijkstra _
-    
-    var res2 = dijkstra(listPos)
-    
     var template = AppTemplateService.getTemplate(TEMPLATE_REPOSITORY, request.getLocale(), model);
 
     page.setContent(template.getHtml());
