@@ -13,6 +13,9 @@ class DijkstraBidirectTest extends AssertionsForJUnit with MockitoSugar {
   @Before
   def init() {
     graph = new Graph()
+  }
+  
+  def initNodes(graph:Graph){
     graph.addNode("A")
     graph.addNode("B")
     graph.addNode("C")
@@ -23,6 +26,9 @@ class DijkstraBidirectTest extends AssertionsForJUnit with MockitoSugar {
     graph.addNode("H")
     graph.addNode("I")
     graph.addNode("J")
+  }
+  
+  def initLinks(graph:Graph){
     graph.addLink("A", "B", 85)
     graph.addLink("A", "C", 217)
     graph.addLink("A", "E", 173)
@@ -56,7 +62,21 @@ class DijkstraBidirectTest extends AssertionsForJUnit with MockitoSugar {
 
   @Test
   def seeNeighborsTest() {
-    fail("not yet implemented")
+    initNodes(graph)
+    var addNodeToA = graph.addLink("A", _:String, _:Int)
+    
+    var neighbors = graph.seeNeighbors("A")
+    var nbNeighbors  = neighbors.size
+    assertTrue(neighbors.size==0)
+    addNodeToA("B",24)
+    addNodeToA("C",17)
+    
+    assertTrue(neighbors.size==2)
+  }
+  
+  @Test
+  def staticMethodsTest(){
+      fail("not yet implemented")
   }
 
 }
