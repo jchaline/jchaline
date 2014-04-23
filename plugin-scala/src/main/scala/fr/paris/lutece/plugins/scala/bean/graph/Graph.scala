@@ -33,3 +33,9 @@ class Graph(name:String="Graph", bidirectional:Boolean=true) {
     null
   }
 }
+
+object Graph{
+  def size(graph:Graph){
+    println("test")
+  }
+}
