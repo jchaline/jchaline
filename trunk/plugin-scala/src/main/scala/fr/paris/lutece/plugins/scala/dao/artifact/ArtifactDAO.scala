@@ -1,4 +1,4 @@
-package fr.paris.lutece.plugins.scala.dao
+package fr.paris.lutece.plugins.scala.dao.artifact
 
 import fr.paris.lutece.plugins.genericjpa.dao.AbstractDAO
 import fr.paris.lutece.plugins.scala.bean.artifact.Artifact
