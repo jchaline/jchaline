@@ -14,8 +14,7 @@
 
 	<tx:annotation-driven />
 	
-	<bean id="scala.artifactdao" class="fr.paris.lutece.plugins.scala.dao.artifact.ArtifactDAO" />
-	<bean id="scala.artifactdservice" class="fr.paris.lutece.plugins.scala.service.artifact.ArtifactService" />
-	<bean id="scala.artifactdjspbean" class="fr.paris.lutece.plugins.scala.web.artifact.ArtifactJspBean" />
-	
+	<context:component-scan base-package="fr.paris.lutece.plugins.scala.dao" />
+	<context:component-scan base-package="fr.paris.lutece.plugins.scala.service" />
+	<context:component-scan base-package="fr.paris.lutece.plugins.scala.web" />
 </beans>
