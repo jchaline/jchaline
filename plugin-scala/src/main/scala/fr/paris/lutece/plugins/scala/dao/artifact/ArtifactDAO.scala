@@ -1,9 +1,12 @@
 package fr.paris.lutece.plugins.scala.dao.artifact
 
+import org.springframework.stereotype.Repository
+
 import fr.paris.lutece.plugins.genericjpa.dao.AbstractDAO
 import fr.paris.lutece.plugins.scala.bean.artifact.Artifact
 import fr.paris.lutece.plugins.scala.service.ScalaPlugin
 
+@Repository("scala.artifactdao")
 class ArtifactDAO extends AbstractDAO[Int, Artifact]{
 
   def getBeanClass():Class[Artifact]={
