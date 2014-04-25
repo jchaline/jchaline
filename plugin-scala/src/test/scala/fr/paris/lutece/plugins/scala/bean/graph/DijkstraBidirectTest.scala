@@ -14,8 +14,8 @@ class DijkstraBidirectTest extends AssertionsForJUnit with MockitoSugar {
   def init() {
     graph = new Graph()
   }
-  
-  def initNodes(graph:Graph){
+
+  def initNodes(graph: Graph) {
     graph.addNode("A")
     graph.addNode("B")
     graph.addNode("C")
@@ -27,8 +27,8 @@ class DijkstraBidirectTest extends AssertionsForJUnit with MockitoSugar {
     graph.addNode("I")
     graph.addNode("J")
   }
-  
-  def initLinks(graph:Graph){
+
+  def initLinks(graph: Graph) {
     graph.addLink("A", "B", 85)
     graph.addLink("A", "C", 217)
     graph.addLink("A", "E", 173)
@@ -50,33 +50,45 @@ class DijkstraBidirectTest extends AssertionsForJUnit with MockitoSugar {
   @Test
   def mockTest() {
     val mockGraph = mock[Graph]
-    when(mockGraph.shortestWay("A", "B")).thenReturn(List("A", "B"))
-    assert(List("A", "B") === mockGraph.shortestWay("A", "B"))
-    verify(mockGraph).shortestWay("A", "B")
+    when(mockGraph.findShortestWay("A", "B")).thenReturn(List("A", "B"))
+    assert(List("A", "B") === mockGraph.findShortestWay("A", "B"))
+    verify(mockGraph).findShortestWay("A", "B")
   }
 
   @Test
   def graphShortestWayTest() {
-    fail("not yet implemented")
+    initNodes(graph)
+    initLinks(graph)
+
+    var way = graph.findShortestWay("A", "J")
+
+    var expected = List("A", "C", "H", "J")
+    assert(way.equals(expected))
+    
+    way = graph.findShortestWay("A", "J")
+    assert(way.equals(expected.reverse))
   }
 
   @Test
-  def seeNeighborsTest() {
+  def addNeighborsTest() {
     initNodes(graph)
-    var addNodeToA = graph.addLink("A", _:String, _:Int)
-    
-    var neighbors = graph.seeNeighbors("A")
-    var nbNeighbors  = neighbors.size
-    assertTrue(neighbors.size==0)
-    addNodeToA("B",24)
-    addNodeToA("C",17)
-    
-    assertTrue(neighbors.size==2)
-  }
-  
-  @Test
-  def staticMethodsTest(){
-      fail("not yet implemented")
+    var addNeighbor = graph.addLink(_: String, _: String, 10)
+
+    var neighbors = graph.getNeighbors("A")
+    assertTrue(neighbors.size == 0)
+    addNeighbor("A", "B")
+    addNeighbor("A", "C")
+
+    neighbors = graph.getNeighbors("A")
+    assertTrue(neighbors.size == 2)
+
+    addNeighbor("A", "B")
+    neighbors = graph.getNeighbors("A")
+    assertTrue(neighbors.size == 2)
+
+    addNeighbor("D", "A")
+    neighbors = graph.getNeighbors("A")
+    assertTrue(neighbors.size == 3)
   }
 
 }
