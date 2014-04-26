@@ -1,0 +1,10 @@
+ - prevoir des coups à jouer "obligatoirement" en fonction d'un plateau donnée
+ 	=> ouvertures précise type case du centre au tictactoe et coin en deuxième choix
+ - fusionner notion de gameengine & moteur => utiliser igameengine et injecter bot & plateau via spring directement 
+ - passer au full annotation pour les moteur, le client api rest, etc...
+ - AOP configuration !
+ 	=> permettre de déclarer le pointcut et la méthode à appeler dans la config xml :
+	 	=> http://www.jmdoudoux.fr/java/dej/chap-spring-aop.htm#spring-aop-2 : 70.1.2.2. La déclaration de l'aspect
+ - multithread pour l'ia : ainsi que recursive task
+ - ajouter notion de profondeur pour negamax
+ - ajouter tables de transpositions
