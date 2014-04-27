@@ -22,7 +22,8 @@ public abstract class AbstractBot<T> implements IBot<T>
      * Fournit le plateau utilisable par le bot
      * @return le plateau
      */
-    protected IBoard<T> getPlateau( )
+    @Override
+    public IBoard<T> getPlateau( )
     {
         return _plateau;
     }

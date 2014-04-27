@@ -6,7 +6,8 @@ import org.apache.log4j.Logger;
 
 import battle.csn.lucette.game.board.IBoard;
 import battle.csn.lucette.game.structure.Move;
-import battle.csn.lucette.java8.MethodMagic;
+
+import com.google.common.base.Function;
 
 
 public class AlphaBeta implements ILogic
@@ -20,13 +21,13 @@ public class AlphaBeta implements ILogic
      * @param plateau le plateau à évaluer
      * @param alpha valeur minimum
      * @param beta valeur maximum
-     * @param heuristique methode permettant d'évaluer un plateau
+     * @param evaluate methode permettant d'évaluer un plateau
      * @param findMax boolean indiquant s'il faut chercher le meilleur ou le
      *            pire des plateau (pour l'un ou d'autre des joueurs)
      * @param deep profondeur maximum pour rechercher une valeur
      * @return la valeur d'un plateau
      */
-    public static int alphaBeta( IBoard<Integer> plateau, int alpha, int beta, MethodMagic heuristique,
+    public <T>int alphaBeta( IBoard<Integer> plateau, int alpha, int beta, Function<IBoard<Integer>, Integer> evaluate,
             boolean findMax, int deep )
     {
         Integer value = 0;
@@ -36,10 +37,7 @@ public class AlphaBeta implements ILogic
         //si le plateau est une feuille
         if ( moves.size( ) == 0 || deep == 0 )
         {
-            Object[] params = new Object[1];
-            params[0] = plateau;
-            heuristique.setParams( params );
-            value = (Integer) heuristique.invoke( );
+            value = evaluate.apply( plateau );
         }
         else
         {
@@ -49,7 +47,7 @@ public class AlphaBeta implements ILogic
             {
                 IBoard<Integer> deepCopy = plateau.deepCopy( );
                 deepCopy.play( move );
-                int score = alphaBeta( deepCopy, -beta, -alpha, heuristique, !findMax, deep - 1 );
+                int score = alphaBeta( deepCopy, -beta, -alpha, evaluate, !findMax, deep - 1 );
                 if ( ( findMax && score > bestScore ) || ( !findMax && score < bestScore ) )
                 {
                     bestScore = score;

@@ -21,10 +21,10 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
     private MethodMagic _heuristique;
     private boolean _findMax;
     private int _deep;
+    private Move _move;
 
     public AlphaBetaThread( )
     {
-
     }
 
     /**
@@ -55,7 +55,7 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
      */
     public int parallelScan( )
     {
-        int result = 0;
+        int result = _findMax ? Integer.MIN_VALUE : Integer.MAX_VALUE;
         //List d'objet qui contiendra les sous-tâches créées et lancées
         List<AlphaBetaThread> list = new ArrayList<AlphaBetaThread>( );
 
@@ -71,6 +71,17 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
 
             AlphaBetaThread childThread = new AlphaBetaThread( deepCopy, _alpha * -1, _beta * -1, _heuristique,
                     !_findMax, _deep - 1 );
+            
+            //Give the first move to all childs
+            if ( _move == null )
+            {
+                childThread.setMove( move );
+            }
+            //reuse the first move 
+            else
+            {
+                childThread.setMove( _move );
+            }
             //Nous l'ajoutons à la liste des tâches en cours pour récupérer le résultat plus tard
             list.add( childThread );
 
@@ -82,6 +93,22 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
         for ( AlphaBetaThread t : list )
         {
             int childThreadResult = t.join( );
+            if ( _findMax )
+            {
+                if ( childThreadResult > result )
+                {
+                    result = childThreadResult;
+                    _move = t.getMove( );
+                }
+            }
+            else
+            {
+                if ( childThreadResult < result )
+                {
+                    result = childThreadResult;
+                    _move = t.getMove( );
+                }
+            }
         }
 
         return result;
@@ -189,5 +216,21 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
     public void setDeep( int _deep )
     {
         this._deep = _deep;
+    }
+
+    /**
+     * @return the move
+     */
+    public Move getMove( )
+    {
+        return _move;
+    }
+
+    /**
+     * @param move the move to set
+     */
+    public void setMove( Move move )
+    {
+        this._move = move;
     }
 }
