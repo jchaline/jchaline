@@ -1,6 +1,5 @@
 package battle.csn.lucette.game.bot;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -9,12 +8,12 @@ import battle.csn.lucette.game.board.DameBoard;
 import battle.csn.lucette.game.board.IBoard;
 import battle.csn.lucette.game.logic.AlphaBeta;
 import battle.csn.lucette.game.structure.Move;
-import battle.csn.lucette.java8.MethodMagic;
+
+import com.google.common.base.Function;
 
 
 public class DameBotNegaMax extends AbstractBot<Integer>
 {
-    private static final String METHOD_EVALUATE = "evaluateBoard";
     private static final Logger LOGGER = Logger.getLogger( DameBotNegaMax.class );
 
     private Integer _maxDeep = 2;
@@ -48,10 +47,11 @@ public class DameBotNegaMax extends AbstractBot<Integer>
         {
             IBoard<Integer> deepCopy = getPlateau( ).deepCopy( );
             deepCopy.play( tryMove );
-            MethodMagic heuristique = new MethodMagic( getEvaluateMethod( ), this, deepCopy );
+            
+            Function<IBoard<Integer>, Integer> evaluate = getEvaluation( );
             try
             {
-                int actualValue = AlphaBeta.alphaBeta( deepCopy, alpha, beta, heuristique, findMax, _maxDeep );
+                int actualValue = ( new AlphaBeta( ) ).alphaBeta( deepCopy, alpha, beta, evaluate, findMax, _maxDeep );
                 if ( ( findMax && actualValue > bestValueFind ) || ( !findMax && actualValue < bestValueFind ) )
                 {
                     bestValueFind = actualValue;
@@ -68,6 +68,23 @@ public class DameBotNegaMax extends AbstractBot<Integer>
         }
 
         return move;
+    }
+
+    /**
+     * Get the evaluation function
+     * @return the evaluation function
+     */
+    private Function<IBoard<Integer>, Integer> getEvaluation( )
+    {
+        Function<IBoard<Integer>, Integer> evaluate = new Function<IBoard<Integer>, Integer>( )
+        {
+            @Override
+            public Integer apply( IBoard<Integer> input )
+            {
+                return input == null ? 0 : evaluateBoard( input );
+            }
+        };
+        return evaluate;
     }
 
     /**
@@ -88,24 +105,6 @@ public class DameBotNegaMax extends AbstractBot<Integer>
             }
         }
         return sum;
-    }
-
-    private static Method getEvaluateMethod( )
-    {
-        Method m = null;
-        try
-        {
-            m = DameBotNegaMax.class.getMethod( METHOD_EVALUATE, IBoard.class );
-        }
-        catch ( NoSuchMethodException e )
-        {
-            LOGGER.error( e );
-        }
-        catch ( SecurityException e )
-        {
-            LOGGER.error( e );
-        }
-        return m;
     }
 
     public Integer getMaxDeep( )

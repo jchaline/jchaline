@@ -26,4 +26,10 @@ public interface IBot<T>
      * @param _plateau the _plateau to set
      */
     void setPlateau( IBoard<T> plateau );
+    
+    /**
+     * Fournit le plateau utilisable par le bot
+     * @return le plateau
+     */
+    IBoard<T> getPlateau( );
 }

@@ -1,39 +1,46 @@
 package battle.csn.lucette.game.bot;
 
-import java.lang.reflect.Method;
-import java.util.List;
 import java.util.concurrent.ForkJoinPool;
-
-import org.apache.log4j.Logger;
 
 import battle.csn.lucette.game.board.DameBoard;
 import battle.csn.lucette.game.board.IBoard;
-import battle.csn.lucette.game.logic.AlphaBeta;
 import battle.csn.lucette.game.logic.AlphaBetaThread;
 import battle.csn.lucette.game.structure.Move;
-import battle.csn.lucette.java8.MethodMagic;
 
 
 public class DameBotNegaMaxThread extends AbstractBot<Integer>
 {
-    private static final String METHOD_EVALUATE = "evaluateBoard";
-    private static final Logger LOGGER = Logger.getLogger( DameBotNegaMaxThread.class );
-
     private Integer _maxDeep = 2;
 
     @Override
     public Move chooseMove( String idEquipe )
     {
-        Move move = null;
-
-        AlphaBetaThread thread = new AlphaBetaThread( );
+        Move move = new Move( );
+        Integer alpha = null;
+        Integer beta = null;
+        Boolean findMax = null;
+        Integer bestValueFind = null;
+        if ( getPlateau( ).getIdEquipes( ).get( 0 ).equals( idEquipe ) )
+        {
+            alpha = Integer.MIN_VALUE;
+            beta = Integer.MAX_VALUE;
+            findMax = true;
+            bestValueFind = Integer.MIN_VALUE;
+        }
+        else
+        {
+            alpha = Integer.MAX_VALUE;
+            beta = Integer.MIN_VALUE;
+            findMax = false;
+            bestValueFind = Integer.MAX_VALUE;
+        }
+        AlphaBetaThread thread = new AlphaBetaThread( getPlateau( ), alpha, beta, null, findMax, _maxDeep );
 
         //Nous récupérons le nombre de processeurs disponibles
         int processeurs = Runtime.getRuntime( ).availableProcessors( );
-        
+
         //Nous créons notre pool de thread pour nos tâches de fond
         ForkJoinPool pool = new ForkJoinPool( processeurs );
-        Long start = System.currentTimeMillis( );
 
         //Nous lançons le traitement de notre tâche principale via le pool
         pool.invoke( thread );
@@ -59,24 +66,6 @@ public class DameBotNegaMaxThread extends AbstractBot<Integer>
             }
         }
         return sum;
-    }
-
-    private static Method getEvaluateMethod( )
-    {
-        Method m = null;
-        try
-        {
-            m = DameBotNegaMaxThread.class.getMethod( METHOD_EVALUATE, IBoard.class );
-        }
-        catch ( NoSuchMethodException e )
-        {
-            LOGGER.error( e );
-        }
-        catch ( SecurityException e )
-        {
-            LOGGER.error( e );
-        }
-        return m;
     }
 
     public Integer getMaxDeep( )
