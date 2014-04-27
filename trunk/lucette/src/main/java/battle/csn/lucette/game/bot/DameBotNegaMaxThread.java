@@ -2,6 +2,8 @@ package battle.csn.lucette.game.bot;
 
 import java.util.concurrent.ForkJoinPool;
 
+import com.google.common.base.Function;
+
 import battle.csn.lucette.game.board.DameBoard;
 import battle.csn.lucette.game.board.IBoard;
 import battle.csn.lucette.game.logic.AlphaBetaThread;
@@ -19,22 +21,22 @@ public class DameBotNegaMaxThread extends AbstractBot<Integer>
         Integer alpha = null;
         Integer beta = null;
         Boolean findMax = null;
-        Integer bestValueFind = null;
         if ( getPlateau( ).getIdEquipes( ).get( 0 ).equals( idEquipe ) )
         {
             alpha = Integer.MIN_VALUE;
             beta = Integer.MAX_VALUE;
             findMax = true;
-            bestValueFind = Integer.MIN_VALUE;
         }
         else
         {
             alpha = Integer.MAX_VALUE;
             beta = Integer.MIN_VALUE;
             findMax = false;
-            bestValueFind = Integer.MAX_VALUE;
         }
-        AlphaBetaThread thread = new AlphaBetaThread( getPlateau( ), alpha, beta, null, findMax, _maxDeep );
+        
+        Function<IBoard<Integer>, Integer> evaluate = getEvaluation( );
+        
+        AlphaBetaThread thread = new AlphaBetaThread( getPlateau( ), alpha, beta, evaluate, findMax, _maxDeep );
 
         //Nous récupérons le nombre de processeurs disponibles
         int processeurs = Runtime.getRuntime( ).availableProcessors( );
@@ -46,6 +48,23 @@ public class DameBotNegaMaxThread extends AbstractBot<Integer>
         pool.invoke( thread );
 
         return move;
+    }
+    
+    /**
+     * Get the evaluation function
+     * @return the evaluation function
+     */
+    private Function<IBoard<Integer>, Integer> getEvaluation( )
+    {
+        Function<IBoard<Integer>, Integer> evaluate = new Function<IBoard<Integer>, Integer>( )
+        {
+            @Override
+            public Integer apply( IBoard<Integer> input )
+            {
+                return input == null ? 0 : evaluateBoard( input );
+            }
+        };
+        return evaluate;
     }
 
     /**

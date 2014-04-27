@@ -8,7 +8,8 @@ import org.apache.log4j.Logger;
 
 import battle.csn.lucette.game.board.IBoard;
 import battle.csn.lucette.game.structure.Move;
-import battle.csn.lucette.java8.MethodMagic;
+
+import com.google.common.base.Function;
 
 
 public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
@@ -18,7 +19,7 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
 
     private IBoard<Integer> _plateau;
     private int _alpha, _beta;
-    private MethodMagic _heuristique;
+    private Function<IBoard<Integer>, Integer>  _heuristique;
     private boolean _findMax;
     private int _deep;
     private Move _move;
@@ -36,7 +37,7 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
      *            pire des plateau (pour l'un ou d'autre des joueurs)
      * @param deep profondeur maximum pour rechercher une valeur
      */
-    public AlphaBetaThread( IBoard<Integer> plateau, int alpha, int beta, MethodMagic heuristique, boolean findMax,
+    public AlphaBetaThread( IBoard<Integer> plateau, int alpha, int beta, Function<IBoard<Integer>, Integer>  heuristique, boolean findMax,
             int deep )
     {
         logger.info( "Creation d'un thread alpha beta" );
@@ -173,7 +174,7 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
     /**
      * @return the _heuristique
      */
-    public MethodMagic getHeuristique( )
+    public Function<IBoard<Integer>, Integer>  getHeuristique( )
     {
         return _heuristique;
     }
@@ -181,7 +182,7 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
     /**
      * @param _heuristique the _heuristique to set
      */
-    public void setHeuristique( MethodMagic _heuristique )
+    public void setHeuristique( Function<IBoard<Integer>, Integer>  _heuristique )
     {
         this._heuristique = _heuristique;
     }
