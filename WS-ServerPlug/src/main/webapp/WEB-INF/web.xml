@@ -1,0 +1,17 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Checker Practice webapp</display-name>
+  <servlet>
+  	<servlet-name>PingServlet</servlet-name>
+  	<display-name>PingServlet</display-name>
+  	<description></description>
+  	<servlet-class>battle.csn.lucette.servlet.PingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>PingServlet</servlet-name>
+  	<url-pattern>/test/ping</url-pattern>
+  </servlet-mapping>
+</web-app>
