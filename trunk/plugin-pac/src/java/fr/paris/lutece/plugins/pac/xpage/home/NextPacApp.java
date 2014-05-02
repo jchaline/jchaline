@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import fr.paris.lutece.plugins.genericjpa.dao.commons.ResultList;
-import fr.paris.lutece.plugins.genericjpa.utils.messages.SessionMessage;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
 import fr.paris.lutece.plugins.pac.dto.pacuser.PacuserDTO;
 import fr.paris.lutece.plugins.pac.service.pacuser.IPacuserService;
@@ -35,6 +34,7 @@ public class NextPacApp extends AbstractPacApp
             SiteMessageException
     {
         ResultList<Pacuser> listPacuser = _servicePacuser.findAll( null );
+        List<String[]> doDownload = _servicePacuser.doDownload( );
         List<PacuserDTO> listDTO = PacuserDTO.convert( listPacuser );
         Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_LIST_PACUSER, listDTO );
@@ -43,7 +43,7 @@ public class NextPacApp extends AbstractPacApp
         //        model.put( SessionMessage.MARK_SESSION_MESSAGE, SessionMessage.popMessage( request ) );
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_NEXTPAC, request.getLocale( ), model );
-
+        
         XPage page = new XPage( );
         page.setContent( template.getHtml( ) );
         page.setPathLabel( "Prochains PAC" );
