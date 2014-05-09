@@ -13,12 +13,12 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 	<bean id="genericProfiler"
 		class="fr.paris.lutece.plugins.log4jspringaop.profiler.TimeProfiler" />
-	<aop:config>
+<!-- 	<aop:config>
 		<aop:aspect id="traceInvocationAspect" ref="genericProfiler">
 			<aop:pointcut
 				expression="execution(* fr.paris.lutece.plugins.pac.service.pacuser.IPacuserService.*(..))"
 				id="traceInvocationPointcut" />
 			<aop:around pointcut-ref="traceInvocationPointcut" method="timeProfile" />
 		</aop:aspect>
-	</aop:config>
+	</aop:config> -->
 </beans>
