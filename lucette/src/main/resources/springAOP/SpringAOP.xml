@@ -6,16 +6,13 @@
 
 	<!-- @AspectJ support -->
 	<aop:aspectj-autoproxy />
-	<!-- Aspect sample with annotation -->
-	<bean id="boardProfiler" class="battle.csn.lucette.profile.BoardProfiler" />
-	
 	<!-- Aspect with only XML configuration -->
-	<bean id="timeProfiler" class="battle.csn.lucette.profile.TimeProfiler" />
+	<bean id="timeProfiler" class="fr.paris.lutece.plugins.log4jspringaop.profiler.TimeProfiler" />
 
 	<aop:config>
 		<aop:aspect id="executeChooseMoveAspect" ref="timeProfiler">
 			<aop:pointcut
-				expression="execution(* battle.csn.lucette.game.*.*.chooseMove(..))"
+				expression="execution(* battle.csn.lucette.game.*.*.*(..))"
 				id="executeChooseMove" />
 			<aop:around pointcut-ref="executeChooseMove" method="timeProfile" />
 		</aop:aspect>

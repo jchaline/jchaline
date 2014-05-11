@@ -17,7 +17,6 @@ public class DameBotNegaMaxThread extends AbstractBot<Integer>
     @Override
     public Move chooseMove( String idEquipe )
     {
-        Move move = new Move( );
         Integer alpha = null;
         Integer beta = null;
         Boolean findMax = null;
