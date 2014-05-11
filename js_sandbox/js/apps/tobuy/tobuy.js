@@ -1,31 +1,22 @@
 var productsArray;
+var productSelected;
 load();
 
 function displayResult(item, val, text) {
-	addProduct(productsArray[val]);
-	$('.alert').show().html('You selected <strong>' + val + '</strong>: <strong>' + text + '</strong>');
+	addProductToHtml(productsArray[val]);
 }
 
-$(function () {
-	$('#productInput').typeahead({
-		source: productsArray,
-		display: 'name',
-		val: 'id',
-		itemSelected: displayResult
-	});
-});
-
 //add product to the checked list
-function addProduct(product){
+function addProductToHtml(product){
 	var content = "";
 	content+= '<label>'+product.name+'</label>';
-	content+='<input type="checkbox" value="'+product.id+'" name="checkbox" checked="checked" />';
+	content+='<input type="checkbox" value="'+product.id+'" name="checkbox" />';
 	content+='<button name="delete" value="'+product.id+'" type="button" class="btn btn-small btn-danger">';
 	content+='<i class="icon-trash icon-white"></i>';
 	content+='</button>';
 	var div = $(document.createElement('div')).html(content);
 	div.attr('id','product'+product.id);
-	$("#checked").append(div);
+	$("#unchecked").append(div);
 }
 
 $(document).ready(function(){
@@ -39,8 +30,44 @@ $(document).ready(function(){
 	$(document).on('click','[name="delete"]',function(){
 		$(this).parent().remove();
 	});
+	$('#save').click(function(){
+		save();
+	});
+	$('#load').click(function(){
+		load();
+		refreshData();
+	});
+	$('#addProduct').click(function(){
+		var id = addProduct($('#productInput').val(),"test",0);
+		$('#productInput').data('typeahead').source = productsArray;
+		addProductToHtml(productsArray[id]);
+	});
+	initTypeAhead();
 });
 
+function refreshData(){
+	
+}
+function initTypeAhead() {
+	$('#productInput').typeahead({
+		source: productsArray,
+		display: 'name',
+		val: 'id',
+		itemSelected: displayResult
+	});
+}
+function addProduct(name,type,pos){
+	var matches = $(productsArray).filter(function(i,n){return n.name == name;});
+	var newId = 0;
+	if(matches.length==0){
+		newId = nextId();
+		productsArray[newId]={id:newId, name:name, type:type, pos:pos};
+	}
+	else{
+		newId = matches[0].id;
+	}
+	return newId;
+}
 function initData(){
 	var id=0;
 	var products= [
