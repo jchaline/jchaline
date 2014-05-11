@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.RecursiveTask;
 
-import org.apache.log4j.Logger;
-
 import battle.csn.lucette.game.board.IBoard;
 import battle.csn.lucette.game.structure.Move;
 
@@ -14,7 +12,6 @@ import com.google.common.base.Function;
 
 public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
 {
-    private static final Logger logger = Logger.getLogger( AlphaBetaThread.class );
     private static final long serialVersionUID = -5197231610232749425L;
 
     private IBoard<Integer> _plateau;

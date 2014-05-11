@@ -11,7 +11,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 
 public class TimeProfiler
 {
-    static final Logger logger = Logger.getLogger( BotProfiler.class );
+    static final Logger logger = Logger.getLogger( TimeProfiler.class );
     static final Map<String, List<Long>> _methodsTimes = new HashMap<String, List<Long>>( );
 
     /**
