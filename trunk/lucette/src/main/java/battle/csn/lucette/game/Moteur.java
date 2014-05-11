@@ -18,7 +18,7 @@ public class Moteur<T>
 {
     private static final String SPRING_BEANS_XML = "SpringBeans.xml";
     
-    private ApplicationContext context = new ClassPathXmlApplicationContext( SPRING_BEANS_XML );
+    private ApplicationContext context ;
     protected List<String> _idEquipes = new ArrayList<String>( );
     private IBoard<T> _plateau;
     private String _idPartie;
@@ -28,6 +28,7 @@ public class Moteur<T>
 
     public Moteur( String idPartie )
     {
+        context = new ClassPathXmlApplicationContext( SPRING_BEANS_XML );
         setIdPartie( idPartie );
         IBoard bean = context.getBean( IBoard.class );
         IBot bean2 = context.getBean( IBot.class );
