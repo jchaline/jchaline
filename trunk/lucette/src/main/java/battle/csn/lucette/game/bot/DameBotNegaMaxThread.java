@@ -47,7 +47,7 @@ public class DameBotNegaMaxThread extends AbstractBot<Integer>
         //Nous lançons le traitement de notre tâche principale via le pool
         pool.invoke( thread );
 
-        return move;
+        return thread.getMove( );
     }
     
     /**

@@ -15,7 +15,7 @@
 	<aop:config>
 		<aop:aspect id="executeChooseMoveAspect" ref="timeProfiler">
 			<aop:pointcut
-				expression="execution(* battle.csn.lucette.game.*.*.*(..))"
+				expression="execution(* battle.csn.lucette.game.*.*.chooseMove(..))"
 				id="executeChooseMove" />
 			<aop:around pointcut-ref="executeChooseMove" method="timeProfile" />
 		</aop:aspect>

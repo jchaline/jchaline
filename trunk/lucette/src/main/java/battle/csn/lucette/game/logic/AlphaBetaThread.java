@@ -19,7 +19,7 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
 
     private IBoard<Integer> _plateau;
     private int _alpha, _beta;
-    private Function<IBoard<Integer>, Integer>  _heuristique;
+    private Function<IBoard<Integer>, Integer> _heuristique;
     private boolean _findMax;
     private int _deep;
     private Move _move;
@@ -37,10 +37,9 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
      *            pire des plateau (pour l'un ou d'autre des joueurs)
      * @param deep profondeur maximum pour rechercher une valeur
      */
-    public AlphaBetaThread( IBoard<Integer> plateau, int alpha, int beta, Function<IBoard<Integer>, Integer>  heuristique, boolean findMax,
-            int deep )
+    public AlphaBetaThread( IBoard<Integer> plateau, int alpha, int beta,
+            Function<IBoard<Integer>, Integer> heuristique, boolean findMax, int deep )
     {
-        logger.info( "Creation d'un thread alpha beta" );
         _plateau = plateau;
         _alpha = alpha;
         _beta = beta;
@@ -64,50 +63,57 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
         // si le plateau est gagnant/perdant, on retourne la valeur correspondante. Sinon, analyse des fils
 
         //Analyse des fils : pour chaque coup disponible, un nouveau thread est créé 
+
         List<Move> moveAvailables = _plateau.getMoveAvailables( );
-        for ( Move move : moveAvailables )
+        if ( moveAvailables.size( ) == 0 || _deep == 0 )
         {
-            IBoard<Integer> deepCopy = getPlateau( ).deepCopy( );
-            deepCopy.play( move );
-
-            AlphaBetaThread childThread = new AlphaBetaThread( deepCopy, _alpha * -1, _beta * -1, _heuristique,
-                    !_findMax, _deep - 1 );
-            
-            //Give the first move to all childs
-            if ( _move == null )
-            {
-                childThread.setMove( move );
-            }
-            //reuse the first move 
-            else
-            {
-                childThread.setMove( _move );
-            }
-            //Nous l'ajoutons à la liste des tâches en cours pour récupérer le résultat plus tard
-            list.add( childThread );
-
-            //lance l'action en tâche de fond
-            childThread.fork( );
+            result = _heuristique.apply( _plateau );
         }
-
-        //comparaison de tous les résultats
-        for ( AlphaBetaThread t : list )
+        else
         {
-            int childThreadResult = t.join( );
-            if ( _findMax )
+            for ( Move move : moveAvailables )
             {
-                if ( childThreadResult > result )
+                IBoard<Integer> deepCopy = _plateau.deepCopy( );
+                deepCopy.play( move );
+
+                AlphaBetaThread childThread = new AlphaBetaThread( deepCopy, _alpha * -1, _beta * -1, _heuristique,
+                        !_findMax, _deep - 1 );
+
+                //Give the first move to all childs
+                if ( _move == null )
                 {
-                    result = childThreadResult;
-                    _move = t.getMove( );
+                    childThread.setMove( move );
                 }
-            }
-            else
-            {
-                if ( childThreadResult < result )
+                //reuse the first move 
+                else
                 {
-                    result = childThreadResult;
-                    _move = t.getMove( );
+                    childThread.setMove( _move );
+                }
+                //Nous l'ajoutons à la liste des tâches en cours pour récupérer le résultat plus tard
+                list.add( childThread );
+
+                //lance l'action en tâche de fond
+                childThread.fork( );
+            }
+            //comparaison de tous les résultats
+            for ( AlphaBetaThread t : list )
+            {
+                int childThreadResult = t.join( );
+                if ( _findMax )
+                {
+                    if ( childThreadResult > result )
+                    {
+                        result = childThreadResult;
+                        _move = t.getMove( );
+                    }
+                }
+                else
+                {
+                    if ( childThreadResult < result )
+                    {
+                        result = childThreadResult;
+                        _move = t.getMove( );
+                    }
                 }
             }
         }
@@ -174,7 +180,7 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
     /**
      * @return the _heuristique
      */
-    public Function<IBoard<Integer>, Integer>  getHeuristique( )
+    public Function<IBoard<Integer>, Integer> getHeuristique( )
     {
         return _heuristique;
     }
@@ -182,7 +188,7 @@ public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
     /**
      * @param _heuristique the _heuristique to set
      */
-    public void setHeuristique( Function<IBoard<Integer>, Integer>  _heuristique )
+    public void setHeuristique( Function<IBoard<Integer>, Integer> _heuristique )
     {
         this._heuristique = _heuristique;
     }

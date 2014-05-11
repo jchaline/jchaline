@@ -9,7 +9,7 @@
 	<!-- The two beans uses by application to run the game ! -->
 	<bean class="battle.csn.lucette.game.board.DameBoard"></bean>
 	<bean class="battle.csn.lucette.game.bot.DameBotNegaMaxThread">
-		<property name="maxDeep" value="2" />
+		<property name="maxDeep" value="4" />
 	</bean>
 
 	<bean id="configuration"
