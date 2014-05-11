@@ -8,32 +8,44 @@
 </head>
 
 <body class="container">
-    <div class="alert alert-block alert-success">
-    </div>
-
-<form class="form-inline">
-    <div class="row-fluid">
-        <div class="span5">
-            <input id="productInput" type="text" placeholder="Search products..." 
-				autocomplete="off" class="input-large" />
-        </div>
-		<div class="well span7">
-			<fieldset id="unchecked">
-				
-			</fieldset>
-			<hr>
-			<fieldset id="checked">
-				
-			</fieldset>
-		</div>
-    </div>
-</form>
+	<form class="form-inline" action="javascript:void(0);">
+		<fieldset>
+			<div class="alert alert-block alert-success pagination-centered">
+				Make your own list ! 
+			</div>
+		</fieldset>
+		<fieldset>
+			<span class="pull-right">
+				<button type="button" id="save" class="btn btn-small btn-success">
+					<i class="icon-check icon-white"></i>
+				</button>
+				<button type="button" id="load" class="btn btn-small btn-danger">
+					<i class="icon-repeat icon-white"></i>
+				</button>
+			</span>
+			<div class="row-fluid">
+				<div class="span5">
+					<input id="productInput" type="text" placeholder="Search products..." autocomplete="off" class="input-large" />
+					<button id="addProduct" class="btn btn-small btn-primary">
+						<i class="icon-plus icon-white"></i>
+					</button>
+				</div>
+				<div class="well span7">
+					<fieldset id="unchecked">
+						
+					</fieldset>
+					<hr>
+					<fieldset id="checked">
+						
+					</fieldset>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			 <div class="alert alert-block alert-danger pagination-centered">
+				todo : set product number with - + buttons 
+			</div>
+		</fieldset>
+	</form>
 </body>
-
-
-<script>
-	
-</script>
-
-
 </html>
