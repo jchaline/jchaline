@@ -1,23 +1,6 @@
-var productsArray;
+var productsArray = [];
 var productSelected;
 load();
-
-function displayResult(item, val, text) {
-	addProductToHtml(productsArray[val]);
-}
-
-//add product to the checked list
-function addProductToHtml(product){
-	var content = "";
-	content+= '<label>'+product.name+'</label>';
-	content+='<input type="checkbox" value="'+product.id+'" name="checkbox" />';
-	content+='<button name="delete" value="'+product.id+'" type="button" class="btn btn-small btn-danger">';
-	content+='<i class="icon-trash icon-white"></i>';
-	content+='</button>';
-	var div = $(document.createElement('div')).html(content);
-	div.attr('id','product'+product.id);
-	$("#unchecked").append(div);
-}
 
 $(document).ready(function(){
 	$(document).on('click','input[name="checkbox"]',function(e){
@@ -35,7 +18,6 @@ $(document).ready(function(){
 	});
 	$('#load').click(function(){
 		load();
-		refreshData();
 	});
 	$('#addProduct').click(function(){
 		var id = addProduct($('#productInput').val(),"test",0);
@@ -45,9 +27,30 @@ $(document).ready(function(){
 	initTypeAhead();
 });
 
-function refreshData(){
-	
+function initData(){
+	addProduct("steak", "viande", 1);
+	addProduct("lait", "boisson", 2);
+	addProduct("eau", "boisson", 4);
+	addProduct("poulet", "viande", 8);
+	addProduct("céréal", "sec", 3);
 }
+
+//add product to the checked list
+function addProductToHtml(product){
+	var content = "";
+	content+= '<label>'+product.name+'</label>';
+	content+='<input type="checkbox" value="'+product.id+'" name="checkbox" />';
+	content+='<button name="delete" value="'+product.id+'" type="button" class="btn btn-small btn-danger">';
+	content+='<i class="icon-trash icon-white"></i>';
+	content+='</button>';
+	var div = $(document.createElement('div')).html(content);
+	div.attr('id','product'+product.id);
+	div.attr('pos',product.pos);
+	$("#unchecked").append(div);
+	
+	$('div').sortElements(function(a,b){return $(a).attr('pos')>=$(b).attr('pos');});
+}
+
 function initTypeAhead() {
 	$('#productInput').typeahead({
 		source: productsArray,
@@ -68,21 +71,19 @@ function addProduct(name,type,pos){
 	}
 	return newId;
 }
-function initData(){
-	var id=0;
-	var products= [
-		{ id: id++, name: "steak", type: "viande", pos: 1 },
-		{ id: id++, name: "roti", type: "viande", pos: 3 },
-		{ id: id++, name: "eau", type: "boisson", pos: 4 },
-		{ id: id++, name: "lait", type: "froid", pos: 2 }
-	];
-	return products;
+function displayResult(item, val, text) {
+	addProductToHtml(productsArray[val]);
 }
 function nextId(){
-	return Math.max.apply(null, productsArray.map(function(a){return a.id;})) + 1;
+	return productsArray.length>0 ? Math.max.apply(null, productsArray.map(function(a){return a.id;})) + 1 : 0;
 }
 function save(){localStorage["productsArray"] = JSON.stringify(productsArray);}
 function load(){
 	var fromLocal = localStorage["productsArray"];
-	productsArray = fromLocal!=null ? JSON.parse(fromLocal) : initData();
+	if(fromLocal!=null ){
+		productsArray=JSON.parse(fromLocal)
+	}
+	else{
+		initData();
+	}
 }
