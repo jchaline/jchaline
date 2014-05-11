@@ -8,70 +8,72 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 
-public class TimeProfiler {
-	static final Logger logger = Logger.getLogger(BotProfiler.class);
-	static final Map<String, List<Long>> _methodsTimes = new HashMap<String, List<Long>>();
 
-	/**
-	 * Enregistre le temps d'execution d'une methode et affiche la moyenne des
-	 * temps enregistrées jusqu'à présent
-	 * 
-	 * @param joinPoint
-	 *            le pointcut sur l'execution de la méthode
-	 * @return le résultat de l'execution de la méthode
-	 * @throws Throwable
-	 *             diverses erreurs possibles
-	 */
-	public Object timeProfile(ProceedingJoinPoint joinPoint) throws Throwable {
-		long debut = System.currentTimeMillis();
-		Object sortie = joinPoint.proceed();
-		long tempsPasse = System.currentTimeMillis() - debut;
+public class TimeProfiler
+{
+    static final Logger logger = Logger.getLogger( BotProfiler.class );
+    static final Map<String, List<Long>> _methodsTimes = new HashMap<String, List<Long>>( );
 
-		logger.info(getStrLog(joinPoint, tempsPasse));
+    /**
+     * Enregistre le temps d'execution d'une methode et affiche la moyenne des
+     * temps enregistrées jusqu'à présent
+     * 
+     * @param joinPoint le pointcut sur l'execution de la méthode
+     * @return le résultat de l'execution de la méthode
+     * @throws Throwable diverses erreurs possibles
+     */
+    public Object timeProfile( ProceedingJoinPoint joinPoint ) throws Throwable
+    {
+        long debut = System.currentTimeMillis( );
+        Object sortie = joinPoint.proceed( );
+        long tempsPasse = System.currentTimeMillis( ) - debut;
 
-		return sortie;
-	}
+        logger.info( getStrLog( joinPoint, tempsPasse ) );
 
-	private String getStrLog(ProceedingJoinPoint joinPoint, long tempsPasse) {
-		long moyenne = addTime(joinPoint.getSignature().toString(), tempsPasse);
-		int nbCall = _methodsTimes.get(joinPoint.getSignature().toString()).size();
-		return "Temps d'exécution de la fonction ("
-				+ joinPoint.getSignature().getName() + "): " + tempsPasse
-				+ " ms (moyenne : " + moyenne + "ms pour "+nbCall+" appels).";
-	}
+        return sortie;
+    }
 
-	/**
-	 * Ajoute le temps d'execution d'une methode et retourne le temps moyen
-	 * 
-	 * @param signature
-	 *            identifiant unique de la methode analysé
-	 * @param time
-	 *            temps d'execution de la méthode
-	 * @return le temps moyen constaté jusqu'à présent
-	 */
-	private Long addTime(final String signature, final long time) {
-		if (!_methodsTimes.containsKey(signature)) {
-			_methodsTimes.put(signature, new ArrayList<Long>());
-		}
-		_methodsTimes.get(signature).add(time);
-		return moyenne(_methodsTimes.get(signature));
-	}
+    private String getStrLog( ProceedingJoinPoint joinPoint, long tempsPasse )
+    {
+        long moyenne = addTime( joinPoint.getSignature( ).toString( ), tempsPasse );
+        int nbCall = _methodsTimes.get( joinPoint.getSignature( ).toString( ) ).size( );
+        return "Temps d'exécution de la fonction (" + joinPoint.getSignature( ).getName( ) + "): " + tempsPasse
+                + " ms (moyenne : " + moyenne + "ms pour " + nbCall + " appels).";
+    }
 
-	/**
-	 * Calcule la moyenne des elements d'une liste
-	 * 
-	 * @param list
-	 *            entiers
-	 * @return la valeur moyenne
-	 */
-	private Long moyenne(final List<Long> list) {
-		Long result = (long) 0;
-		for (Long elem : list) {
-			result += elem;
-		}
-		result /= list.size();
+    /**
+     * Ajoute le temps d'execution d'une methode et retourne le temps moyen
+     * 
+     * @param signature identifiant unique de la methode analysé
+     * @param time temps d'execution de la méthode
+     * @return le temps moyen constaté jusqu'à présent
+     */
+    private Long addTime( final String signature, final long time )
+    {
+        if ( !_methodsTimes.containsKey( signature ) )
+        {
+            _methodsTimes.put( signature, new ArrayList<Long>( ) );
+        }
+        _methodsTimes.get( signature ).add( time );
+        return moyenne( _methodsTimes.get( signature ) );
+    }
 
-		return result;
-	}
-	
+    /**
+     * Calcule la moyenne des elements d'une liste
+     * 
+     * @param list entiers
+     * @return la valeur moyenne
+     */
+    private Long moyenne( final List<Long> list )
+    {
+        Long result = (long) 0;
+        for ( Long elem : list )
+        {
+            result += elem;
+        }
+        result /= list.size( );
+
+        return result;
+    }
+
 }

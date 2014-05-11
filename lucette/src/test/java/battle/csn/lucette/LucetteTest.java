@@ -3,6 +3,7 @@ package battle.csn.lucette;
 import junit.framework.TestCase;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -13,11 +14,16 @@ import battle.csn.lucette.game.bot.IBot;
 
 public class LucetteTest extends TestCase
 {
-    private ApplicationContext context = new ClassPathXmlApplicationContext( "SpringBeans.xml" );
+    private ApplicationContext context ;
 
     protected final String ID_EQUIPE = "lucette";
     protected final String ID_EQUIPE_ADVERSE = "germaine";
     protected final String ID_PARTIE = "partie";
+    
+    @Before
+    public void init(){
+        context = new ClassPathXmlApplicationContext( "SpringBeans.xml" );
+    }
 
     /**
      * TODO : configurer avec spring
