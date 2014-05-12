@@ -8,13 +8,20 @@
 	<aop:aspectj-autoproxy />
 	<!-- Aspect with only XML configuration -->
 	<bean id="timeProfiler" class="fr.paris.lutece.plugins.log4jspringaop.profiler.TimeProfiler" />
+	<bean id="argsProfiler" class="fr.paris.lutece.plugins.log4jspringaop.profiler.ArgsProfiler" />
 
 	<aop:config>
-		<aop:aspect id="executeChooseMoveAspect" ref="timeProfiler">
+		<aop:aspect id="logTimeAspect" ref="timeProfiler">
 			<aop:pointcut
 				expression="execution(* battle.csn.lucette.game.*.*.*(..))"
-				id="executeChooseMove" />
-			<aop:around pointcut-ref="executeChooseMove" method="timeProfile" />
+				id="executeForTime" />
+			<aop:around pointcut-ref="executeForTime" method="timeProfile" />
+		</aop:aspect>
+		<aop:aspect id="logArgsAspect" ref="argsProfiler">
+			<aop:pointcut
+				expression="execution(* battle.csn.lucette.game.*.*.*(..))"
+				id="executeForArgs" />
+			<aop:around pointcut-ref="executeForArgs" method="argsProfile" />
 		</aop:aspect>
 <!-- 		<aop:aspect id="executeNegaMaxAspect" ref="timeProfiler">
 			<aop:pointcut
