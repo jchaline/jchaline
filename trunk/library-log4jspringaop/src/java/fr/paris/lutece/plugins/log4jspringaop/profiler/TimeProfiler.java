@@ -32,7 +32,7 @@ public class TimeProfiler
 
         return sortie;
     }
-
+    
     /**
      * Get the str content for the method calling log
      * @param joinPoint the joinPoint
