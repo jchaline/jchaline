@@ -7,7 +7,12 @@ import org.aspectj.lang.ProceedingJoinPoint;
 public class ArgsProfiler
 {
     private static final Logger logger = Logger.getLogger( ArgsProfiler.class );
-    
+
+    /**
+     * 0 for args and return, 1 for args, 2 for return
+     */
+    private int config = 0;
+
     /**
      * Display args of the method call
      * @param joinPoint le pointcut sur l'execution de la méthode
@@ -33,5 +38,13 @@ public class ArgsProfiler
         logger.info( methodName + " return : " + sortie );
 
         return sortie;
+    }
+
+    /**
+     * @param config the config to set
+     */
+    public void setConfig( int config )
+    {
+        this.config = config;
     }
 }
