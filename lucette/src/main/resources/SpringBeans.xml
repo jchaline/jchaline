@@ -6,6 +6,8 @@
 	
 	<import resource="springConfiguration/SpringConfiguration.xml" />
 	
+	<bean id="negaMax" class="battle.csn.lucette.game.logic.AlphaBeta" ></bean>
+	
 	<!-- The two beans uses by application to run the game ! -->
 	<bean class="battle.csn.lucette.game.board.DameBoard"></bean>
 	<bean class="battle.csn.lucette.game.bot.DameBotNegaMax">

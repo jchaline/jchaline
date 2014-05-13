@@ -2,18 +2,22 @@ package battle.csn.lucette.game.bot;
 
 import java.util.concurrent.ForkJoinPool;
 
-import com.google.common.base.Function;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import battle.csn.lucette.game.board.DameBoard;
 import battle.csn.lucette.game.board.IBoard;
 import battle.csn.lucette.game.logic.AlphaBetaThread;
+import battle.csn.lucette.game.logic.ILogic;
 import battle.csn.lucette.game.structure.Move;
+
+import com.google.common.base.Function;
 
 
 public class DameBotNegaMaxThread extends AbstractBot<Integer>
 {
     private Integer _maxDeep = 2;
-
+    
     @Override
     public Move chooseMove( String idEquipe )
     {

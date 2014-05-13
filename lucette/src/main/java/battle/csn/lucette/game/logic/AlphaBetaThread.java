@@ -10,7 +10,7 @@ import battle.csn.lucette.game.structure.Move;
 import com.google.common.base.Function;
 
 
-public class AlphaBetaThread extends RecursiveTask<Integer> implements ILogic
+public class AlphaBetaThread extends RecursiveTask<Integer>
 {
     private static final long serialVersionUID = -5197231610232749425L;
 

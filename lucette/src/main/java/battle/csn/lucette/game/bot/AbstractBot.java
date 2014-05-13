@@ -1,6 +1,7 @@
 package battle.csn.lucette.game.bot;
 
 import battle.csn.lucette.game.board.IBoard;
+import battle.csn.lucette.game.logic.ILogic;
 
 
 /**
@@ -11,6 +12,7 @@ import battle.csn.lucette.game.board.IBoard;
 public abstract class AbstractBot<T> implements IBot<T>
 {
     private IBoard<T> _plateau;
+    private ILogic _logic;
 
     @Override
     public void setPlateau( IBoard<T> plateau )
@@ -26,5 +28,21 @@ public abstract class AbstractBot<T> implements IBot<T>
     public IBoard<T> getPlateau( )
     {
         return _plateau;
+    }
+
+    /**
+     * @return the logic
+     */
+    public ILogic getLogic( )
+    {
+        return _logic;
+    }
+
+    /**
+     * @param logic the logic to set
+     */
+    public void setLogic( ILogic logic )
+    {
+        this._logic = logic;
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import battle.csn.lucette.game.board.AbstractBoard;
 import battle.csn.lucette.game.board.IBoard;
 import battle.csn.lucette.game.bot.IBot;
+import battle.csn.lucette.game.logic.ILogic;
 import battle.csn.lucette.game.structure.Move;
 
 
@@ -30,11 +31,12 @@ public class Moteur<T>
     {
         context = new ClassPathXmlApplicationContext( SPRING_BEANS_XML );
         setIdPartie( idPartie );
-        IBoard bean = context.getBean( IBoard.class );
-        IBot bean2 = context.getBean( IBot.class );
-        _plateau = bean;
-        _bot = bean2;
+        _plateau = context.getBean( IBoard.class );
+        _bot = context.getBean( IBot.class );
         _bot.setPlateau( _plateau );
+        _bot.setLogic( context.getBean( ILogic.class ) );
+        
+        System.out.println(context.getBean( ILogic.class ));
     }
 
     /**

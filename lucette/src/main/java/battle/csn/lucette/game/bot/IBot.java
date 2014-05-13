@@ -1,6 +1,7 @@
 package battle.csn.lucette.game.bot;
 
 import battle.csn.lucette.game.board.IBoard;
+import battle.csn.lucette.game.logic.ILogic;
 import battle.csn.lucette.game.structure.Move;
 
 /**
@@ -32,4 +33,9 @@ public interface IBot<T>
      * @return le plateau
      */
     IBoard<T> getPlateau( );
+    
+    
+    ILogic getLogic( );
+
+    void setLogic( ILogic logic );
 }
