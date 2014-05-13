@@ -1,12 +1,12 @@
 package battle.csn.lucette.game.bot;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import battle.csn.lucette.game.board.DameBoard;
 import battle.csn.lucette.game.board.IBoard;
-import battle.csn.lucette.game.logic.AlphaBeta;
+import battle.csn.lucette.game.logic.ILogic;
 import battle.csn.lucette.game.structure.Move;
 
 import com.google.common.base.Function;
@@ -16,6 +16,9 @@ public class DameBotNegaMax extends AbstractBot<Integer>
 {
     private static final Logger LOGGER = Logger.getLogger( DameBotNegaMax.class );
 
+    /**
+     * Default value
+     */
     private Integer _maxDeep = 2;
 
     @Override
@@ -40,18 +43,15 @@ public class DameBotNegaMax extends AbstractBot<Integer>
             findMax = false;
             bestValueFind = Integer.MAX_VALUE;
         }
-
-        List<Move> moves = getPlateau( ).getMoveAvailables( );
-
-        for ( Move tryMove : moves )
+        Function<IBoard<Integer>, Integer> evaluate = getEvaluation( );
+        for ( Move tryMove : getPlateau( ).getMoveAvailables( ) )
         {
             IBoard<Integer> deepCopy = getPlateau( ).deepCopy( );
             deepCopy.play( tryMove );
             
-            Function<IBoard<Integer>, Integer> evaluate = getEvaluation( );
             try
             {
-                int actualValue = ( new AlphaBeta( ) ).alphaBeta( deepCopy, alpha, beta, evaluate, findMax, _maxDeep );
+                int actualValue = getLogic().solve( deepCopy, alpha, beta, evaluate, findMax, _maxDeep );
                 if ( ( findMax && actualValue > bestValueFind ) || ( !findMax && actualValue < bestValueFind ) )
                 {
                     bestValueFind = actualValue;

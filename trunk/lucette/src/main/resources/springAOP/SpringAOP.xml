@@ -21,7 +21,7 @@
 		</aop:aspect>
 		<aop:aspect id="logArgsAspect" ref="argsProfiler">
 			<aop:pointcut
-				expression="execution(* battle.csn.lucette.game.*.*.*(..))"
+				expression="execution(* battle.csn.lucette.game.*.*.d(..))"
 				id="executeForArgs" />
 			<aop:around pointcut-ref="executeForArgs" method="argsProfile" />
 		</aop:aspect>
