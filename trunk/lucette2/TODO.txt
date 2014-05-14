@@ -1,0 +1,7 @@
+ - fusionner notion de gameengine & moteur => utiliser igameengine et injecter bot & plateau via spring directement 
+ - passer au full annotation pour les moteur, le client api rest, etc...
+ - prevoir des coups à jouer "obligatoirement" en fonction d'un plateau donnée
+	=> ajouter tables de transpositions
+ 	=> creer une option de lancement de partie qui génère ces tables avec l'ia 
+ 		=> noter les plateau qui permettent de jouer un coup amenant vers une table existante
+ 			=> rajouter le plateau aux tables

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<!-- @AspectJ support -->
+	<aop:aspectj-autoproxy />
+	<!-- Aspect with only XML configuration -->
+	<bean id="timeProfiler" class="fr.paris.lutece.plugins.log4jspringaop.profiler.TimeProfiler" />
+	<bean id="argsProfiler" class="fr.paris.lutece.plugins.log4jspringaop.profiler.ArgsProfiler" >
+		<property name="config" value="2"/>
+	</bean>
+
+	<aop:config>
+		<aop:aspect id="logTimeAspect" ref="timeProfiler">
+			<aop:pointcut
+				expression="execution(* battle.csn.lucette.game.*.*.*(..))"
+				id="executeForTime" />
+			<aop:around pointcut-ref="executeForTime" method="timeProfile" />
+		</aop:aspect>
+		<aop:aspect id="logArgsAspect" ref="argsProfiler">
+			<aop:pointcut
+				expression="execution(* battle.csn.lucette.game.*.*.d(..))"
+				id="executeForArgs" />
+			<aop:around pointcut-ref="executeForArgs" method="argsProfile" />
+		</aop:aspect>
+<!-- 		<aop:aspect id="executeNegaMaxAspect" ref="timeProfiler">
+			<aop:pointcut
+				expression="execution(* battle.csn.lucette.game.bot.AbstractBot.alphaBeta(..))"
+				id="executeNegaMax" />
+			<aop:around pointcut-ref="executeNegaMax" method="timeProfile" />
+		</aop:aspect> -->
+<!-- 		<aop:aspect id="executeDeepCopyAspect" ref="timeProfiler">
+			<aop:pointcut
+				expression="execution(* battle.csn.lucette.game.board.IBoard.deepCopy(..))"
+				id="executeDeepCopy" />
+			<aop:around pointcut-ref="executeDeepCopy" method="timeProfile" />
+		</aop:aspect>
+		<aop:aspect id="executeMovesAvailablesAspect" ref="timeProfiler">
+			<aop:pointcut
+				expression="execution(* battle.csn.lucette.game.board.IBoard.getMoveAvailables(..))"
+				id="executeMovesAvailables" />
+			<aop:around pointcut-ref="executeMovesAvailables" method="timeProfile" />
+		</aop:aspect> -->
+	</aop:config>
+</beans>
