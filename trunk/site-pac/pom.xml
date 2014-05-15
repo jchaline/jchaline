@@ -21,6 +21,17 @@
 			<layout>default</layout>
 		</repository>
 	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>fr.paris.lutece</groupId>
+				<artifactId>lutece-core</artifactId>
+				<version>4.4.0</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>fr.paris.lutece.plugins</groupId>
@@ -39,18 +50,19 @@
 			<artifactId>module-jpa-hibernate</artifactId>
 			<version>1.0.5</version>
 			<type>lutece-plugin</type>
-			<exclusions>
-				<exclusion>
-					<groupId>fr.paris.lutece</groupId>
-					<artifactId>lutece-core</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>fr.paris.lutece.plugins</groupId>
 			<artifactId>plugin-helpdesk</artifactId>
 			<type>lutece-plugin</type>
 			<version>3.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>fr.paris.lutece.plugins</groupId>
+			<artifactId>library-log4jspringaop</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<type>lutece-plugin</type>
 		</dependency>
 	</dependencies>
 
