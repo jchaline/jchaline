@@ -32,12 +32,6 @@ public abstract class AbstractBoard<T> implements IBoard<T>
         return pseudo;
     }
 
-    @Override
-    public String getBoard( )
-    {
-        return "";
-    }
-
     /**
      * Creer un plateau par defaut, avec une ligne et une colonne
      */

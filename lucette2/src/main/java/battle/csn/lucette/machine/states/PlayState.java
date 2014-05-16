@@ -28,12 +28,11 @@ public class PlayState extends AbstractIntermediateState
         FightStateMachine stateMachine = chain.getStateMachine( );
 
         // TODO : here the magic happend.
-
         String strBoard = new RestClientAPI( ).getBoard( chain.getStateMachine( ).getGame( ) );
 
         Moteur moteur = new Moteur( "" );
         IBoard plateau = moteur.getPlateau( );
-        plateau.updateCases( strBoard );
+        plateau.updateBoard( strBoard );
 
         List<String> idEquipes = new ArrayList<>( );
         idEquipes.add( chain.getStateMachine( ).getIdEquipe( ) );

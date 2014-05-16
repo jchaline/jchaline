@@ -36,11 +36,17 @@ public class RestClientAPI implements IClient
     {
         this.client = new HttpLayerAPI( BASE_URL );
     }
+    
+
+    private String callString( String strCalling )
+    {
+        return client.callString( strCalling );
+    }
 
     @Override
     public String ping( )
     {
-        return client.callString( PING_URI );
+        return callString( PING_URI );
     }
 
     @Override
@@ -59,41 +65,41 @@ public class RestClientAPI implements IClient
     public String getIdEquipe( String nomEquipe, String motDePasse )
     {
         String getIdEquipe = GET_ID_EQUIPE_URI + nomEquipe + URI_SEPARATOR + motDePasse;
-        return client.callString( getIdEquipe );
+        return callString( getIdEquipe );
     }
 
     @Override
     public String getGameStatus( String idPartie, String idEquipe )
     {
         String getStatusUri = STATUS_URI + idPartie + URI_SEPARATOR + idEquipe;
-        return client.callString( getStatusUri );
+        return callString( getStatusUri );
     }
 
     @Override
     public String getBoard( String idPartie )
     {
         String getBoard = BOARD_URI + idPartie;
-        return client.callString( getBoard );
+        return callString( getBoard );
     }
 
     @Override
     public String getNewPracticeGame( String idEquipe, Integer level )
     {
         String getNewPractiveGame = CREATE_GAME_URI + level + URI_SEPARATOR + idEquipe;
-        return client.callString( getNewPractiveGame );
+        return callString( getNewPractiveGame );
     }
 
     @Override
     public String getGameId( String idEquipe )
     {
-        return client.callString( GET_ID_GAME_URI );
+        return callString( GET_ID_GAME_URI );
     }
 
     @Override
     public String getLastMove( String idPartie )
     {
         String getLastMove = LAST_MOVE_URI + idPartie;
-        return client.callString( getLastMove );
+        return callString( getLastMove );
     }
 
     @Override
@@ -104,7 +110,7 @@ public class RestClientAPI implements IClient
         {
             playMove += URI_SEPARATOR + String.valueOf( coord );
         }
-        return client.callString( playMove );
+        return callString( playMove );
     }
 
 }

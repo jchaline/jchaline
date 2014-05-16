@@ -128,7 +128,7 @@ public class TictactoeBoard extends AbstractBoard<Integer>
     }
 
     @Override
-    public void updateCases( String strBoard )
+    public void updateBoard( String strBoard )
     {
         // TODO Auto-generated method stub
         
@@ -136,6 +136,13 @@ public class TictactoeBoard extends AbstractBoard<Integer>
 
     @Override
     public IBoard<Integer> deepCopy( )
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getBoard( )
     {
         // TODO Auto-generated method stub
         return null;
