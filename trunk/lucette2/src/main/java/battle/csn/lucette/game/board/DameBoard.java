@@ -91,7 +91,7 @@ public class DameBoard extends AbstractBoard<Integer> implements IBoard<Integer>
     @Override
     public String toString( )
     {
-        String gameBoard = "\n";
+        String gameBoard = "";
         for ( int i = 0; i < DIM_X; i++ )
         {
             for ( int j = 0; j < DIM_Y; j++ )
@@ -296,9 +296,14 @@ public class DameBoard extends AbstractBoard<Integer> implements IBoard<Integer>
     }
 
     @Override
-    public void updateCases( String strBoard )
+    public void updateBoard( String strBoard )
     {
-        // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public String getBoard( )
+    {
+        return toString( );
     }
 }

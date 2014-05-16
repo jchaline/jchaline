@@ -13,7 +13,6 @@ import com.google.common.base.Function;
 public class AlphaBeta implements ILogic
 {
     private static final Logger logger = Logger.getLogger( AlphaBeta.class );
-    private static int cpt=0;
 
     /**
      * Determine le score de chaque plateau avec une implémentation NegaMax -
@@ -31,7 +30,6 @@ public class AlphaBeta implements ILogic
     public int solve( IBoard<Integer> plateau, int alpha, int beta, Function<IBoard<Integer>, Integer> evaluate,
             boolean findMax, int deep )
     {
-        cpt++;
         Integer value = 0;
         List<Move> moves = plateau.getMoveAvailables( );
         logger.debug( "alphaBeta mode " + findMax + " : " + moves.size( ) + " mouvements disponibles." );
@@ -66,8 +64,6 @@ public class AlphaBeta implements ILogic
             }
         }
         
-        logger.error( cpt );
-
         return value;
     }
 }

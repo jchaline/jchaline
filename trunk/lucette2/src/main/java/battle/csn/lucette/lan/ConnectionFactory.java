@@ -12,18 +12,20 @@ import com.sun.jersey.client.urlconnection.HttpURLConnectionFactory;
 /**
  * Connexion derrière un proxy.
  * @author jgoulley
- *
+ * 
  */
-public class ConnectionFactory implements HttpURLConnectionFactory {
-
+public class ConnectionFactory implements HttpURLConnectionFactory
+{
     Proxy proxy;
 
-    private void initializeProxy() {
-        proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("ptx.proxy.corp.sopra", 8080));
+    private void initializeProxy( )
+    {
+        proxy = new Proxy( Proxy.Type.HTTP, new InetSocketAddress( "ptx.proxy.corp.sopra", 8080 ) );
     }
 
-    public HttpURLConnection getHttpURLConnection(URL url) throws IOException {
-        initializeProxy();
-        return (HttpURLConnection) url.openConnection(proxy);
+    public HttpURLConnection getHttpURLConnection( URL url ) throws IOException
+    {
+        initializeProxy( );
+        return (HttpURLConnection) url.openConnection( proxy );
     }
 }
