@@ -5,3 +5,4 @@
  	=> creer une option de lancement de partie qui génère ces tables avec l'ia 
  		=> noter les plateau qui permettent de jouer un coup amenant vers une table existante
  			=> rajouter le plateau aux tables
+ - utiliser un composant commun pour la gestion du client et du serveur
