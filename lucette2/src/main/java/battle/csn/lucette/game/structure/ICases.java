@@ -1,4 +1,4 @@
-package battle.csn.lucette.game.board;
+package battle.csn.lucette.game.structure;
 
 /**
  * Interface à implementer pour proposer une classe enregistrant les cases d'un plateau de jeu à n dimension

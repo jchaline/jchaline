@@ -3,7 +3,9 @@ package battle.csn.lucette.game.board;
 import java.util.ArrayList;
 import java.util.List;
 
+import battle.csn.lucette.game.structure.ICases;
 import battle.csn.lucette.game.structure.Move;
+import battle.csn.lucette.game.structure.MultiTab;
 
 
 /**
