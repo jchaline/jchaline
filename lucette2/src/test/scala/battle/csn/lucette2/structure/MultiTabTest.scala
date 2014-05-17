@@ -10,6 +10,7 @@ import org.junit._
 import org.scalatest.mock._
 import org.mockito.Mockito._
 import battle.csn.lucette2.game.structure.MultiTab
+import scala.collection.mutable.MutableList
 
 @RunWith(classOf[MockitoJUnitRunner])
 class MultiTabTest extends AssertionsForJUnit with MockitoSugar {
@@ -18,7 +19,17 @@ class MultiTabTest extends AssertionsForJUnit with MockitoSugar {
   def updateTabTest() {
     var t = new MultiTab[Int]()
     t.updateSizes(Seq(3, 3))
-    println (t.toString())
+    println ("multitab size : "+t.size)
+  }
+  
+  @Test
+  @Ignore
+  def mutableListTest(){
+    var l = MutableList[MultiTab[Int]]()
+    l+=(new MultiTab[Int]())
+    println(l.size)
+    l+=(new MultiTab[Int]())
+    println(l.size)
   }
 
 
