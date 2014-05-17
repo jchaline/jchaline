@@ -1,4 +1,4 @@
-package battle.csn.lucette.game.board;
+package battle.csn.lucette.game.structure;
 
 import java.util.ArrayList;
 import java.util.List;
