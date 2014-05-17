@@ -15,6 +15,8 @@ class DameBoard extends Board[Int] {
     updateSize(Seq(DIM_X, DIM_Y))
     reset()
   }
+  
+  def getCases()=this.cases
 
   def play(move: Move) {
 
@@ -31,7 +33,7 @@ class DameBoard extends Board[Int] {
               case Some(Etat.BLACK) => BLACK 
               case _ => ""
             }
-        gameBoard :+ (append + COLUMN_SEPARATOR)
+        gameBoard += (append + COLUMN_SEPARATOR)
         
       }
       gameBoard += LINE_SEPARATOR
@@ -53,9 +55,9 @@ class DameBoard extends Board[Int] {
     for (i <- 0 to DIM_X - 1) for (j <- 0 to DIM_Y - 1) writeCase(Etat.EMPTY, Seq(i, j))
 
     //set the black
-    for (i <- 0 to 1) for (j <- 0 to DIM_Y - 1) writeCase(if (whiteCase(i, j)) Etat.BLACK else Etat.WHITE, Seq(i, j))
+    for (i <- 0 to 3) for (j <- 0 to DIM_Y - 1) if (whiteCase(i,j)) writeCase( Etat.BLACK , Seq(i, j))
 
-    for (i <- DIM_X - 4 to DIM_X - 1) for (j <- 0 to DIM_Y - 1) writeCase(if (whiteCase(i, j)) Etat.WHITE else Etat.BLACK, Seq(i, j))
+    for (i <- DIM_X - 4 to DIM_X - 1) for (j <- 0 to DIM_Y - 1) if (whiteCase(i,j)) writeCase( Etat.WHITE , Seq(i, j))
   }
 
   def updateBoard(strBoard: String) {

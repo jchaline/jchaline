@@ -17,6 +17,8 @@ class DameBoardTest {
   
   @Test
   def toStringTest(){
+    
+    
       var board = new DameBoard()
     var res = board.toString()
     

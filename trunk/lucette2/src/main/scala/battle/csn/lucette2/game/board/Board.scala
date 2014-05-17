@@ -57,4 +57,9 @@ trait Board[T] {
    * @param strBoard le plateau sous forme de string
    */
   def updateBoard(strBoard: String)
+  
+  /**
+   * Reset le plateau avec la disposition de départ classic
+   */
+  def reset()
 }
