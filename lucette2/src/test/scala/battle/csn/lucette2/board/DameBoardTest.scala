@@ -13,16 +13,21 @@ import battle.csn.lucette2.game.board.DameBoard
 
 @RunWith(classOf[MockitoJUnitRunner])
 class DameBoardTest {
-  
-  
+
   @Test
-  def toStringTest(){
-    
-    
-      var board = new DameBoard()
+  def moveAvailablesTest() {
+    var board = new DameBoard()
+    var ms = board.moveAvailables(1)
+    println(ms.size)
+  }
+
+  @Test
+  def toStringTest() {
+    var board = new DameBoard()
     var res = board.toString()
-    
-    println(res)
+    board.updateBoard(res)
+    var res2 = board.toString
+    assertTrue(res.equals(res))
   }
 
 }

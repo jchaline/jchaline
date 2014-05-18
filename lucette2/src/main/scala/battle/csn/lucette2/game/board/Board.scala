@@ -31,6 +31,7 @@ trait Board[T] {
 
   /**
    * Permet d'obtenir l'ensemble des coups jouables à un instant t.
+   * @param player couleur du joueur pour lequel on cherche les coups
    * @return la liste des déplacements disponible pour le joueur donné
    */
   def moveAvailables(player: Int): Seq[Move]
