@@ -2,26 +2,10 @@ package battle.csn.lucette2.game.structure
 
 import org.apache.commons.lang3.StringUtils
 
-class Move {
+class Move (var positions:Seq[Int]) {
     var COORD_SEPARATOR = ",";
 
-    var positions: Seq[Int]=_ ;
     var idEquipe:String=_;
-
-    def Move( positions:Seq[Int] )=
-    {
-        this.positions=positions
-    }
-
-    /**
-     * @return the _positions
-     */
-    def getPositions( )=this.positions
-
-    /**
-     * @param _positions the _positions to set
-     */
-    def setPositions( positions:Seq[Int] )=this.positions = positions;
 
     /**
      * @return the _idEquipe
@@ -38,7 +22,7 @@ class Move {
         var equals = false;
         if ( other.isInstanceOf[Move])
         {
-            equals = this.getPositions( ).equals( other.getPositions( ) );
+            equals = positions.equals(other.positions)
         }
         equals
     }
@@ -53,15 +37,23 @@ class Move {
 
     def parse( strMove:String )
     {
-        var move = new Move( );
-
+        var move=new Move(Seq(0))
         if ( StringUtils.isNotBlank( strMove ) )
         {
             var strCoords = strMove.split( COORD_SEPARATOR );
-            var coords = List[Integer]( );
+            var coords = Seq[Int]( );
             strCoords.foreach(coords :+ Integer.valueOf( _ ) )
+            move = new Move(coords );
         }
 
         move
     }
+    
+    def Move(pos : Int*){
+      this.positions=pos
+    }
+}
+
+object Move{
+  def Move(pos:Int*)=new Move(pos)
 }
