@@ -128,7 +128,7 @@ public class TictactoeBoard extends AbstractBoard<Integer>
     }
 
     @Override
-    public void updateCases( String strBoard )
+    public void updateBoard( String strBoard )
     {
         // TODO Auto-generated method stub
         
