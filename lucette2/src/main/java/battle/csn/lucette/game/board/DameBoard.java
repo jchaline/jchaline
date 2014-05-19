@@ -62,7 +62,7 @@ public class DameBoard extends AbstractBoard<Integer> implements IBoard<Integer>
         }
 
         //set the black
-        for ( int row = 0; row < 2; row++ )
+        for ( int row = 0; row < 4; row++ )
         {
             for ( int column = 0; column < x; column++ )
             {
@@ -74,7 +74,7 @@ public class DameBoard extends AbstractBoard<Integer> implements IBoard<Integer>
         }
 
         //set the white
-        for ( int row = x - 1; row > x - 3; row-- )
+        for ( int row = x - 1; row > x - 5; row-- )
         {
             for ( int column = 0; column < x; column++ )
             {

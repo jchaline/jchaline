@@ -68,12 +68,12 @@ class DameBoard extends Board[Int] {
           if (inBoundary(row + color, column - 1)) {
             if (caseMatchValue(row + color, column - 1, Etat.EMPTY)) {
               //that's a possible move
-              moves += new Move(Seq(row, column, row + color, column - 1))
+              moves += Move(row, column, row + color, column - 1)
             } else //if the color is different we may take the pawn
             if (!caseMatchValue(row + color, column - 1, color)) {
               if (inBoundary(row + (2 * color), column - 2)) {
                 if (caseMatchValue(row + (2 * color), column - 2, Etat.EMPTY)) {
-                  moves += new Move(Seq(row, column, row + (2 * color), column - 2))
+                  moves += Move(row, column, row + (2 * color), column - 2)
                 }
               }
             }
@@ -83,14 +83,14 @@ class DameBoard extends Board[Int] {
           if (inBoundary(row + color, column + 1)) {
             if (caseMatchValue(row + color, column + 1,Etat.EMPTY)) {
               //that's a possible move
-              moves += new Move(Seq(row, column, row + color, column + 1))
+              moves += Move(row, column, row + color, column + 1)
             }
             //if the color is different we may take the pawn
             else{
                 if (!caseMatchValue(row + color, column + 1,color)) {
                   if (inBoundary(row + (2 * color), column + 2)) {
                     if (caseMatchValue(row + (2 * color), column + 2,Etat.EMPTY)) {
-                      moves+= new Move(Seq(row, column, row + (2 * color), column + 2))
+                      moves+= Move(row, column, row + (2 * color), column + 2)
                     }
                   }
                 }
@@ -103,7 +103,7 @@ class DameBoard extends Board[Int] {
               && !caseMatchValue(row - color, column - 1,Etat.EMPTY)) {
               if (inBoundary(row - (2 * color), column - 2)) {
                 if (caseMatchValue(row - (2 * color), column - 2,Etat.EMPTY)) {
-                  moves += new Move(Seq(row, column, row - (2 * color), column - 2))
+                  moves +=  Move(row, column, row - (2 * color), column - 2)
                 }
               }
             }
@@ -115,7 +115,7 @@ class DameBoard extends Board[Int] {
               && !caseMatchValue(row - color, column + 1,Etat.EMPTY)) {
               if (inBoundary(row - (2 * color), column + 2)) {
                 if (caseMatchValue(row - (2 * color), column + 2,Etat.EMPTY)) {
-                  moves += new Move(Seq(row, column, row - (2 * color), column + 2))
+                  moves += Move(row, column, row - (2 * color), column + 2)
                 }
               }
             }
@@ -132,9 +132,9 @@ class DameBoard extends Board[Int] {
     for (i <- 0 to DIM_X - 1) for (j <- 0 to DIM_Y - 1) writeCase(Etat.EMPTY, Seq(i, j))
 
     //set the black
-    for (i <- 0 to 3) for (j <- 0 to DIM_Y - 1) if (whiteCase(i, j)) writeCase(Etat.BLACK, Seq(i, j))
+    for (i <- 0 to 3) for (j <- 0 to DIM_Y - 1) if (whiteCase(i, j)) writeCase(Etat.WHITE, Seq(i, j))
 
-    for (i <- DIM_X - 4 to DIM_X - 1) for (j <- 0 to DIM_Y - 1) if (whiteCase(i, j)) writeCase(Etat.WHITE, Seq(i, j))
+    for (i <- DIM_X - 4 to DIM_X - 1) for (j <- 0 to DIM_Y - 1) if (whiteCase(i, j)) writeCase(Etat.BLACK, Seq(i, j))
   }
 
   def inBoundary(x: Int, y: Int) = (x < DIM_X && x >= 0 && y < DIM_Y && y >= 0)
