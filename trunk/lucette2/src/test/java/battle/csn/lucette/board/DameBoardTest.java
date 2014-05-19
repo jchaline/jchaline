@@ -2,6 +2,8 @@ package battle.csn.lucette.board;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +22,18 @@ public class DameBoardTest
     public void initBoard( )
     {
         board = new DameBoard( );
+    }
+
+    @Test
+    public void compareWithScala( )
+    {
+        List<Move> moves = board.getMoveAvailables( );
+        System.out.println( board );
+        System.out.println( moves.size( ) );
+        for ( Move m : moves )
+        {
+            System.out.println( m );
+        }
     }
 
     @Test

@@ -17,8 +17,11 @@ class DameBoardTest {
   @Test
   def moveAvailablesTest() {
     var board = new DameBoard()
+    println("search for : ")
+    println(board)
     var ms = board.moveAvailables(1)
-    println(ms.size)
+    println("find : "+ms.size)
+    ms.foreach(println(_))
   }
 
   @Test
