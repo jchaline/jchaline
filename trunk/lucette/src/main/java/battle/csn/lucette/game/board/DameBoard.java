@@ -3,11 +3,17 @@ package battle.csn.lucette.game.board;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import battle.csn.lucette.game.structure.Move;
 
 
 public class DameBoard extends AbstractBoard<Integer> implements IBoard<Integer>
 {
+    private static final String LINE_SEPARATOR = "\n";
+    private static final String COLUMN_SEPARATOR = ",";
+    private static final String BLACK = "o";
+    private static final String WHITE = "x";
     private static final int DIM_X = 10, DIM_Y = 10;
 
     public int getWidth( )
@@ -91,7 +97,7 @@ public class DameBoard extends AbstractBoard<Integer> implements IBoard<Integer>
     @Override
     public String toString( )
     {
-        String gameBoard = "\n";
+        String gameBoard = "";
         for ( int i = 0; i < DIM_X; i++ )
         {
             for ( int j = 0; j < DIM_Y; j++ )
@@ -99,17 +105,17 @@ public class DameBoard extends AbstractBoard<Integer> implements IBoard<Integer>
                 switch ( _cases.get( i, j ) )
                 {
                 case Etat.EMPTY:
-                    gameBoard += " ,";
+                    gameBoard += " " + COLUMN_SEPARATOR;
                     break;
                 case Etat.WHITE:
-                    gameBoard += "x,";
+                    gameBoard += WHITE + COLUMN_SEPARATOR;
                     break;
                 case Etat.BLACK:
-                    gameBoard += "o,";
+                    gameBoard += BLACK + COLUMN_SEPARATOR;
                     break;
                 }
             }
-            gameBoard += "\n";
+            gameBoard += LINE_SEPARATOR;
         }
         return gameBoard;
     }
@@ -296,9 +302,28 @@ public class DameBoard extends AbstractBoard<Integer> implements IBoard<Integer>
     }
 
     @Override
-    public void updateCases( String strBoard )
+    public void updateBoard( String strBoard )
     {
-        // TODO Auto-generated method stub
-
+        String[] lines = strBoard.split( LINE_SEPARATOR );
+        int i = 0;
+        for ( String line : lines )
+        {
+            int j = 0;
+            String[] columns = line.split( COLUMN_SEPARATOR );
+            for ( String elem : columns )
+            {
+                elem = elem.trim( );
+                if ( StringUtils.isNotBlank( elem ) )
+                {
+                    writeCase( elem.equals( WHITE ) ? Etat.WHITE : Etat.BLACK, i, j );
+                }
+                else
+                {
+                    writeCase( Etat.EMPTY, i, j );
+                }
+                j++;
+            }
+            i++;
+        }
     }
 }

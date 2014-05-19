@@ -33,7 +33,7 @@ public class PlayState extends AbstractIntermediateState
 
         Moteur moteur = new Moteur( "" );
         IBoard plateau = moteur.getPlateau( );
-        plateau.updateCases( strBoard );
+        plateau.updateBoard( strBoard );
 
         List<String> idEquipes = new ArrayList<>( );
         idEquipes.add( chain.getStateMachine( ).getIdEquipe( ) );

@@ -94,5 +94,5 @@ public interface IBoard<T>
      * Met à jour le plateau via une chaine de caractère
      * @param strBoard le plateau sous forme de string
      */
-    void updateCases(String strBoard);
+    void updateBoard(String strBoard);
 }
