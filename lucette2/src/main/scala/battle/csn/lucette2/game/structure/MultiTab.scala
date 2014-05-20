@@ -8,6 +8,7 @@ class  MultiTab[T] extends ICases[T] {
   var value: Option[T] = _
   var subTab= new MutableList[MultiTab[T]]()
   var dimensions: Seq[Int] = _
+  var move:Move=_
 
   def MultiTab() = this.deep = 1
 
