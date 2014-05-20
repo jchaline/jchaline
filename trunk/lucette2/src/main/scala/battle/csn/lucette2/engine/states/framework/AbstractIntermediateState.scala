@@ -1,5 +1,8 @@
 package battle.csn.lucette2.engine.states.framework
 
-trait AbstractIntermediateState {
-
+trait AbstractIntermediateState extends State {
+   
+    override def done() ={
+        false;
+    }
 }
