@@ -14,10 +14,10 @@
 	<context:annotation-config />
 	<tx:annotation-driven />
 
-	<!-- Lucette Scala Spring -->
+	<!-- Scala Lucette Spring -->
 	<import resource="ScalaSpringBeans.xml" />
 
-	<!-- Lucette Java Spring -->
+	<!-- Java Lucette Spring -->
 	<import resource="JavaSpringBeans.xml" />
 
 	<!-- AOP Spring configuration -->
