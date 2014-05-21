@@ -9,18 +9,10 @@
 				        http://www.springframework.org/schema/tx 
 				        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-	<import resource="springConfiguration/SpringConfiguration.xml" />
-
-	<context:annotation-config />
-	<tx:annotation-driven />
-
-	<!-- Lucette Scala Spring -->
-	<import resource="ScalaSpringBeans.xml" />
-
-	<!-- Lucette Java Spring -->
-	<import resource="JavaSpringBeans.xml" />
-
-	<!-- AOP Spring configuration -->
-	<import resource="springAOP/SpringAOP.xml" />
+	<bean id="negamax" class="battle.csn.lucette.game.logic.AlphaBeta" />
+	<bean class="battle.csn.lucette.game.board.DameBoard" />
+	<bean class="battle.csn.lucette.game.bot.DameBotNegaMax">
+		<property name="maxDeep" value="3" />
+	</bean>
 
 </beans>
