@@ -5,7 +5,6 @@ import battle.csn.lucette.game.board.IBoard
 import battle.csn.lucette.game.structure.Move
 import scala.collection.JavaConverters._
 
-@Service("logic.negamax")
 class NegaMax extends Logic {
 
   private var cpt = 0
