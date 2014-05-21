@@ -7,17 +7,24 @@ import battle.csn.lucette2.engine.FightStateMachine
 import battle.csn.lucette2.engine.Engine
 import scala.collection.mutable.MutableList
 import battle.csn.lucette2.game.structure.Move
+import org.apache.log4j.Logger
 
 class PlayState extends AbstractIntermediateState {
+
+  def LOGGER = Logger.getLogger(classOf[PlayState]);
 
   def pull(chain: Chain) {
     var stateMachine: FightStateMachine = chain.stateMachine
 
     var strBoard = new RestClient().getBoard(chain.stateMachine.game)
 
-    var engine = new Engine();
-    var plateau = engine.plateau
-    plateau.updateBoard(strBoard);
+    var engine = new Engine("");
+    var plateau = engine.board
+
+    plateau match {
+      case Some(p) => p.updateBoard(strBoard)
+      case None => LOGGER.error("Error while updating board")
+    }
 
     var idEquipes = MutableList[String]()
     idEquipes += chain.stateMachine.idEquipe
