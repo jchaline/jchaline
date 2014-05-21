@@ -17,6 +17,8 @@ class Engine[T](idGame: String) {
   var bot: Option[Bot[T]] = _
 
   {
+    LOGGER.debug("Init spring context")
+    
     context = new ClassPathXmlApplicationContext(SPRING_BEANS_XML)
     board = Some(context.getBean(classOf[Board[T]]))
     bot = Some(context.getBean(classOf[Bot[T]]))
