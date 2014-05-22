@@ -21,8 +21,7 @@ class NegaMaxTest extends AssertionsForJUnit with MockitoSugar {
     when(mockBoard.deepCopy()).thenReturn(mockBoard)
 
     var eval = solver.solve(mockBoard, 1000, -1000, (x: IBoard[Int]) => 0, true, 2)
-    println("cpt : "+solver.getCpt())
 
-    assert(eval==0)
+    assertTrue(eval==0)
   }
 }

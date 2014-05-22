@@ -15,13 +15,13 @@
 	<aop:config>
 		<aop:aspect id="logTimeAspect" ref="timeProfiler">
 			<aop:pointcut
-				expression="execution(* battle.csn.lucette.game.*.*.*(..))"
+				expression="execution(* battle.csn.lucette2.game.*.*.*(..))"
 				id="executeForTime" />
 			<aop:around pointcut-ref="executeForTime" method="timeProfile" />
 		</aop:aspect>
 		<aop:aspect id="logArgsAspect" ref="argsProfiler">
 			<aop:pointcut
-				expression="execution(* battle.csn.lucette.game.*.*.d(..))"
+				expression="execution(* battle.csn.lucette2.game.*.*.d(..))"
 				id="executeForArgs" />
 			<aop:around pointcut-ref="executeForArgs" method="argsProfile" />
 		</aop:aspect>
