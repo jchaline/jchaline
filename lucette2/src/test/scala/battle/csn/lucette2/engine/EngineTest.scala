@@ -19,9 +19,22 @@ class EngineTest extends AssertionsForJUnit with MockitoSugar {
   @Test
   def moveAvailableTest() {
     var e = new Engine[Int]("game1");
-    var optM = e.chooseMove("player1")
+    var currentPlayer = "player1"
+    var optM = e.chooseMove(currentPlayer)
     optM match {
-      case Some(m) => e.play("player1", m)
+      case Some(m) => e.play(currentPlayer, m)
+      case default => fail("No move find")
+    }
+    currentPlayer = "player2"
+    optM = e.chooseMove(currentPlayer)
+    optM match {
+      case Some(m) => e.play(currentPlayer, m)
+      case default => fail("No move find")
+    }
+    currentPlayer = "player2"
+    optM = e.chooseMove(currentPlayer)
+    optM match {
+      case Some(m) => e.play(currentPlayer, m)
       case default => fail("No move find")
     }
   }
