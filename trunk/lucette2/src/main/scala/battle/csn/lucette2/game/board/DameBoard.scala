@@ -13,16 +13,17 @@ class DameBoard extends Board[Int] {
   val COLUMN_SEPARATOR = ","
   val BLACK = "o"
   val WHITE = "x"
-    
+  var turn = 1
+
   var players = Map("player1" -> 1, "player2" -> -1)
 
   {
     updateSize(Seq(DIM_X, DIM_Y))
     reset()
   }
-  
-  def registerPlayer(playerName:String*){
-    
+
+  def registerPlayer(playerName: String*) {
+
   }
 
   def play(playerName: String, move: Move) {
@@ -39,6 +40,7 @@ class DameBoard extends Board[Int] {
       var adverseY = (y2 + y1) / 2
       writeCase(Etat.EMPTY, adverseX, adverseY)
     }
+    turn *= -1
   }
 
   override def toString() = {
@@ -141,7 +143,7 @@ class DameBoard extends Board[Int] {
         }
       }
     }
-    moves;
+    moves.toList
   }
 
   def whiteCase(x: Int, y: Int) = (x + y) % 2 == 0
@@ -175,4 +177,15 @@ class DameBoard extends Board[Int] {
       i += 1
     }
   }
+
+  def gameStatus(playerName: String) =
+    {
+      var status = "";
+      if (moveAvailables(playerName).isEmpty) {
+        status = PERDU;
+      } else {
+        status = if (players(playerName) == turn) OUI else NON
+      }
+      status
+    }
 }

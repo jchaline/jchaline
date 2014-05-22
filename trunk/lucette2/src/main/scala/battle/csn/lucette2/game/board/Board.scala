@@ -8,23 +8,29 @@ import battle.csn.lucette2.game.structure.MultiTab
  * Interface d'un plateau standard
  */
 trait Board[T] {
-  
-  val cases : ICases[T]=new MultiTab[T]()
-  
+
+  val OUI = "OUI"
+  val NON = "NON"
+  val GAGNE = "GAGNE"
+  val PERDU = "PERDU"
+  val ANNULE = "ANNULE"
+
+  val cases: ICases[T] = new MultiTab[T]()
+
   /**
    * Enregistre le nom d'un ou de plusieurs joueurs au sein du plateau,
    * remplace les noms par defaut
    * @param playerName liste des nom de joueurs ou d'équipes
-   * 
+   *
    */
-  def registerPlayer(playerName:String*)
-  
+  def registerPlayer(playerName: String*)
+
   /**
    * Joue un coup si possible sur le plateau courant pour l'equipe donné
    * @param move coup joué, pas de position car abstraction du type de coup
    * @param move coup joué, pas de position car abstraction du type de coup
    */
-  def play(player:String, move: Move)
+  def play(player: String, move: Move)
 
   /**
    * Retourne le plateau courant sous forme textuel pour être parsé
@@ -50,7 +56,7 @@ trait Board[T] {
    * Attention, cette methode reinitilise complétement le plateau
    * @param sizes tailles
    */
-  protected def updateSize(sizes: Seq[Int])=this.cases.updateSizes(sizes)
+  protected def updateSize(sizes: Seq[Int]) = this.cases.updateSizes(sizes)
 
   /**
    * Lire une case du plateau en fonction des coordonnées (x,y)
@@ -58,18 +64,24 @@ trait Board[T] {
    * @param y ordonnée de la case
    * @return la case
    */
-  def readCase(coords: Seq[Int])=this.cases.get(coords)
-  
-  def writeCase(value:T,coords: Int*)=this.cases.set(value, coords)
+  def readCase(coords: Seq[Int]) = this.cases.get(coords)
+
+  def writeCase(value: T, coords: Int*) = this.cases.set(value, coords)
 
   /**
    * Met à jour le plateau via une chaine de caractère
    * @param strBoard le plateau sous forme de string
    */
   def updateBoard(strBoard: String)
-  
+
   /**
    * Reset le plateau avec la disposition de départ classic
    */
   def reset()
+  
+  /**
+   * Get the game status for any team
+   * @param playerName the team to get the status
+   */
+  def gameStatus(playerName: String):String
 }
