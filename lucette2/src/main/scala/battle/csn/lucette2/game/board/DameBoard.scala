@@ -182,9 +182,9 @@ class DameBoard extends Board[Int] {
     {
       var status = "";
       if (moveAvailables(playerName).isEmpty) {
-        status = PERDU;
+        status = Board.PERDU;
       } else {
-        status = if (players(playerName) == turn) OUI else NON
+        status = if (players(playerName) == turn) Board.OUI else Board.NON
       }
       status
     }

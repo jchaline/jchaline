@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext
 import battle.csn.lucette2.game.logic.Logic
 import org.apache.log4j.Logger
 import battle.csn.lucette2.game.structure.Move
+import battle.csn.lucette2.game.structure.State
 
 class Engine[T](idGame: String) {
 
@@ -36,6 +37,13 @@ class Engine[T](idGame: String) {
     board match {
       case Some(b) => b.play(player, move)
       case default => LOGGER.error("Error while playing move")
+    }
+  }
+  
+  def gameStatus(playerName:String)={
+    board match{
+      case Some(b) => b.gameStatus(playerName)
+      case default => Board.ERROR
     }
   }
 

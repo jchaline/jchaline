@@ -8,13 +8,6 @@ import battle.csn.lucette2.game.structure.MultiTab
  * Interface d'un plateau standard
  */
 trait Board[T] {
-
-  val OUI = "OUI"
-  val NON = "NON"
-  val GAGNE = "GAGNE"
-  val PERDU = "PERDU"
-  val ANNULE = "ANNULE"
-
   val cases: ICases[T] = new MultiTab[T]()
 
   /**
@@ -66,6 +59,11 @@ trait Board[T] {
    */
   def readCase(coords: Seq[Int]) = this.cases.get(coords)
 
+  /**
+   * set case value
+   * @param value the value to set on the board
+   * @param coords the positions
+   */
   def writeCase(value: T, coords: Int*) = this.cases.set(value, coords)
 
   /**
@@ -84,4 +82,12 @@ trait Board[T] {
    * @param playerName the team to get the status
    */
   def gameStatus(playerName: String):String
+}
+object Board{
+  val OUI = "OUI"
+  val NON = "NON"
+  val GAGNE = "GAGNE"
+  val PERDU = "PERDU"
+  val ANNULE = "ANNULE"
+  val ERROR = "ERROR"
 }
