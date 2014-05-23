@@ -28,14 +28,16 @@ class EngineTest extends AssertionsForJUnit with MockitoSugar {
     
     var status = e.gameStatus(players(turn))
     while(status.equals(Board.OUI)){
-      
         var optM = e.chooseMove(players(turn))
                 optM match {
                 case Some(m) => e.play(players(turn), m);LOGGER.debug(m)
                 case default => fail("No move find")
         }
         turn *= -1
+        status = e.gameStatus(players(turn))
+        println(status)
     }
+    println("result : "+players(turn)+" : "+status)
   }
 
 }
