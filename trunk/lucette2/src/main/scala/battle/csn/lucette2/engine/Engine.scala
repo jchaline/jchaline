@@ -1,6 +1,7 @@
 package battle.csn.lucette2.engine
 
 import battle.csn.lucette2.game.board.Board
+
 import org.springframework.context.ApplicationContext
 import battle.csn.lucette2.game.bot.Bot
 import org.springframework.context.support.ClassPathXmlApplicationContext
@@ -17,7 +18,8 @@ class Engine[T](idGame: String) {
   var context: ApplicationContext = _
   var board: Option[Board[T]] = _
   var bot: Option[Bot[T]] = _
-
+  var players=Map("player1"->1,"player2"->2)
+  
   {
     LOGGER.debug("Init spring context")
 
@@ -25,24 +27,24 @@ class Engine[T](idGame: String) {
     board = Some(context.getBean(classOf[Board[T]]))
     bot = Some(context.getBean(classOf[Bot[T]]))
 
-    var logic = Option(context.getBean(classOf[Logic]));
+    var logic = Some(context.getBean(classOf[Logic]));
 
     bot match {
-      case Some(b) => b.logic = logic
+      case Some(b) => (b.logic = logic)
       case None => LOGGER.error("Error while getting logic bean")
     }
   }
 
   def play(player: String, move: Move) {
     board match {
-      case Some(b) => b.play(player, move)
+      case Some(b) => b.play(players(player), move)
       case default => LOGGER.error("Error while playing move")
     }
   }
   
-  def gameStatus(playerName:String)={
+  def gameStatus(player:String)={
     board match{
-      case Some(b) => b.gameStatus(playerName)
+      case Some(b) => b.gameStatus(players(player))
       case default => Board.ERROR
     }
   }
@@ -51,7 +53,7 @@ class Engine[T](idGame: String) {
     bot match {
       case Some(robot) =>
         board match {
-          case Some(b) => robot.chooseMove(player, b)
+          case Some(b) => robot.chooseMove(players(player), b)
           case default => None
         }
       case default => None

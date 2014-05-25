@@ -1,7 +1,7 @@
 package battle.csn.lucette2.game.board
 
+
 import battle.csn.lucette2.game.structure.Move
-import battle.csn.lucette.game.board.Etat
 import org.apache.commons.lang3.StringUtils
 import scala.collection.mutable.MutableList
 import battle.csn.lucette2.game.structure.State
@@ -15,30 +15,23 @@ class DameBoard extends Board[Int] {
   val WHITE = "x"
   var turn = 1
 
-  var players = Map("player1" -> 1, "player2" -> -1)
-
   {
     updateSize(Seq(DIM_X, DIM_Y))
     reset()
   }
 
-  def registerPlayer(playerName: String*) {
-
-  }
-
-  def play(playerName: String, move: Move) {
-    var player = players(playerName)
+  def play(player: Int, move: Move) {
     var x1 = move.positions(0)
     var y1 = move.positions(1)
     var x2 = move.positions(2)
     var y2 = move.positions(3);
-    writeCase(Etat.EMPTY, x1, y1) //empty the initial position
+    writeCase(State.EMPTY, x1, y1) //empty the initial position
     writeCase(player, x2, y2) //fill the new one.
     //if we take an adverse pawn
     if ((Math.abs(x2 - x1) == 2)) {
       var adverseX = (x2 + x1) / 2
       var adverseY = (y2 + y1) / 2
-      writeCase(Etat.EMPTY, adverseX, adverseY)
+      writeCase(State.EMPTY, adverseX, adverseY)
     }
     turn *= -1
   }
@@ -49,9 +42,9 @@ class DameBoard extends Board[Int] {
       for (j <- 0 to DIM_Y - 1) {
         var value = readCase(Seq(i, j))
         var append = value match {
-          case None | Some(Etat.EMPTY) => " "
-          case Some(Etat.WHITE) => WHITE
-          case Some(Etat.BLACK) => BLACK
+          case None | Some(State.EMPTY) => " "
+          case Some(State.WHITE) => WHITE
+          case Some(State.BLACK) => BLACK
           case _ => ""
         }
         gameBoard += (append + COLUMN_SEPARATOR)
@@ -75,8 +68,7 @@ class DameBoard extends Board[Int] {
     }
   }
 
-  def moveAvailables(playerName: String) = {
-    var player = players(playerName)
+  def moveAvailables(player: Int) = {
     var moves = MutableList[Move]()
 
     for (row <- 0 to DIM_X - 1) {
@@ -178,13 +170,13 @@ class DameBoard extends Board[Int] {
     }
   }
 
-  def gameStatus(playerName: String) =
+  def gameStatus(player: Int) =
     {
       var status = "";
-      if (moveAvailables(playerName).isEmpty) {
+      if (moveAvailables(player).isEmpty) {
         status = Board.PERDU;
       } else {
-        status = if (players(playerName) == turn) Board.OUI else Board.NON
+        status = if (player == turn) Board.OUI else Board.NON
       }
       status
     }

@@ -1,36 +1,38 @@
 package battle.csn.lucette2.game.logic
 
+
 import org.springframework.stereotype.Service
-import battle.csn.lucette.game.board.IBoard
-import battle.csn.lucette.game.structure.Move
 import scala.collection.JavaConverters._
+import battle.csn.lucette2.game.board.Board
 
 class NegaMax extends Logic {
 
   private var cpt = 0
   
     def getCpt():Int={cpt}
-    
-    def solve(plateau : IBoard[Int], alpha:Integer, beta:Integer, heuristique:(IBoard[Int]) => Int, findMax:Boolean, deep: Integer):Int={
+
+  /**
+     * this algorithm can only use with black & white players games
+     */
+    def solve(player:Int, plateau : Board[Int], alpha:Integer, beta:Integer, heuristique:(Int , Board[Int]) => Int, findMax:Boolean, deep: Integer):Int={
         cpt+=1
         var value = 0;
-        var moves = plateau.getMoveAvailables( )
+        var moves = plateau.moveAvailables(player)
 
         //si le plateau est une feuille
-        if ( moves.size( ) == 0 || deep == 0 ) 
+        if ( moves.size == 0 || deep == 0 ) 
         {
-            value = heuristique(plateau)
+            value = heuristique(player, plateau)
         }
         else
         {
             var bestScore = if (findMax) Integer.MIN_VALUE else Integer.MAX_VALUE
-            var move : Move=null
             //Pour toutes les coups jouables du plateau
-            for ( move <- moves.asScala )
+            for ( move <- moves )
             {
                 var deepCopy = plateau.deepCopy( );
-                deepCopy.play( move );
-                var score = solve( deepCopy, -beta, -alpha, heuristique, !findMax, deep - 1 );
+                deepCopy.play( player,move );
+                var score = solve(player * -1, deepCopy, -beta, -alpha, heuristique, !findMax, deep - 1 );
                 if ( ( findMax && score > bestScore ) || ( !findMax && score < bestScore ) )
                 {
                     bestScore = score;

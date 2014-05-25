@@ -19,7 +19,7 @@ class DameBoardTest {
     var board = new DameBoard()
     println("search for : ")
     println(board)
-    var ms = board.moveAvailables("player1")
+    var ms = board.moveAvailables(1)
     println("find : "+ms.size)
     ms.foreach(println(_))
   }

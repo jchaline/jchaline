@@ -11,19 +11,11 @@ trait Board[T] {
   val cases: ICases[T] = new MultiTab[T]()
 
   /**
-   * Enregistre le nom d'un ou de plusieurs joueurs au sein du plateau,
-   * remplace les noms par defaut
-   * @param playerName liste des nom de joueurs ou d'équipes
-   *
-   */
-  def registerPlayer(playerName: String*)
-
-  /**
    * Joue un coup si possible sur le plateau courant pour l'equipe donné
    * @param move coup joué, pas de position car abstraction du type de coup
    * @param move coup joué, pas de position car abstraction du type de coup
    */
-  def play(player: String, move: Move)
+  def play(player: Int, move: Move)
 
   /**
    * Retourne le plateau courant sous forme textuel pour être parsé
@@ -42,7 +34,7 @@ trait Board[T] {
    * @param player couleur du joueur pour lequel on cherche les coups
    * @return la liste des déplacements disponible pour le joueur donné
    */
-  def moveAvailables(player: String): Seq[Move]
+  def moveAvailables(player: Int): Seq[Move]
 
   /**
    * Créer les cases nécessaires pour obtenir un plateau de la taille XxYxZ...
@@ -81,7 +73,7 @@ trait Board[T] {
    * Get the game status for any team
    * @param playerName the team to get the status
    */
-  def gameStatus(playerName: String):String
+  def gameStatus(player: Int):String
 }
 object Board{
   val OUI = "OUI"

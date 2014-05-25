@@ -4,7 +4,7 @@ import battle.csn.lucette2.game.board.Board
 
 class DameBot extends Bot[Int] {
 
-  def chooseMove(player: String, board: Board[Int]) = {
+  def chooseMove(player: Int, board: Board[Int]) = {
     var moves = board.moveAvailables(player)
 
     if (moves.size == 0) {
