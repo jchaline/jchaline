@@ -9,6 +9,7 @@ import org.junit.Assert._
 import org.junit._
 import org.scalatest.mock._
 import org.mockito.Mockito._
+import battle.csn.lucette2.game.board.Board
 
 @RunWith(classOf[MockitoJUnitRunner])
 class NegaMaxTest extends AssertionsForJUnit with MockitoSugar {
@@ -17,10 +18,10 @@ class NegaMaxTest extends AssertionsForJUnit with MockitoSugar {
   def solveBoardTest() {
     var solver: NegaMax = new NegaMax
 
-    val mockBoard = mock[IBoard[Int]]
+    val mockBoard = mock[Board[Int]]
     when(mockBoard.deepCopy()).thenReturn(mockBoard)
 
-    var eval = solver.solve(mockBoard, 1000, -1000, (x: IBoard[Int]) => 0, true, 2)
+    var eval = solver.solve(1, mockBoard, 1000, -1000, (x:Int, y: Board[Int]) => 0, true, 2)
 
     assertTrue(eval==0)
   }

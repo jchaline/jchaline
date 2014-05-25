@@ -12,5 +12,5 @@ trait Bot[T] {
    * @param player l'equipe
    * @return le coup
    */
-  def chooseMove(player: String, board: Board[T]): Option[Move]
+  def chooseMove(player: Int, board: Board[T]): Option[Move]
 }

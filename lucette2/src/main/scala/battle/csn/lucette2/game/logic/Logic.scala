@@ -1,9 +1,9 @@
 package battle.csn.lucette2.game.logic
 
-import battle.csn.lucette.game.board.IBoard
+import battle.csn.lucette2.game.board.Board
 
 trait Logic {
   
-  def solve(plateau : IBoard[Int], alpha:Integer, beta:Integer, heuristique:(IBoard[Int]) => Int, findMax:Boolean, deep: Integer):Int
+  def solve(player:Int, plateau : Board[Int], alpha:Integer, beta:Integer, heuristique:(Int, Board[Int]) => Int, findMax:Boolean, deep: Integer):Int
   
 }
