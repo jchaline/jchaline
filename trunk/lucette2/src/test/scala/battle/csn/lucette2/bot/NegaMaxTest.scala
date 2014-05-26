@@ -9,7 +9,9 @@ import org.junit.Assert._
 import org.junit._
 import org.scalatest.mock._
 import org.mockito.Mockito._
+import scala.concurrent._
 import battle.csn.lucette2.game.board.Board
+import scala.concurrent.ExecutionContext.Implicits.global
 
 @RunWith(classOf[MockitoJUnitRunner])
 class NegaMaxTest extends AssertionsForJUnit with MockitoSugar {
