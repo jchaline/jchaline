@@ -2,6 +2,7 @@ package tools.mapplugins.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,9 +13,6 @@ import org.apache.log4j.Logger;
 import tools.mapplugins.bean.ArtifactComparator;
 import tools.mapplugins.bean.Repository;
 import tools.mapplugins.xml.Project;
-
-import com.google.gwt.thirdparty.guava.common.base.Predicate;
-import com.google.gwt.thirdparty.guava.common.collect.Iterables;
 
 
 public class MavenService
@@ -84,6 +82,7 @@ public class MavenService
      */
     private static Project findDependencyWithRange( Repository repo, String groupId, String artifactId, String version )
     {
+        Project p = null;
         List<String> listVersions = getListVersionsAvailable( repo, groupId, artifactId );
         String[] plages = version.split( MARK_COMMA );
 
@@ -94,36 +93,46 @@ public class MavenService
         String minVersion = plages[0].length( ) > 1 ? plages[0].substring( 1 ) : listVersions.get( 0 );
         String maxVersion = plages[1].length( ) > 1 ? plages[1].substring( 0, plages[1].length( ) - 1 ) : listVersions
                 .get( listVersions.size( ) - 1 );
-        
-        Predicate<String> predicateAcceptVersion = getAcceptVersionMethod( minVersion, maxVersion, firstChar, lastChar );
-        Iterable<String> iterablePortfolio = Iterables.filter( listVersions, predicateAcceptVersion );
-        logger.debug( "Use minVersion:" + minVersion + ", maxVersion:" + maxVersion );
 
-        return null;
+        String v = searchVersion( listVersions, minVersion, maxVersion, firstChar, lastChar );
+        logger.debug( "Use minVersion:" + minVersion + ", maxVersion:" + maxVersion );
+        if ( StringUtils.isNotBlank( v ) )
+        {
+            p = repo.get( groupId, artifactId, v );
+        }
+
+        return p;
     }
 
     /**
-     * Get the predicate method to filter version list
+     * Search the greatest version
+     * @param listVersions the list to search
      * @param min the mininum version accepted
      * @param max the maximum version accepted
      * @param bornMin the min born
      * @param bornMax the max born
-     * @return the accepted predicate
+     * @return the version
      */
-    private static Predicate<String> getAcceptVersionMethod( String min, String max, char bornMin, char bornMax )
+    private static String searchVersion( List<String> listVersions, String minVersion, String maxVersion,
+            char firstChar, char lastChar )
     {
-        Predicate<String> acceptMethod = new Predicate<String>( )
+        Collections.sort( listVersions, new ArtifactComparator( ) );
+        Collections.reverse( listVersions);
+        boolean find = false;
+        String version = null;
+        Iterator<String> itr = listVersions.iterator( );
+        while ( itr.hasNext( ) && !find )
         {
-            @Override
-            public boolean apply( String o )
-            {
-                if ( o == null )
-                    return false;
-                String tested = (String) o;
-                return tested.equals( "2.0.2" );
+            String v = itr.next( );
+            int compare = ArtifactComparator.compareStatic( v, maxVersion);
+            if(compare<=0){
+                if(compare<0 || lastChar==MARK_HOOK_CLOSE ){
+                    version = v;
+                    find = true;
+                }
             }
-        };
-        return acceptMethod;
-    }
+        }
 
+        return version;
+    }
 }

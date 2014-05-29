@@ -56,6 +56,17 @@ public class ArtifactComparator implements Comparator<String>, Serializable
      */
     public int compare( String version1, String version2 )
     {
+        return compareStatic( version1, version2 );
+    }
+
+    /**
+     * The Artifact compare method
+     * @param version1 the first artifact
+     * @param version2 the second artifact
+     * @return -1, 0 ou 1
+     */
+    public static int compareStatic( String version1, String version2 )
+    {
         int compare = 0;
         String[] arrayVersion1 = version1.split( REGEX_DOT );
         String[] arrayVersion2 = version2.split( REGEX_DOT );

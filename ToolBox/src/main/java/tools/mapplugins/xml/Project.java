@@ -9,28 +9,29 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "project")
+
+@XmlAccessorType( XmlAccessType.FIELD )
+@XmlRootElement( name = "project" )
 public class Project implements Serializable
 {
     private static final long serialVersionUID = -6333685159954247911L;
 
-    @XmlElement(name="artifactid")
+    @XmlElement( name = "artifactid" )
     private String artifactId;
 
-    @XmlElement(name="version")
+    @XmlElement( name = "version" )
     private String version;
 
-    @XmlElement(name="groupid")
+    @XmlElement( name = "groupid" )
     private String groupId;
-    
-    @XmlElement(name="type")
+
+    @XmlElement( name = "type" )
     private String type;
-    
-    @XmlElementWrapper(name="dependencies")
-    @XmlElement(name="dependency")
+
+    @XmlElementWrapper( name = "dependencies" )
+    @XmlElement( name = "dependency" )
     private List<Dependency> dependencies;
-    
+
     /**
      * @return the groupId
      */
@@ -38,6 +39,7 @@ public class Project implements Serializable
     {
         return groupId;
     }
+
     /**
      * @param groupId the groupId to set
      */
@@ -45,6 +47,7 @@ public class Project implements Serializable
     {
         this.groupId = groupId;
     }
+
     /**
      * @return the artifactId
      */
@@ -52,6 +55,7 @@ public class Project implements Serializable
     {
         return artifactId;
     }
+
     /**
      * @param artifactId the artifactId to set
      */
@@ -59,6 +63,7 @@ public class Project implements Serializable
     {
         this.artifactId = artifactId;
     }
+
     /**
      * @return the version
      */
@@ -66,6 +71,7 @@ public class Project implements Serializable
     {
         return version;
     }
+
     /**
      * @param version the version to set
      */
@@ -73,6 +79,7 @@ public class Project implements Serializable
     {
         this.version = version;
     }
+
     /**
      * @return the dependencies
      */
@@ -80,6 +87,7 @@ public class Project implements Serializable
     {
         return dependencies;
     }
+
     /**
      * @param dependencies the dependencies to set
      */
@@ -87,6 +95,7 @@ public class Project implements Serializable
     {
         this.dependencies = dependencies;
     }
+
     /**
      * @return the type
      */
@@ -94,12 +103,19 @@ public class Project implements Serializable
     {
         return type;
     }
+
     /**
      * @param type the type to set
      */
     public void setType( String type )
     {
         this.type = type;
+    }
+
+    @Override
+    public String toString( )
+    {
+        return "[" + groupId + ";" + artifactId + ";" + version + "]";
     }
 
 }
