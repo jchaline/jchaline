@@ -4,38 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
-	<!-- @AspectJ support -->
+<!--  -->
 	<aop:aspectj-autoproxy />
-	<!-- Aspect sample with annotation -->
-	<!-- <bean id="boardProfiler" class="battle.csn.lucette.profile.BoardProfiler" /> -->
-	
-	<!-- Aspect with only XML configuration -->
-<!-- 	<bean id="timeProfiler" class="battle.csn.lucette.profile.TimeProfiler" /> -->
 
-	<!-- <aop:config>
-		<aop:aspect id="executeNegaMaxAspect" ref="timeProfiler">
-			<aop:pointcut
-				expression="execution(* battle.csn.lucette.game.bot.AbstractBot.alphaBeta(..))"
-				id="executeNegaMax" />
-			<aop:around pointcut-ref="executeNegaMax" method="timeProfile" />
-		</aop:aspect>
-		<aop:aspect id="executeChooseMoveAspect" ref="timeProfiler">
-			<aop:pointcut
-				expression="execution(* battle.csn.lucette.game.bot.IBot.chooseMove(..))"
-				id="executeChooseMove" />
-			<aop:around pointcut-ref="executeChooseMove" method="timeProfile" />
-		</aop:aspect>
-		<aop:aspect id="executeDeepCopyAspect" ref="timeProfiler">
-			<aop:pointcut
-				expression="execution(* battle.csn.lucette.game.board.IBoard.deepCopy(..))"
-				id="executeDeepCopy" />
-			<aop:around pointcut-ref="executeDeepCopy" method="timeProfile" />
-		</aop:aspect>
-		<aop:aspect id="executeMovesAvailablesAspect" ref="timeProfiler">
-			<aop:pointcut
-				expression="execution(* battle.csn.lucette.game.board.IBoard.getMoveAvailables(..))"
-				id="executeMovesAvailables" />
-			<aop:around pointcut-ref="executeMovesAvailables" method="timeProfile" />
-		</aop:aspect>
-	</aop:config> -->
 </beans>

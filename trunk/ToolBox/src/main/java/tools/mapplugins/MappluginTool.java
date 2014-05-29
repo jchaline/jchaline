@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.tmatesoft.svn.core.SVNException;
 
 import services.PropertiesService;
+import services.SerializableService;
 import services.svn.Svn;
 import services.svn.SvnEntry;
 import services.svn.SvnFilter;
@@ -44,30 +45,8 @@ public class MappluginTool implements Tool
     @Override
     public int run( )
     {
-        Repository repo = null;
-
         String serializableFile = PropertiesService.getProperty( MappluginConstants.MARK_SERIALIZABLE_FILE );
-        FileInputStream inputFile = null;
-        try
-        {
-            inputFile = new FileInputStream( serializableFile );
-            ObjectInputStream ois = new ObjectInputStream( inputFile );
-            repo = (Repository) ois.readObject( );
-            ois.close( );
-            inputFile.close( );
-        }
-        catch ( FileNotFoundException e1 )
-        {
-            logger.info( "File " + serializableFile + " not exist, ask SVN repos" );
-        }
-        catch ( IOException e )
-        {
-            logger.info( "File " + serializableFile + " throw error." );
-        }
-        catch ( ClassNotFoundException e )
-        {
-            logger.info( "File " + serializableFile + " throw error." );
-        }
+        Repository repo = SerializableService.deserialize( serializableFile );
 
         if ( repo == null )
         {
@@ -122,24 +101,8 @@ public class MappluginTool implements Tool
             }
         }
 
-        try
-        {
-            FileOutputStream outputFile = new FileOutputStream( serializableFile );
-            ObjectOutputStream oos = new ObjectOutputStream( outputFile );
-            oos.writeObject( repo );
-            oos.flush( );
-            oos.close( );
-        }
-        catch ( IOException e )
-        {
-            logger.error( "Error while create serializable file" );
-        }
-
-        Project dependencySimple = MavenService.findDependency( repo, "fr.paris.lutece.plugins", "plugin-html",
-                "2.1.2-SNAPSHOT" );
-        Project dependencyPlage = MavenService.findDependency( repo, "fr.paris.lutece.plugins", "plugin-html",
-                "[2.0.2-SNAPSHOT,2.4.0]" );
-
+        SerializableService.serialize( repo, serializableFile );
+        
         //derniere etape, generer le fichier SQL permettant de créer la bdd
         String sqlPath = PropertiesService.getProperty( MappluginConstants.MARK_SQL_FILE );
         SqlService.generateSqlFile( repo, sqlPath );
