@@ -98,6 +98,8 @@ public class MappluginTool implements Tool
         }
 
         SerializableService.serialize( repo, serializableFile );
+        
+        MavenService.associateDependencies( repo );
 
         //derniere etape, generer le fichier SQL permettant de créer la bdd
         String sqlPath = PropertiesService.getProperty( MappluginConstants.MARK_SQL_FILE );

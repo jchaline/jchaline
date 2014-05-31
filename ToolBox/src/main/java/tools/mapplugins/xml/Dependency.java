@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import tools.mapplugins.commons.MappluginConstants;
+
 
 @XmlAccessorType( XmlAccessType.FIELD )
 @XmlType( name = "dependency" )
@@ -93,6 +95,7 @@ public class Dependency implements Serializable
     @Override
     public String toString( )
     {
-        return groupId + ";" + artifactId + ";" + version;
+        return groupId + MappluginConstants.ARTIFACT_COORD_SEPARATOR + artifactId
+                + MappluginConstants.ARTIFACT_COORD_SEPARATOR + version;
     }
 }
