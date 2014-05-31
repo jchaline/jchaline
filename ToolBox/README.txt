@@ -53,6 +53,7 @@ a quoi sert et comment est utilisé le contenu de la balise <class> dans le plug
  X ajouter fichier macro pour convertir type variable java => SQL et utiliser la macro dans la génération des scripts SQL
  X corriger generation jsp avec module stock billetterie
  X 2 modes => 1) génération des fichiers (java, jsp, html, xml) par defaut s'ils n'existent pas (en fonction d'un fichier de config), 2) génération des fichiers manquants et reprise du contenu des fichiers existants (adaptation selon les parametres existants ?)
+ X mappingplugin => remplacer les maven properties pour les versions 
  
 refactorer le marker pour utiliser le fichier de conf
 permettre de marquer les jsp au niveau du contenu injecté par les jsp bean 

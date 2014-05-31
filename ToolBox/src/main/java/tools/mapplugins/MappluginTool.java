@@ -1,11 +1,6 @@
 package tools.mapplugins;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
@@ -75,6 +70,7 @@ public class MappluginTool implements Tool
                             try
                             {
                                 unmarshal = SvnService.getProject( element.getUrl( ) );
+                                MavenService.correctProject( unmarshal );
 
                                 //referencer l'artifact courant
                                 repo.add( unmarshal );
@@ -102,7 +98,7 @@ public class MappluginTool implements Tool
         }
 
         SerializableService.serialize( repo, serializableFile );
-        
+
         //derniere etape, generer le fichier SQL permettant de créer la bdd
         String sqlPath = PropertiesService.getProperty( MappluginConstants.MARK_SQL_FILE );
         SqlService.generateSqlFile( repo, sqlPath );

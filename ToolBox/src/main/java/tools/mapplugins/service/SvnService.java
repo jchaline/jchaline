@@ -38,6 +38,7 @@ public class SvnService
 
         Project unmarshal = (Project) jaxbUnmarshaller
                 .unmarshal( new StringReader( pomContent.replaceAll( "[\n ]", "" ) ) );
+        //TODO : replace maven properties
         return unmarshal;
     }
 

@@ -12,11 +12,14 @@ import org.apache.log4j.Logger;
 
 import tools.mapplugins.bean.ArtifactComparator;
 import tools.mapplugins.bean.Repository;
+import tools.mapplugins.xml.Dependency;
 import tools.mapplugins.xml.Project;
 
 
 public class MavenService
 {
+    private static final String DEFAULT_GROUPID = "fr.paris.lutece.plugins";
+
     private static final Logger logger = Logger.getLogger( MavenService.class );
 
     private static final char MARK_PARENTHESE_OPEN = '(';
@@ -24,6 +27,38 @@ public class MavenService
     private static final char MARK_HOOK_OPEN = '[';
     private static final char MARK_HOOK_CLOSE = ']';
     private static final String MARK_COMMA = ",";
+
+    /**
+     * Set all dependencies with dependency solver
+     * Log error if dependency cannot be found
+     * @param repo the repository to associate
+     */
+    public static void associateDependencies( Repository repo )
+    {
+        //log si pas de dependence trouvé
+        for ( Project p : repo.getProjectsList( ) )
+        {
+            p.setRealDependencies( new ArrayList<String>() );
+            if ( p.getDependencies( ) != null && !p.getDependencies( ).isEmpty( ) )
+            {
+
+                for ( Dependency d : p.getDependencies( ) )
+                {
+                    logger.debug( "Dependency #" + d + "# search for " + p );
+                    Project realDependency = findDependency( repo, d.getGroupId( ), d.getArtifactId( ), d.getVersion( ) );
+                    if ( realDependency != null )
+                    {
+                        p.getRealDependencies( ).add( realDependency.toString( ) );
+                    }
+                    else
+                    {
+                        p.getRealDependencies( ).add( d.toString( ) );
+                        logger.error( "Dependency #" + d + "# not found for " + p );
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Get the list ordered of the available versions for any artifact
@@ -84,21 +119,23 @@ public class MavenService
     {
         Project p = null;
         List<String> listVersions = getListVersionsAvailable( repo, groupId, artifactId );
-        String[] plages = version.split( MARK_COMMA );
-
-        char firstChar = plages[0].charAt( 0 );
-        char lastChar = plages[1].charAt( plages[1].length( ) - 1 );
-
-        //get the using min and max version
-        String minVersion = plages[0].length( ) > 1 ? plages[0].substring( 1 ) : listVersions.get( 0 );
-        String maxVersion = plages[1].length( ) > 1 ? plages[1].substring( 0, plages[1].length( ) - 1 ) : listVersions
-                .get( listVersions.size( ) - 1 );
-
-        String v = searchVersion( listVersions, minVersion, maxVersion, firstChar, lastChar );
-        logger.debug( "Use minVersion:" + minVersion + ", maxVersion:" + maxVersion );
-        if ( StringUtils.isNotBlank( v ) )
+        if ( !listVersions.isEmpty( ) )
         {
-            p = repo.get( groupId, artifactId, v );
+            String[] plages = version.split( MARK_COMMA );
+
+            char firstChar = plages[0].charAt( 0 );
+            char lastChar = plages[1].charAt( plages[1].length( ) - 1 );
+
+            //get the using min and max version
+            String minVersion = plages[0].length( ) > 1 ? plages[0].substring( 1 ) : listVersions.get( 0 );
+            String maxVersion = plages[1].length( ) > 1 ? plages[1].substring( 0, plages[1].length( ) - 1 )
+                    : listVersions.get( listVersions.size( ) - 1 );
+
+            String v = searchVersion( listVersions, minVersion, maxVersion, firstChar, lastChar );
+            if ( StringUtils.isNotBlank( v ) )
+            {
+                p = repo.get( groupId, artifactId, v );
+            }
         }
 
         return p;
@@ -117,16 +154,18 @@ public class MavenService
             char firstChar, char lastChar )
     {
         Collections.sort( listVersions, new ArtifactComparator( ) );
-        Collections.reverse( listVersions);
+        Collections.reverse( listVersions );
         boolean find = false;
         String version = null;
         Iterator<String> itr = listVersions.iterator( );
         while ( itr.hasNext( ) && !find )
         {
             String v = itr.next( );
-            int compare = ArtifactComparator.compareStatic( v, maxVersion);
-            if(compare<=0){
-                if(compare<0 || lastChar==MARK_HOOK_CLOSE ){
+            int compare = ArtifactComparator.compareStatic( v, maxVersion );
+            if ( compare <= 0 )
+            {
+                if ( compare < 0 || lastChar == MARK_HOOK_CLOSE )
+                {
                     version = v;
                     find = true;
                 }
@@ -134,5 +173,17 @@ public class MavenService
         }
 
         return version;
+    }
+
+    /**
+     * Correct project data
+     * @param the project to correct
+     */
+    public static void correctProject( Project p )
+    {
+        if ( StringUtils.isBlank( p.getGroupId( ) ) )
+        {
+            p.setGroupId( DEFAULT_GROUPID );
+        }
     }
 }
