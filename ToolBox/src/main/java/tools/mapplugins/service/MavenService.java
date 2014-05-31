@@ -38,7 +38,7 @@ public class MavenService
         //log si pas de dependence trouvé
         for ( Project p : repo.getProjectsList( ) )
         {
-            p.setRealDependencies( new ArrayList<String>() );
+            p.setRealDependencies( new ArrayList<String>( ) );
             if ( p.getDependencies( ) != null && !p.getDependencies( ).isEmpty( ) )
             {
 

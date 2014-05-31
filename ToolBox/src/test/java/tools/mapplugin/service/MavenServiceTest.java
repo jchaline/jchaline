@@ -47,7 +47,7 @@ public class MavenServiceTest
         assertTrue( ArtifactComparator.compareStatic( "3.0.1-RC02", "3.0.1-RC02" ) == 0 );
         assertTrue( ArtifactComparator.compareStatic( "3.0.1-RC03", "3.0.1-RC02" ) == 1 );
     }
-    
+
     @Test
     @Ignore( "Not yet implemented" )
     public void compareTest( )

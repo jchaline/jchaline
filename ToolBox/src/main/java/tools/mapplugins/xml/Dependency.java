@@ -7,23 +7,25 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "dependency")
+
+@XmlAccessorType( XmlAccessType.FIELD )
+@XmlType( name = "dependency" )
 public class Dependency implements Serializable
 {
     private static final long serialVersionUID = -3474385308647789992L;
 
-    @XmlElement(name="artifactid")
+    @XmlElement( name = "artifactid" )
     private String artifactId;
 
-    @XmlElement(name="version")
+    @XmlElement( name = "version" )
     private String version;
 
-    @XmlElement(name="groupid")
+    @XmlElement( name = "groupid" )
     private String groupId;
-    
-    @XmlElement(name="type")
+
+    @XmlElement( name = "type" )
     private String type;
+
     /**
      * @return the type
      */
@@ -31,6 +33,7 @@ public class Dependency implements Serializable
     {
         return type;
     }
+
     /**
      * @param type the type to set
      */
@@ -38,6 +41,7 @@ public class Dependency implements Serializable
     {
         this.type = type;
     }
+
     /**
      * @return the groupId
      */
@@ -45,6 +49,7 @@ public class Dependency implements Serializable
     {
         return groupId;
     }
+
     /**
      * @param groupId the groupId to set
      */
@@ -52,6 +57,7 @@ public class Dependency implements Serializable
     {
         this.groupId = groupId;
     }
+
     /**
      * @return the version
      */
@@ -59,6 +65,7 @@ public class Dependency implements Serializable
     {
         return version;
     }
+
     /**
      * @param version the version to set
      */
@@ -66,6 +73,7 @@ public class Dependency implements Serializable
     {
         this.version = version;
     }
+
     /**
      * @return the artifactId
      */
@@ -73,6 +81,7 @@ public class Dependency implements Serializable
     {
         return artifactId;
     }
+
     /**
      * @param artifactId the artifactId to set
      */
@@ -80,9 +89,10 @@ public class Dependency implements Serializable
     {
         this.artifactId = artifactId;
     }
-    
+
     @Override
-    public String toString(){
-        return "[" + groupId + ";" + artifactId + ";" + version + "]"; 
+    public String toString( )
+    {
+        return groupId + ";" + artifactId + ";" + version;
     }
 }

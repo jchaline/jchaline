@@ -32,11 +32,11 @@ public class Project implements Serializable
     @XmlElementWrapper( name = "dependencies" )
     @XmlElement( name = "dependency" )
     private List<Dependency> dependencies;
-    
+
     /**
      * All str dependency, groupId;artifactId;version
      */
-    private List<String> realDependencies = new ArrayList<String>();
+    private List<String> realDependencies = new ArrayList<String>( );
 
     /**
      * @return the groupId
@@ -121,7 +121,7 @@ public class Project implements Serializable
     @Override
     public String toString( )
     {
-        return "[" + groupId + ";" + artifactId + ";" + version + "]";
+        return groupId + ";" + artifactId + ";" + version;
     }
 
     /**
