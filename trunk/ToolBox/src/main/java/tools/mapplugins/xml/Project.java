@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import tools.mapplugins.commons.MappluginConstants;
+
 
 @XmlAccessorType( XmlAccessType.FIELD )
 @XmlRootElement( name = "project" )
@@ -121,7 +123,8 @@ public class Project implements Serializable
     @Override
     public String toString( )
     {
-        return groupId + ";" + artifactId + ";" + version;
+        return groupId + MappluginConstants.ARTIFACT_COORD_SEPARATOR + artifactId
+                + MappluginConstants.ARTIFACT_COORD_SEPARATOR + version;
     }
 
     /**

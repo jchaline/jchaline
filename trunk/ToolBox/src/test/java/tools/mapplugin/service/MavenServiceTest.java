@@ -36,7 +36,7 @@ public class MavenServiceTest
     }
 
     @Test
-    @Ignore( "Not yet implemented" )
+    @Ignore( "Not yet implemented : suffix different of SNAPSHOT" )
     public void compareAlphaTest( )
     {
         assertTrue( ArtifactComparator.compareStatic( "2.0.0", "2.0.2" ) == -1 );
@@ -49,13 +49,12 @@ public class MavenServiceTest
     }
 
     @Test
-    @Ignore( "Not yet implemented" )
     public void compareTest( )
     {
-        assertTrue( ArtifactComparator.compareStatic( "2.0.0", "2.0.2" ) == -1 );
-        assertTrue( ArtifactComparator.compareStatic( "2.0.1", "2.0.2" ) == -1 );
-        assertTrue( ArtifactComparator.compareStatic( "3.0.1", "2.0.2" ) == 1 );
-        assertTrue( ArtifactComparator.compareStatic( "3.0.1", "3.0.1-SNAPSHOT" ) == 1 );
+        assertTrue( ArtifactComparator.compareStatic( "2.0.0", "2.0.2" ) < 0 );
+        assertTrue( ArtifactComparator.compareStatic( "2.0.1", "2.0.2" ) < 0 );
+        assertTrue( ArtifactComparator.compareStatic( "3.0.1", "2.0.2" ) > 0 );
+        assertTrue( ArtifactComparator.compareStatic( "3.0.1", "3.0.1-SNAPSHOT" ) > 0 );
     }
 
     @Test
@@ -71,6 +70,15 @@ public class MavenServiceTest
         MavenService.associateDependencies( repo );
 
         assertTrue( !project.getRealDependencies( ).isEmpty( ) );
+
+        //asser that all dependency contains three part separate with ;
+        for ( Project p : repo.getProjectsList( ) )
+        {
+            for ( String s : p.getRealDependencies( ) )
+            {
+                assertTrue( s.split( MappluginConstants.ARTIFACT_COORD_SEPARATOR ).length == 3 );
+            }
+        }
     }
 
     @Test
