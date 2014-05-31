@@ -36,6 +36,9 @@ package tools.mapplugins.bean;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+
 
 /**
  * 
@@ -44,8 +47,11 @@ import java.util.Comparator;
  */
 public class ArtifactComparator implements Comparator<String>, Serializable
 {
+    private static final Logger LOGGER = Logger.getLogger( ArtifactComparator.class );
+
     private static final String REGEX_DOT = "\\.";
     private static final String REGEX_DASH = "-";
+    private static final String SNAPSHOT = "SNAPSHOT";
     private static final long serialVersionUID = 6330488276398145992L;
 
     /**
@@ -70,6 +76,7 @@ public class ArtifactComparator implements Comparator<String>, Serializable
         int compare = 0;
         String[] arrayVersion1 = version1.split( REGEX_DOT );
         String[] arrayVersion2 = version2.split( REGEX_DOT );
+        String tmp1, tmp2;
 
         if ( arrayVersion1.length == 3 && arrayVersion2.length == 3 )
         {
@@ -79,11 +86,12 @@ public class ArtifactComparator implements Comparator<String>, Serializable
                 {
                     if ( !arrayVersion1[2].equals( arrayVersion2[2] ) )
                     {
+                        //TODO : correction for -RCx version or FINAL, RELEASE, ... Actually, only work with SNAPSHOT key
                         String minor1 = arrayVersion1[2];
                         String minor2 = arrayVersion2[2];
                         String[] split1 = minor1.split( REGEX_DASH );
                         String[] split2 = minor2.split( REGEX_DASH );
-                        compare = ( Integer.valueOf( split1[0] ).compareTo( Integer.valueOf( split2[0] ) ) );
+                        compare = split1[0].compareTo( split2[0] );
                         if ( split1.length != split2.length && compare == 0 )
                         {
                             compare = split1.length > split2.length ? -1 : 1;
@@ -92,12 +100,12 @@ public class ArtifactComparator implements Comparator<String>, Serializable
                 }
                 else
                 {
-                    compare = ( Integer.valueOf( arrayVersion1[1] ).compareTo( Integer.valueOf( arrayVersion2[1] ) ) );
+                    compare = arrayVersion1[1].compareTo( arrayVersion2[1] );
                 }
             }
             else
             {
-                compare = ( Integer.valueOf( arrayVersion1[0] ).compareTo( Integer.valueOf( arrayVersion2[0] ) ) );
+                compare = ( arrayVersion1[0] ).compareTo( arrayVersion2[0] );
             }
         }
         else if ( arrayVersion1.length != 3 && arrayVersion2.length == 3 )

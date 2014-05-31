@@ -80,4 +80,9 @@ public class Dependency implements Serializable
     {
         this.artifactId = artifactId;
     }
+    
+    @Override
+    public String toString(){
+        return "[" + groupId + ";" + artifactId + ";" + version + "]"; 
+    }
 }

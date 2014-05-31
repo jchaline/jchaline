@@ -1,6 +1,7 @@
 package tools.mapplugins.xml;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -31,6 +32,11 @@ public class Project implements Serializable
     @XmlElementWrapper( name = "dependencies" )
     @XmlElement( name = "dependency" )
     private List<Dependency> dependencies;
+    
+    /**
+     * All str dependency, groupId;artifactId;version
+     */
+    private List<String> realDependencies = new ArrayList<String>();
 
     /**
      * @return the groupId
@@ -116,6 +122,22 @@ public class Project implements Serializable
     public String toString( )
     {
         return "[" + groupId + ";" + artifactId + ";" + version + "]";
+    }
+
+    /**
+     * @return the realDependencies
+     */
+    public List<String> getRealDependencies( )
+    {
+        return realDependencies;
+    }
+
+    /**
+     * @param realDependencies the realDependencies to set
+     */
+    public void setRealDependencies( List<String> realDependencies )
+    {
+        this.realDependencies = realDependencies;
     }
 
 }
