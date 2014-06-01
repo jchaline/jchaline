@@ -16,17 +16,16 @@ class RepositoryApp extends AbstractXPageApplication {
 
   var TEMPLATE_REPOSITORY = "skin/plugins/scala/repository/repository.html";
 
-  var artifactService = new ArtifactService()
-  
-  var LOGGER :Logger = Logger.getLogger(classOf[RepositoryApp])
+  var artifactService = SpringContextService.getContext().getBean(classOf[IArtifactService])
+
+  var LOGGER: Logger = Logger.getLogger(classOf[RepositoryApp])
 
   def getPage(request: HttpServletRequest, nMode: Int, plugin: Plugin): XPage = {
     var page: XPage = new XPage()
 
     var model: Map[String, Object] = Map()
-    
-    
-    var graph =new  Graph()
+
+    var graph = new Graph()
     graph.addNode("A")
     graph.addNode("B")
     graph.addNode("C")
@@ -48,12 +47,15 @@ class RepositoryApp extends AbstractXPageApplication {
     graph.addLink("F", "I", 250)
     graph.addLink("I", "J", 84)
     graph.addLink("E", "J", 502)
-    
-    var  neighbors = graph.getNeighbors("A")
-    LOGGER.debug(neighbors)
-    
+
+    var neighbors = graph.getNeighbors("A")
+    //LOGGER.debug(neighbors)
+
     var way = graph.findShortestWay("A", "J")
-    LOGGER.error(way)
+    //LOGGER.error(way)
+
+    var artifact = artifactService.findByStrPrimaryKey("")
+    println(artifact)
 
     var template = AppTemplateService.getTemplate(TEMPLATE_REPOSITORY, request.getLocale(), model);
 

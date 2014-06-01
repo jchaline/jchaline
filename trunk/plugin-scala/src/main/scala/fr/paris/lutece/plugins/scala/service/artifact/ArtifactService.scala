@@ -19,7 +19,8 @@ class ArtifactService extends IArtifactService {
   }
   
   def findByStrPrimaryKey(key:String):Artifact={
-    artifactDAO.findByStrPrimaryKey(key)
+    //artifactDAO.findByStrPrimaryKey(key)
+          new Artifact()
   }
   
 }

@@ -5,11 +5,11 @@ class Graph(name: String = "Graph", bidirectional: Boolean = true) {
    * All nodes members of the graph
    */
   var nodes: Map[String, Node] = Map()
-  
+
   /**
    * The actual position
    */
-  var position:String=null
+  var position: String = null
 
   def findShortestWay(node1: String, node2: String): List[String] = {
     null
@@ -44,21 +44,21 @@ class Graph(name: String = "Graph", bidirectional: Boolean = true) {
       Map()
     }
   }
-  
+
   /**
    * Get the actuals neighbors
    */
-  def getNeighbors():Map[String,Int]={
+  def getNeighbors(): Map[String, Int] = {
     getNeighbors(position)
   }
-  
+
   /**
    * Move to neighbors node and return the distance between the nodes
    */
-  def move(name:String):Int={
+  def move(name: String): Int = {
     var distance = -1
-    if(getNeighbors().contains(name)){
-      position=name
+    if (getNeighbors().contains(name)) {
+      position = name
       distance = getNeighbors()(name)
     }
     distance
