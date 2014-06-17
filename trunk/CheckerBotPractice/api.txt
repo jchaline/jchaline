@@ -1,0 +1,11 @@
+     PING_URI = "/ping"
+     PING_ERROR_500 = "/pingError500"
+     PING_ERROR_403 = "/pingError403"
+     GET_ID_EQUIPE_URI = "/player/getIdEquipe/"
+     STATUS_URI = "/game/status/"
+     BOARD_URI = "/game/board/"
+     LAST_MOVE_URI = "/game/getlastmove/"
+     PLAY_URI = "/game/play/"
+
+     CREATE_GAME_URI = "localhost:8080/test/practice/new/level/idEquipe"
+     GET_ID_GAME_URI = "/versus/next/"
