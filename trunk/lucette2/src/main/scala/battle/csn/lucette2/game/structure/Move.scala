@@ -13,7 +13,7 @@ class Move(var positions: Seq[Int]) {
   /**
    * @param _idEquipe the _idEquipe to set
    */
-  def setIdEquipe(idEquipe: String) = this.idEquipe = idEquipe;
+  def setIdEquipe(idEquipe: String) = this.idEquipe = idEquipe
 
   def equals(other: Move) =
     {

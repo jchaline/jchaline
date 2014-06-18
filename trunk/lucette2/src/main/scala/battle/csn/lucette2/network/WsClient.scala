@@ -79,5 +79,5 @@ trait WsClient {
    * @param motDePasse
    * @return
    */
-  def getIdEquipe(nomEquipe: String, motDePasse: String):String;
+  def getIdEquipe(nomEquipe: String, motDePasse: String):String
 }

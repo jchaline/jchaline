@@ -34,14 +34,14 @@ class  MultiTab[T] extends ICases[T] {
   @Override
   def updateSizes(dimensions: Seq[Int]) =
     {
-      this.dimensions = dimensions;
-      this.deep = dimensions.length;
+      this.dimensions = dimensions
+      this.deep = dimensions.length
       if (dimensions.length > 0) {
-        var dimensionsUpdate = dimensions.drop(1);
+        var dimensionsUpdate = dimensions.drop(1)
         var i = 0
         for (i <- 0 to dimensions(0)-1) {
           var t = new MultiTab[T]()
-          t.updateSizes(dimensionsUpdate);
+          t.updateSizes(dimensionsUpdate)
           this.subTab += t
         }
       } else {
@@ -58,11 +58,11 @@ class  MultiTab[T] extends ICases[T] {
 
   override def toString() =
     {
-      var result = "";
+      var result = ""
       if (deep == 1) {
         var i = 0
         for (i <- 0 to dimensions(0)) {
-          result += subTab(i).get(Seq());
+          result += subTab(i).get(Seq())
         }
       }
       result;

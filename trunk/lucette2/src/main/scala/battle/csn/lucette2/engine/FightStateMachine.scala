@@ -7,8 +7,8 @@ class FightStateMachine(var idEquipe:String, var game:String) {
         var chain = new Chain( this )
         while ( !chain.done( ) )
         {
-            chain.pull( );
+            chain.pull( )
         }
-        chain.pull( );
+        chain.pull( )
     }
 }

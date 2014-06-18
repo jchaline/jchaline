@@ -41,43 +41,43 @@ class RestClient extends WsClient {
   def getGameStatus(idPartie: String, idEquipe: String) =
     {
       var getStatusUri = STATUS_URI + idPartie + URI_SEPARATOR + idEquipe;
-      client.callString(getStatusUri);
+      client.callString(getStatusUri)
     }
 
   @Override
   def getBoard(idPartie: String) =
     {
       var getBoard = BOARD_URI + idPartie;
-      client.callString(getBoard);
+      client.callString(getBoard)
     }
 
   @Override
   def getNewPracticeGame(idEquipe: String, level: Int) =
     {
-      var getNewPractiveGame = CREATE_GAME_URI + level + URI_SEPARATOR + idEquipe;
-      client.callString(getNewPractiveGame);
+      var getNewPractiveGame = CREATE_GAME_URI + level + URI_SEPARATOR + idEquipe
+      client.callString(getNewPractiveGame)
     }
 
   @Override
   def getGameId(idEquipe: String) =
     {
-      client.callString(GET_ID_GAME_URI);
+      client.callString(GET_ID_GAME_URI)
     }
 
   @Override
   def getLastMove(idPartie: String) =
     {
-      var getLastMove = LAST_MOVE_URI + idPartie;
-      client.callString(getLastMove);
+      var getLastMove = LAST_MOVE_URI + idPartie
+      client.callString(getLastMove)
     }
 
   @Override
   def play(idPartie: String, idEquipe: String, coords: Seq[Int]) =
     {
-      var playMove = PLAY_URI + idPartie + URI_SEPARATOR + idEquipe;
+      var playMove = PLAY_URI + idPartie + URI_SEPARATOR + idEquipe
       for (coord <- coords) {
-        playMove += URI_SEPARATOR + String.valueOf(coord);
+        playMove += URI_SEPARATOR + String.valueOf(coord)
       }
-      client.callString(playMove);
+      client.callString(playMove)
     }
 }

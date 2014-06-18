@@ -8,6 +8,6 @@ class ErrorState(message: String) extends AbstractFinalState {
   def LOGGER = Logger.getLogger(classOf[ErrorState]);
 
   override def pull(wrapper: Chain) {
-    LOGGER.warn("ERREUR : " + message);
+    LOGGER.warn("ERREUR : " + message)
   }
 }
