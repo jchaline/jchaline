@@ -3,6 +3,13 @@ package battle.csn.lucette2.client
 import battle.csn.lucette2.network.RestClient
 import org.apache.commons.cli.Options
 import org.apache.commons.cli.{Option=>OptionApache}
+import org.apache.commons.cli.CommandLine
+import org.apache.commons.cli.HelpFormatter
+import org.apache.commons.cli.OptionGroup
+import org.apache.commons.cli.DefaultParser
+import battle.csn.lucette.service.InitGameHelper
+import battle.csn.lucette2.engine.FightStateMachine
+import org.apache.commons.cli.ParseException
 
 
 class LucetteClient {
@@ -13,14 +20,14 @@ class LucetteClient {
     
     val restClient = new RestClient( );
 
-    def run( args :String*)
+    def run( args :Array[String])
     {
-        Options options = getOptions ( );
+        var options = getOptions ( );
 
         try
         {
-            CommandLine cmd = new DefaultParser( ).parse( options, args );
-            String teamId = getTeamName( cmd );
+            var cmd = new DefaultParser( ).parse( options, args )
+            var teamId = getTeamName( cmd )
             // TODO : récupérer l'identidiant d'équipe
             if ( cmd.hasOption( "h" ) )
             {
@@ -32,12 +39,12 @@ class LucetteClient {
             }
             else if ( cmd.hasOption( "m" ) )
             {
-                final String game = InitGameHelper.getGameId( teamId );
+                var game = InitGameHelper.getGameId( teamId );
                 new FightStateMachine( teamId, game ).start( );
             }
             else if ( cmd.hasOption( "e" ) )
             {
-                int level = Integer.parseInt( cmd.getOptionValue( "e" ) );
+                var level = Integer.parseInt( cmd.getOptionValue( "e" ) );
                 if ( level < 0 || level > 5 )
                 {
                     System.out.println( "Level must be between 0 and 5." );
@@ -45,22 +52,25 @@ class LucetteClient {
                 }
                 else
                 {
-                    final String game = InitGameHelper.getTrainingGameId( teamId, level );
+                    var game = InitGameHelper.getTrainingGameId( teamId, level );
                     new FightStateMachine( teamId, game ).start( );
                 }
             }
         }
-        catch ( ParseException e )
+        catch 
         {
+          case e: ParseException =>{
+            
             System.out.println( e.getMessage( ) );
             help( options );
+          }
         }
 
     }
 
-    private static String getTeamName( CommandLine cmd )
+    def getTeamName( cmd:CommandLine  )=
     {
-        final String team;
+        var team=""
         if ( cmd.hasOption( "t" ) )
         {
             team = cmd.getOptionValue( "t" );
@@ -70,7 +80,7 @@ class LucetteClient {
             team = TEAM_NAME;
         }
 
-        final String mdp;
+        var mdp = ""
         if ( cmd.hasOption( "pwd" ) )
         {
             mdp = cmd.getOptionValue( "pwd" );
@@ -80,10 +90,10 @@ class LucetteClient {
             mdp = TEAM_PASSWORD;
         }
 
-        return new RestClientAPI( ).getIdEquipe( team, mdp );
+        new RestClient( ).getIdEquipe( team, mdp );
     }
 
-    private static void help( Options options )
+    def help( options :Options)
     {
         new HelpFormatter( ).printHelp( APP_NAME, options );
     }
@@ -97,16 +107,16 @@ class LucetteClient {
     {
         var options = new Options( )
         var optionE = OptionApache.builder( "e" ).desc( "Entrainement" ).longOpt( "entrainement" ).numberOfArgs( 1 )
-                .type( classOf[Int]).build( );
+                .`type`( classOf[Int]).build( )
 
-        Option optionM = Option.builder( "m" ).desc( "Match" ).longOpt( "match" ).build( );
-        Option optionP = Option.builder( "p" ).desc( "Ping - network test" ).longOpt( "ping" ).build( );
-        Option optionH = Option.builder( "h" ).desc( "Help" ).longOpt( "help" ).build( );
-        Option optionT = Option.builder( "t" ).desc( "team name (default value \"" + TEAM_NAME + "\")" )
-                .longOpt( "team" ).numberOfArgs( 1 ).type( String.class ).build( );
-        Option optionPwd = Option.builder( "pwd" ).desc( "team password (default value \"" + TEAM_PASSWORD + "\")" )
-                .longOpt( "password" ).numberOfArgs( 1 ).type( String.class ).build( );
-        OptionGroup og = new OptionGroup( );
+        var optionM = OptionApache.builder( "m" ).desc( "Match" ).longOpt( "match" ).build( )
+        var optionP = OptionApache.builder( "p" ).desc( "Ping - network test" ).longOpt( "ping" ).build( )
+        var optionH = OptionApache.builder( "h" ).desc( "Help" ).longOpt( "help" ).build( );
+        var optionT = OptionApache.builder( "t" ).desc( "team name (default value \"" + TEAM_NAME + "\")" )
+                .longOpt( "team" ).numberOfArgs( 1 ).`type`( classOf[String] ).build( )
+        var optionPwd = OptionApache.builder( "pwd" ).desc( "team password (default value \"" + TEAM_PASSWORD + "\")" )
+                .longOpt( "password" ).numberOfArgs( 1 ).`type`( classOf[String] ).build( )
+        var og = new OptionGroup( )
         og.addOption( optionM );
         og.addOption( optionE );
         og.addOption( optionP );
@@ -115,6 +125,6 @@ class LucetteClient {
         options.addOptionGroup( og );
         options.addOption( optionT );
         options.addOption( optionPwd );
-        return options;
+        options
     }
 }
