@@ -18,7 +18,7 @@ class Engine[T](idGame: String) {
   var context: ApplicationContext = _
   var board: Option[Board[T]] = _
   var bot: Option[Bot[T]] = _
-  var players=Map("player1"->1,"player2"->2)
+  var players=Map("player1"->1,"player2"-> -1)
   
   {
     LOGGER.debug("Init spring context")

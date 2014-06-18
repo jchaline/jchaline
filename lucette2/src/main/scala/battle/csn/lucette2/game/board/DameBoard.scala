@@ -14,6 +14,10 @@ class DameBoard extends Board[Int] {
   val BLACK = "o"
   val WHITE = "x"
   var turn = 1
+  
+  def getWidth = DIM_X
+
+  def getHeight = DIM_X
 
   {
     updateSize(Seq(DIM_X, DIM_Y))
