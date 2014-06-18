@@ -9,6 +9,11 @@ import battle.csn.lucette2.game.structure.MultiTab
  */
 trait Board[T] {
   val cases: ICases[T] = new MultiTab[T]()
+  
+  
+  def getWidth():Int
+  
+  def getHeight():Int
 
   /**
    * Joue un coup si possible sur le plateau courant pour l'equipe donné
