@@ -18,7 +18,7 @@ class PlayState extends AbstractIntermediateState {
 
     var strBoard = new RestClient().getBoard(chain.stateMachine.game)
 
-    var engine = new Engine("");
+    var engine = new Engine("")
     var plateau = engine.board
 
     plateau match {
@@ -36,7 +36,7 @@ class PlayState extends AbstractIntermediateState {
     //var move = new GameEngine( ).getMove( plateau, chain.getStateMachine( ).getIdEquipe( ) );
     var move = Move()
 
-    var result = new RestClient().play(stateMachine.game, stateMachine.idEquipe, move.positions);
+    var result = new RestClient().play(stateMachine.game, stateMachine.idEquipe, move.positions)
 
     result match {
       case OUI =>

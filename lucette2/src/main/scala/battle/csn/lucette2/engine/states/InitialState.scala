@@ -11,8 +11,7 @@ class InitialState extends AbstractIntermediateState {
     var stateMachine = chain.stateMachine
     var idPartie = stateMachine.game
     var idEquipe = stateMachine.idEquipe
-    var gameStatus = new RestClient().getGameStatus(idPartie,
-      idEquipe);
+    var gameStatus = new RestClient().getGameStatus(idPartie, idEquipe)
     gameStatus match {
       case OUI =>
         chain.current = new PlayState()
