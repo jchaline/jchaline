@@ -1,6 +1,7 @@
 package battle.csn.lucette2.game.bot
 
 import battle.csn.lucette2.game.board.Board
+import battle.csn.lucette2.game.structure.Move
 
 class DameBot extends Bot[Int] {
   
@@ -12,16 +13,26 @@ class DameBot extends Bot[Int] {
   def chooseMove(player: Int, board: Board[Int]) = {
     var moves = board.moveAvailables(player)
     
+    var bestMove : Option[Move]=None
+    
     logic match{
-      case Some(l) => l.solve( player, board, ALPHA*player, BETA*player, evaluateBoard, player==1, DEEP )
+      case Some(l) => 
+          var maxFind = BETA
+          
+          for( move <- moves){
+              var copy = board.deepCopy()
+              copy.play(player, move)
+              var evaluation = l.solve( player, copy, ALPHA, BETA, evaluateBoard, FIND_MAX, DEEP )
+              if (evaluation>maxFind) {
+                maxFind = evaluation
+                bestMove=Some(move)
+              }
+          }
+        
       case None => 
     }
     
-    if (moves.size == 0) {
-      None
-    } else {
-      Some(moves(0))
-    }
+    bestMove
   }
   
     def evaluateBoard( player:Int, board:Board[Int]  )=
@@ -38,6 +49,8 @@ class DameBot extends Bot[Int] {
                 } 
             }
         }
-        sum
+        //first player collect the +1, second collect the -1,
+        //both try to find the best score
+        sum*player
     }
 }
