@@ -29,6 +29,8 @@ class NegaMax extends Logic {
 
   /**
    * this algorithm can only use with black & white players games
+   * TODO : verifier avec une heuristique qui donne toujours le score positif d'un joueur
+   * si enlever le "findmax" (toujours avoir true) suffit, comparer avec des exemples d'algo sur le sujet
    */
   def solve(player: Int, plateau: Board[Int], alpha: Integer, beta: Integer, heuristique: (Int, Board[Int]) => Int, findMax: Boolean, deep: Integer): Int = {
     cpt += 1
