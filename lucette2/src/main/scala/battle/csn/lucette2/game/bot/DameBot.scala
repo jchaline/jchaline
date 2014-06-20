@@ -22,7 +22,8 @@ class DameBot extends Bot[Int] {
           for( move <- moves){
               var copy = board.deepCopy()
               copy.play(player, move)
-              var evaluation = l.solve( player, copy, ALPHA, BETA, evaluateBoard, FIND_MAX, DEEP )
+              var evaluation = l.solve(board, evaluateBoard, DEEP, BETA, ALPHA, player)
+              
               if (evaluation>maxFind) {
                 maxFind = evaluation
                 bestMove=Some(move)

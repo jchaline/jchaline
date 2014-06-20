@@ -1,7 +1,6 @@
 package battle.csn.lucette2.engine
 
 import battle.csn.lucette2.game.board.Board
-
 import org.springframework.context.ApplicationContext
 import battle.csn.lucette2.game.bot.Bot
 import org.springframework.context.support.ClassPathXmlApplicationContext
@@ -9,8 +8,9 @@ import battle.csn.lucette2.game.logic.Logic
 import org.apache.log4j.Logger
 import battle.csn.lucette2.game.structure.Move
 import battle.csn.lucette2.game.structure.State
+import scala.beans.BeanProperty
 
-class Engine[T](idGame: String) {
+class Engine[T](@BeanProperty val idGame: String) {
 
   def LOGGER = Logger.getLogger(classOf[Engine[T]]);
 
