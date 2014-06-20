@@ -32,7 +32,7 @@ class NegaMax extends Logic {
    * TODO : verifier avec une heuristique qui donne toujours le score positif d'un joueur
    * si enlever le "findmax" (toujours avoir true) suffit, comparer avec des exemples d'algo sur le sujet
    */
-  def solve(player: Int, plateau: Board[Int], alpha: Integer, beta: Integer, heuristique: (Int, Board[Int]) => Int, findMax: Boolean, deep: Integer): Int = {
+  def solveOld(player: Int, plateau: Board[Int], alpha: Integer, beta: Integer, heuristique: (Int, Board[Int]) => Int, findMax: Boolean, deep: Integer): Int = {
     cpt += 1
     var value = 0;
     var moves = plateau.moveAvailables(player)
@@ -46,7 +46,7 @@ class NegaMax extends Logic {
       for (move <- moves) {
         var deepCopy = plateau.deepCopy()
         deepCopy.play(player, move)
-        var score = solve(player * -1, deepCopy, -beta, -alpha, heuristique, !findMax, deep - 1)
+        var score = solveOld(player * -1, deepCopy, -beta, -alpha, heuristique, !findMax, deep - 1)
         if ((findMax && score > bestScore) || (!findMax && score < bestScore)) {
           bestScore = score
           if ((findMax && bestScore > alpha) || (!findMax && bestScore < alpha)) {
@@ -58,6 +58,33 @@ class NegaMax extends Logic {
         }
       }
     }
+    //println("cpt : "+cpt)
     value
   }
+  
+  
+  def solve(node:Board[Int], heuristic:(Int,Board[Int]) => Int, depth:Int, α:Int, β:Int, color:Int):Int={
+    
+    var moves = node.moveAvailables(color)
+    if (depth == 0 || moves.isEmpty ) {
+        color * heuristic(color,node)
+    }
+    else{
+      var αLooped = α
+        var bestValue = Int.MinValue
+        for(move <- moves){
+          var copy = node.deepCopy
+          copy.play(color * -1, move)
+          
+          var value = -solve(copy, heuristic, depth - 1, -β, -αLooped, -color)
+          bestValue = math.max( bestValue, value )
+          αLooped = math.max( αLooped, value );
+          if (αLooped >= β){
+              break
+          }
+        }
+      bestValue
+    }
+  }
+
 }
