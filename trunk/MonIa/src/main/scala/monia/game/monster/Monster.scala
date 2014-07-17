@@ -11,7 +11,7 @@ class Monster {
   var life: Int = _
   var speed: Int = _
   var typeExp = TypeExperience.Normal
-  var typeMonster: Seq[TypeMonster] = Seq()
+  var typeMonster: List[TypeMonster] = List()
 }
 
 object Monster {
