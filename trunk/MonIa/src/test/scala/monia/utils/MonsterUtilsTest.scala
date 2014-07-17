@@ -10,14 +10,16 @@ import scala.util.parsing.json.JSONFormat
 
 @RunWith(classOf[MockitoJUnitRunner])
 class MonsterUtilsTest {
-  var jsonMonsters = "{\"monsters\":{1:{\"name\":\"Salameche\"},2:{\"name\":\"Carapuce\"}}}";
+  var jsonMonsters = "{\"monsters\":{\"1\":{\"name\":\"Salameche\"},\"2\":{\"name\":\"Carapuce\"}}}";
   var jsonTypes = "{\"types\":{\"feu\":{\"eau\":0.5,\"feu\":1},\"eau\":{\"feu\":2,\"eau\":1}}}";
-  var json = "{\"monsters\":{}}";
 
   @Test
   def loadJsonFileTest() {
-    val result = JSON.parseRaw(json)
+    var result = JSON.parseRaw(jsonTypes)
     println(result)
+    result = JSON.parseRaw(jsonMonsters)
+    println(result)
+    
     result match {
       // Matches if jsonStr is valid JSON and represents a Map of Strings to Any
       case Some(a) => println(a)
