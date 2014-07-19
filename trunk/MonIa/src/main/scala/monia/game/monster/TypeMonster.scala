@@ -3,6 +3,8 @@ package monia.game.monster
 /**
  * Feu, Eau, Plante, ...
  */
-class TypeMonster (name:String) {
-    var bonus:Map[TypeMonster,Double]=Map()
+class TypeMonster(name: String, ratio: Map[String, Double]) {
+  override def toString = name + ":" + ratio
+  
+  def getRatio=ratio
 }
