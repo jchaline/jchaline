@@ -5,7 +5,6 @@ import org.mockito.runners.MockitoJUnitRunner
 import org.junit.Test
 import scala.util.parsing.json.JSON
 import scala.util.parsing.json.JSONObject
-import jdk.nashorn.internal.parser.JSONParser
 import scala.util.parsing.json.JSONFormat
 import scala.util.parsing.json.JSONObject
 import monia.game.monster.Monster
@@ -13,6 +12,7 @@ import scala.collection.mutable.MutableList
 import org.junit.Assert._
 import monia.game.monster.TypeExperience
 import play.api.libs.json.Json
+import play.api.libs.json.JsObject
 
 @RunWith(classOf[MockitoJUnitRunner])
 class MonsterUtilsTest {
@@ -27,5 +27,19 @@ class MonsterUtilsTest {
     val res = MonsterUtils.loadJsonTypeData(strJsonTypes)
     assertTrue(res.size == NB_TYPES)
     res foreach { case (k, v) => assertTrue(v.size == NB_TYPES) }
+  }
+
+  @Test
+  def loadJsonMonsterTest() {
+    val json = Json.parse(strJsonMonsters)
+
+    val mapMap = (json \ "monsters").as[Array[JsObject]]
+    println(mapMap)
+    println(mapMap.size)
+    
+    var i=0
+    val map = mapMap map { _ => (""+(Math.random()), "de") }
+    println(map)
+
   }
 }
