@@ -1,5 +1,7 @@
 package monia.game.attaque
 
-trait Attack {
+import monia.game.effect.Effect
+
+class Attack(power:Int,points:Int,effect:Effect) {
 
 }
