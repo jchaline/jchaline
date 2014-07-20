@@ -6,5 +6,5 @@ package monia.game.monster
 class TypeMonster(name: String, ratio: Map[String, Double]) {
   override def toString = name + ":" + ratio
   
-  def getRatio=ratio
+  def size=ratio.size
 }
