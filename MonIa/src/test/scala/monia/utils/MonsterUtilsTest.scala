@@ -26,6 +26,6 @@ class MonsterUtilsTest {
 
     val res = MonsterUtils.loadJsonTypeData(strJsonTypes)
     assertTrue(res.size == NB_TYPES)
-    res foreach { case (k, v) => assertTrue(v.getRatio.size == NB_TYPES) }
+    res foreach { case (k, v) => assertTrue(v.size == NB_TYPES) }
   }
 }
