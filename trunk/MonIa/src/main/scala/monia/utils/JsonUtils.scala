@@ -17,7 +17,7 @@ object JsonUtils {
   def loadJsonMonsterData(strJson: String): Map[Int, Monster] = {
 
     val json = Json.parse(strJson)
-    val arrayJson = (json \ "monsters").as[Array[JsObject]]
+    val arrayJson = (json \ JsonConsts.MARK_MONSTERS).as[Array[JsObject]]
 
     val tuples = arrayJson map { x => ((x \ "id").as[Int], convertToMonster(x)) }
     val map = tuples.toMap
@@ -28,8 +28,8 @@ object JsonUtils {
   def loadJsonTypeData(strJson: String): Map[String, TypeMonster] = {
     val json = Json.parse(strJson)
 
-    val mapMap = (json \ "types").as[Map[String, Map[String, Double]]]
-    val mapBean = mapMap map { case (k, v) => (k, new TypeMonster(k, v)) }
+    val mapDatas = (json \ JsonConsts.MARK_TYPES).as[Map[String, Map[String, Double]]]
+    val mapBean = mapDatas map { case (k, v) => (k, new TypeMonster(k, v)) }
     mapBean
   }
 

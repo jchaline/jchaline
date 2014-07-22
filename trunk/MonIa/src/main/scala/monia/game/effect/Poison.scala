@@ -1,5 +1,4 @@
 package monia.game.effect
 
-class Poison extends Effect{
-
+class Poison(probability: Int) extends Effect {
 }
