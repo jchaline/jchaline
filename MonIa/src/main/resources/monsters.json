@@ -1,0 +1,28 @@
+{
+    "monsters": [
+        {
+            "id": 1,
+            "name": "Salameche",
+            "race": "Salameche",
+            "attack": 5,
+            "defense": 3,
+            "life": 10,
+            "typeExperience": "starter",
+            "typeMonster": [
+                "feu"
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Carapuce",
+            "race": "Carapuce",
+            "attack": 3,
+            "defense": 5,
+            "life": 10,
+            "typeExperience": "starter",
+            "typeMonster": [
+                "eau"
+            ]
+        }
+    ]
+}
