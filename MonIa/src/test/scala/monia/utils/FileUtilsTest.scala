@@ -11,11 +11,15 @@ import play.api.libs.json.Json
 @RunWith(classOf[MockitoJUnitRunner])
 class FileUtilsTest {
 
-  val PATH_FILE = "/monsters.json"
+  val PATH_MONSTER_FILE = "/monsters.json"
+  val PATH_TYPES_FILE = "/types.json"
 
   @Test
   def loadJsonFileTest() {
-    val fileContent = FileUtils.readAll(PATH_FILE)
-    assertTrue(StringUtils.isNotBlank(fileContent))
+    val fileMonsterContent = FileUtils.readAll(PATH_MONSTER_FILE)
+    assertTrue(StringUtils.isNotBlank(fileMonsterContent))
+    
+    val fileTypesContent = FileUtils.readAll(PATH_TYPES_FILE)
+    assertTrue(StringUtils.isNotBlank(fileTypesContent))
   }
 }
