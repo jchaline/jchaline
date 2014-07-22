@@ -15,7 +15,7 @@ import play.api.libs.json.Json
 import play.api.libs.json.JsObject
 
 @RunWith(classOf[MockitoJUnitRunner])
-class MonsterUtilsTest {
+class JsonUtilsTest {
   val NB_TYPES = 2
   val NB_MONSTERS = 2
 
