@@ -19,12 +19,12 @@ import monia.game.attaque.Attack
 
 @RunWith(classOf[MockitoJUnitRunner])
 class JsonUtilsTest {
-  val NB_TYPES = 2
+  val NB_TYPES = 3
   val NB_MONSTERS = 2
 
   var strJsonMonsters = """{"monsters":[{"id":1,"name":"Salameche","race":"Salameche","attack":5,"defense":3,"life":10,"typeExperience":"starter","typeMonster":["feu"]},{"id":2,"name":"Carapuce","race":"Carapuce","attack":3,"defense":5,"life":10,"typeExperience":"starter","typeMonster":["eau"]}]}"""
-  var strJsonTypes = """{"types":{"feu":{"eau":0.5,"feu":1},"eau":{"feu":2,"eau":1}}}"""
-  var strJsonAttacks = """{"attacks":[{"name":"griffe","power":35,"points":25},{"name":"pic-pic","power":20,"points":20,"effect":{"name":"poison","probability":50}}]}"""
+  var strJsonTypes = """{"types":{"feu":{"eau":0.5},"eau":{"feu":2},"poison":{"eau":2}}}"""
+  var strJsonAttacks = """{"attacks":[{"name":"griffe","type":"normal","power":35,"points":25},{"name":"pic-pic","type":"poison","power":20,"points":20,"effect":{"name":"poison","probability":50}}]}"""
 
   @Test
   def loadJsonAttacksTest() {
@@ -36,9 +36,10 @@ class JsonUtilsTest {
 
   def convertToAttack(json: JsObject) = {
     val name = (json \ "name").as[String]
+    val typeName = (json \ "type").as[String]
     val power = (json \ "power").as[Int]
     val points = (json \ "points").as[Int]
-    new Attack(name, power, points)
+    new Attack(name, typeName, power, points)
   }
 
   @Test
@@ -46,7 +47,6 @@ class JsonUtilsTest {
 
     val res = JsonUtils.loadJsonTypeData(strJsonTypes)
     assertTrue(res.size == NB_TYPES)
-    res foreach { case (k, v) => assertTrue(v.size == NB_TYPES) }
   }
 
   @Test
