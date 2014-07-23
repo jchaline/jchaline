@@ -4,6 +4,8 @@ trait Effect {
   def getName()={
     this.getClass().getName().toLowerCase()
   }
+  
+  def apply()
 
 }
 
