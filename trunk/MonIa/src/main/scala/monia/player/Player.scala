@@ -1,8 +1,7 @@
 package monia.player
 
-trait Player {
-  val name:String
-  var level:Int
-  var experience:Int
+import monia.game.monster.Monster
 
+class Player(name: String, level: Int, experience: Int) {
+  val monsters: Map[String, Monster] = Map()
 }
