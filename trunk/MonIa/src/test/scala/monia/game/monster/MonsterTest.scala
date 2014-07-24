@@ -11,7 +11,7 @@ class MonsterTest {
   def attackTest() {
     val gala = Monster.default
     val jerry = Monster.default
-    
+
     gala.attack(jerry)
 
   }
