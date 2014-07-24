@@ -13,6 +13,7 @@ class MonsterTest {
     val jerry = Monster.default
 
     gala.attack(jerry)
+    jerry.attack(gala)
 
   }
 
