@@ -1,5 +1,7 @@
 package monia.game.ia
 
-trait IA {
+import monia.game.monster.Monster
 
+trait IA {
+	def attack(owner:Monster,target:Monster)
 }
