@@ -6,7 +6,6 @@ package monia.game.map
  * ou encore un type spécial (eau, lave ?) traversable sous certaines conditions
  */
 class Square {
-  var monsters = List(("Carapuce",List(10,12,11), 15),("Salameche",List(10,12,11), 10))
-  
+  var monsters: List[MonsterLocation] = List()
 
 }
