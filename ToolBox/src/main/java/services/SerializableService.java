@@ -9,12 +9,19 @@ import java.io.ObjectOutputStream;
 
 import org.apache.log4j.Logger;
 
-
+/**
+ * Provide way to (un)serialize objects
+ */
 public class SerializableService
 {
 
     private static final Logger logger = Logger.getLogger( SerializableService.class );
 
+    /**
+     * Serialize and save object to path
+     * @param object the object to serialize
+     * @param path the path
+     */
     public static <T> void serialize( T object, String path )
     {
         try
@@ -31,6 +38,11 @@ public class SerializableService
         }
     }
 
+    /**
+     * Load object from file path
+     * @param path the path
+     * @return the object
+     */
     public static <T> T deserialize( String path )
     {
         T result = null;

@@ -360,7 +360,7 @@ public class TemplateService
 
         String folderSource = GeneratorPropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_SOURCE );
         String folderGenerated = GeneratorPropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_TO_GENERATE );
-        ret = templatePath.replaceFirst( folderSource, folderGenerated );
+        ret = templatePath.replace( folderSource, folderGenerated );
 
         ret = getFolderPath( ret );
 

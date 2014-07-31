@@ -17,7 +17,11 @@ import services.svn.SvnFilter;
 import tools.mapplugins.commons.MappluginConstants;
 import tools.mapplugins.xml.Project;
 
-
+/**
+ * TODO : use locals files OR svn connexion
+ * @author jchaline
+ *
+ */
 public class SvnService
 {
     /**

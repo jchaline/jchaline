@@ -46,13 +46,13 @@ public class MappluginTool implements Tool
         if ( repo == null )
         {
             repo = new Repository( );
+            //TODO : use url or local path
             String urlsConfig = PropertiesService.getProperty( MappluginConstants.MARK_SVN_URLS );
             String[] urls = urlsConfig.split( ";" );
             for ( String url : urls )
             {
                 Svn svn = new Svn( );
                 svn.setUrl( url );
-
                 if ( svn.connect( ) )
                 {
                     try
