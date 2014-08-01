@@ -56,6 +56,7 @@ class DijkstraBidirectTest extends AssertionsForJUnit with MockitoSugar {
   }
 
   @Test
+  @Ignore
   def graphShortestWayTest() {
     initNodes(graph)
     initLinks(graph)
