@@ -26,9 +26,6 @@
 	<bean id="pac.pacconfigservice" class="fr.paris.lutece.plugins.pac.service.pacconfig.PacconfigService" />
 	<bean id="pac.pacconfigjspbean" class="fr.paris.lutece.plugins.pac.web.pacconfig.PacconfigJspBean" />
 	
-	<bean id="pac.artifactdao" class="fr.paris.lutece.plugins.pac.dao.artifact.ArtifactDAO" />
-	<bean id="pac.artifactservice" class="fr.paris.lutece.plugins.pac.service.artifact.ArtifactService" />
-
 	<!-- Dozer -->
 	<bean id="mapper" class="org.dozer.DozerBeanMapper">
 		<property name="mappingFiles">
