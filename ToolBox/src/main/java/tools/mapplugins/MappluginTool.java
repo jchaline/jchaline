@@ -47,8 +47,9 @@ public class MappluginTool implements Tool
     public int run( )
     {
         String serializableFile = PropertiesService.getProperty( MappluginConstants.MARK_SERIALIZABLE_FILE +"e");
-        Repository repo = SerializableService.deserialize( serializableFile );
 
+        Repository repo = null;
+        //repo = SerializableService.deserialize( serializableFile );
         if ( repo == null )
         {
             repo = new Repository( );

@@ -20,20 +20,20 @@ public class SqlService
         String strArtifactFirstId = PropertiesService.getProperty( MappluginConstants.MARK_SQL_ARTIFACT_FIRST_ID );
         String strDependenciesFirstId = PropertiesService
                 .getProperty( MappluginConstants.MARK_SQL_DEPENDENCIES_FIRST_ID );
-        Integer artifactFirstId = Integer.valueOf( strArtifactFirstId );
-        Integer dependenciesFirstId = Integer.valueOf( strDependenciesFirstId );
+        Integer artifactId = Integer.valueOf( strArtifactFirstId );
+        Integer dependencyId = Integer.valueOf( strDependenciesFirstId );
 
-        List<Project> list = repo.getProjectsList( );
+        List<Project> listProject = repo.getProjectsList( );
         StringBuilder builder = new StringBuilder( );
-        for ( Project project : list )
+        for ( Project project : listProject )
         {
-            builder.append( getSqlForProject( artifactFirstId, project ) );
+            builder.append( getSqlForProject( artifactId, project ) );
             for ( String dependency : project.getRealDependencies( ) )
             {
-                builder.append( getSqlForStrDependency( artifactFirstId, dependenciesFirstId, dependency ) );
-                dependenciesFirstId++;
+                builder.append( getSqlForStrDependency( dependencyId, artifactId, dependency ) );
+                dependencyId++;
             }
-            artifactFirstId++;
+            artifactId++;
         }
 
         FileService.write( path, builder.toString( ) );
@@ -41,10 +41,12 @@ public class SqlService
 
     /**
      * Get the line for the dependency
+     * @param artifactId the artifact bean id
+     * @param dependencyId the dependency bean id
      * @param dependency the str dependency
      * @return the SQL line
      */
-    private static Object getSqlForStrDependency( Integer artifactId, Integer dependencyId, String dependency )
+    private static Object getSqlForStrDependency( Integer dependencyId, Integer artifactId, String dependency )
     {
         StringBuilder builder = new StringBuilder( );
         String[] coords = dependency.split( MappluginConstants.ARTIFACT_COORD_SEPARATOR );
@@ -64,6 +66,7 @@ public class SqlService
 
     /**
      * Get the line for the artifact
+     * @param currentId
      * @param project the artifact
      * @return the SQL line
      */
