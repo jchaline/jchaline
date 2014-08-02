@@ -2,12 +2,11 @@ package tools.generator.service;
 
 import java.io.FileInputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-import services.ReadWrite;
+import services.FileService;
 import tools.generator.bean.Attribut;
 import tools.generator.bean.Bean;
 import tools.generator.bean.Plugin;
@@ -16,7 +15,6 @@ import tools.generator.utils.GeneratorConstants;
 
 public class GeneratorPropertiesService
 {
-
     public static final String PATH_PROJECT = System.getProperty( "user.dir" );
     public final static String FOLDER_CONFIG_NAME = "\\conf";
     public final static String FOLDER_OVERRIDE_NAME = "\\override";
@@ -80,7 +78,7 @@ public class GeneratorPropertiesService
 
         String pathBeansFile = PATH_PROJECT + FOLDER_CONFIG_NAME + GeneratorConstants.PATH_SEPARATOR
                 + _properties.getProperty( GeneratorConstants.KEY_BEANS_FILE_NAME );
-        List<String> linesOfBeanFile = ReadWrite.read( pathBeansFile );
+        List<String> linesOfBeanFile = FileService.read( pathBeansFile );
         linesOfBeanFile = filterLine( linesOfBeanFile );
 
         for ( String line : linesOfBeanFile )
@@ -179,10 +177,7 @@ public class GeneratorPropertiesService
      */
     private static List<String> findPropertiesFiles( )
     {
-        List<String> list = new ArrayList<String>( );
-
-        ReadWrite.findFiles( 1, list, PATH_PROJECT + FOLDER_CONFIG_NAME, PROPERTIES_PATTERN );
-        return list;
+       return FileService.findFiles( 1, PATH_PROJECT + FOLDER_CONFIG_NAME, PROPERTIES_PATTERN );
     }
 
     /**
@@ -191,10 +186,7 @@ public class GeneratorPropertiesService
      */
     private static List<String> findOverrideFiles( )
     {
-        List<String> list = new ArrayList<String>( );
-
-        ReadWrite.findFiles( 1, list, PATH_PROJECT + FOLDER_CONFIG_NAME + FOLDER_OVERRIDE_NAME, PROPERTIES_PATTERN );
-        return list;
+        return FileService.findFiles( 1, PATH_PROJECT + FOLDER_CONFIG_NAME + FOLDER_OVERRIDE_NAME, PROPERTIES_PATTERN );
     }
 
     /**

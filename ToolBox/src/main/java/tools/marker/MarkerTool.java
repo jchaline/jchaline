@@ -4,15 +4,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import services.FileService;
 import services.PropertiesService;
-import services.ReadWrite;
 import tools.Tool;
 import utils.ToolsConstants;
 
@@ -35,7 +34,7 @@ public final class MarkerTool implements Tool
         RandomAccessFile randomAccesFile = null;
         try
         {
-            ReadWrite.insert( filePath, 0, texteBegin.getBytes( ) );
+        	FileService.insert( filePath, 0, texteBegin.getBytes( ) );
             //            randomAccesFile = new RandomAccessFile( new File( filePath ), "rw" );
             //            randomAccesFile.seek( 0 ); // to the beginning
             //            randomAccesFile.write( texteBegin.getBytes( ) );
@@ -79,7 +78,6 @@ public final class MarkerTool implements Tool
     {
         logger.info( "Run tool : " + getName( ) );
         PropertiesService.init( );
-        List<String> listFiles = new LinkedList<String>( );
         String filePatternFilter = PropertiesService.getProperty( "marker.templates.pattern" );
         logger.debug( "Use pattern : " + filePatternFilter );
         String pathFiles = PropertiesService.getProperty( "marker.templates.path" );
@@ -100,7 +98,7 @@ public final class MarkerTool implements Tool
             return ToolsConstants.STATUS_ERROR;
         }
 
-        ReadWrite.findFiles( -1, listFiles, pathFiles, filePatternFilter );
+        List<String> listFiles = FileService.findFiles( -1, pathFiles, filePatternFilter );
 
         logger.debug( "# files found : " + listFiles.size( ) );
         for ( String file : listFiles )

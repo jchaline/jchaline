@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,11 +17,11 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 
-public class ReadWrite
+public class FileService
 {
-    private static final Logger logger = Logger.getLogger( ReadWrite.class );
+    private static final Logger logger = Logger.getLogger( FileService.class );
 
-    private ReadWrite( )
+    private FileService( )
     {
     }
 
@@ -112,8 +113,9 @@ public class ReadWrite
      * @param directoryPath the directory to search recursively
      * @param pattern the pattern the file must match, can be null
      */
-    public static void findFiles( int deep, List<String> fileList, String directoryPath, String pattern )
+    public static List<String> findFiles( int deep, String directoryPath, String pattern )
     {
+    	List<String> fileList = new ArrayList<String>();
         if ( fileList != null )
         {
             File directory = new File( directoryPath );
@@ -139,10 +141,11 @@ public class ReadWrite
                 {
                     String name = subfiles[i].getName( );
                     String path = directoryPath + "/" + name;
-                    findFiles( deep - 1, fileList, path, pattern );
+                    fileList.addAll(findFiles( deep - 1, path, pattern ));
                 }
             }
         }
+        return fileList;
     }
 
     /**
