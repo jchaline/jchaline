@@ -1,6 +1,5 @@
 package tools.generator;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -38,15 +37,7 @@ public class BeanGeneratorTool implements Tool
         {
             plugin = GeneratorPropertiesService.getPlugin( );
         }
-        catch ( IllegalAccessException e )
-        {
-            logger.error( e );
-        }
         catch ( IllegalArgumentException e )
-        {
-            logger.error( e );
-        }
-        catch ( InvocationTargetException e )
         {
             logger.error( e );
         }

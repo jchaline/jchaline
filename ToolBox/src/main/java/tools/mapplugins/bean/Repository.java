@@ -2,6 +2,7 @@ package tools.mapplugins.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,12 @@ public class Repository implements Serializable
         }
         getArtifacts( ).get( artifact.getGroupId( ) ).get( artifact.getArtifactId( ) )
                 .put( artifact.getVersion( ), artifact );
+    }
+    
+    public void addAll(Collection<Project> artifacts){
+    	for(Project p : artifacts){
+    		add(p);
+    	}
     }
 
     /**

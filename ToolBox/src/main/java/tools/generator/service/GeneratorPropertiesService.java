@@ -1,7 +1,6 @@
 package tools.generator.service;
 
 import java.io.FileInputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -48,12 +47,8 @@ public class GeneratorPropertiesService
      * Generate Plugin object
      * @param properties the properties with beans
      * @return the plugin object
-     * @throws InvocationTargetException
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
      */
-    public static Plugin getPlugin( ) throws IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException
+    public static Plugin getPlugin( ) 
     {
         Plugin plugin = new Plugin( _properties.getProperty( GeneratorConstants.KEY_PLUGIN_NAME ) );
         plugin.setName( _properties.getProperty( GeneratorConstants.KEY_PLUGIN_NAME ) );
@@ -69,10 +64,8 @@ public class GeneratorPropertiesService
     /**
      * Get bean list from the config file
      * @return the list of bean for the plugin
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
      */
-    private static List<Bean> getBeanList( ) throws IllegalAccessException, InvocationTargetException
+    private static List<Bean> getBeanList( )
     {
         List<Bean> beanList = new LinkedList<Bean>( );
 

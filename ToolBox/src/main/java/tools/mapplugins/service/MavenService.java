@@ -1,11 +1,16 @@
 package tools.mapplugins.service;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -22,11 +27,28 @@ public class MavenService
 
     private static final Logger logger = Logger.getLogger( MavenService.class );
 
-    private static final char MARK_PARENTHESE_OPEN = '(';
-    private static final char MARK_PARENTHESE_CLOSE = ')';
-    private static final char MARK_HOOK_OPEN = '[';
-    private static final char MARK_HOOK_CLOSE = ']';
-    private static final String MARK_COMMA = ",";
+    public static final char MARK_PARENTHESE_OPEN = '(';
+    public static final char MARK_PARENTHESE_CLOSE = ')';
+    public static final char MARK_HOOK_OPEN = '[';
+    public static final char MARK_HOOK_CLOSE = ']';
+    public static final String MARK_COMMA = ",";
+    
+    /**
+     * Get the project object from file content content
+     * @param content the project pom.xml content
+     * @return the project
+     * @throws JAXBException exception while parsing the pom
+     */
+    public static Project getProject( String content ) throws JAXBException
+    {
+        JAXBContext jaxbContext = JAXBContext.newInstance( Project.class );
+        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller( );
+
+        Project unmarshal = (Project) jaxbUnmarshaller
+                .unmarshal( new StringReader( content.replaceAll( "[\n ]", "" ) ) );
+        //TODO : replace maven properties
+        return unmarshal;
+    }
 
     /**
      * Set all dependencies with dependency solver
