@@ -4,3 +4,4 @@ lucene.installed=1
 pac.installed=1
 pac.pool=portal
 scala.installed=1
+scala.pool=portal
