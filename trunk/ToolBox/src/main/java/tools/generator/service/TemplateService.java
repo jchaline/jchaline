@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
-import services.ReadWrite;
+import services.FileService;
 import tools.generator.bean.Attribut;
 import tools.generator.bean.Bean;
 import tools.generator.bean.Plugin;
@@ -195,7 +195,7 @@ public class TemplateService
                 String pathCorrect = correctBeanPath( plugin, bean, pathToFileToGenerate );
 
                 //generate the folder with the file to generate
-                ReadWrite.makeFolder( pathCorrect );
+                FileService.makeFolder( pathCorrect );
                 List<String> specificImport = getImport( bean );
                 model.put( MARK_SPECIFIC_IMPORT, specificImport );
 
@@ -203,7 +203,7 @@ public class TemplateService
                 String fileName = getFileName( templateName, bean.getName( ) );
                 String genSrc = _factoryService.genSrc( model, folderPathOfTheTemplate, templateName );
 
-                ReadWrite.write( pathCorrect + fileName, genSrc );
+                FileService.write( pathCorrect + fileName, genSrc );
                 filesCreated.add( pathCorrect + fileName );
             }
         }
@@ -217,12 +217,12 @@ public class TemplateService
             pathToFileToGenerate = correctPluginPath( plugin, pathToFileToGenerate );
 
             //generate the folder with the file to generate
-            ReadWrite.makeFolder( pathToFileToGenerate );
+            FileService.makeFolder( pathToFileToGenerate );
 
             String fileName = getFileName( templateName, plugin.getName( ) );
             String genSrc = _factoryService.genSrc( model, folderPathOfTheTemplate, templateName );
 
-            ReadWrite.write( pathToFileToGenerate + fileName, genSrc );
+            FileService.write( pathToFileToGenerate + fileName, genSrc );
             filesCreated.add( pathToFileToGenerate + GeneratorConstants.PATH_SEPARATOR + fileName );
         }
 
@@ -235,7 +235,7 @@ public class TemplateService
     {
         for ( String pack : plugin.getPackages( ) )
         {
-            ReadWrite.makeFolder( generatePath + GeneratorConstants.PATH_SEPARATOR + pack );
+        	FileService.makeFolder( generatePath + GeneratorConstants.PATH_SEPARATOR + pack );
         }
     }
 

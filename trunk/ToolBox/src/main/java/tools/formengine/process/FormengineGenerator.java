@@ -6,8 +6,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+import services.FileService;
 import services.PropertiesService;
-import services.ReadWrite;
 import tools.formengine.bean.Choice;
 import tools.formengine.bean.Field;
 import tools.formengine.bean.Fields;
@@ -184,7 +184,7 @@ public class FormengineGenerator
      */
     private static void generateFile( String pathFile, StringBuilder content )
     {
-        ReadWrite.write( pathFile, content.toString( ) );
+    	FileService.write( pathFile, content.toString( ) );
     }
 
     /**

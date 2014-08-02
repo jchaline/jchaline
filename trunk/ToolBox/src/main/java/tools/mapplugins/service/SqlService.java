@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import services.FileService;
 import services.PropertiesService;
-import services.ReadWrite;
 import tools.mapplugins.bean.Repository;
 import tools.mapplugins.commons.MappluginConstants;
 import tools.mapplugins.xml.Project;
@@ -36,7 +36,7 @@ public class SqlService
             artifactFirstId++;
         }
 
-        ReadWrite.write( path, builder.toString( ) );
+        FileService.write( path, builder.toString( ) );
     }
 
     /**

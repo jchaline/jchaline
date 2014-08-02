@@ -101,10 +101,7 @@ public class PropertiesService
      */
     private static List<String> findPropertiesFiles( )
     {
-        List<String> list = new ArrayList<String>( );
-
-        ReadWrite.findFiles( -1, list, PATH_PROJECT + FOLDER_CONFIG_NAME, PROPERTIES_PATTERN );
-        return list;
+        return FileService.findFiles( -1, PATH_PROJECT + FOLDER_CONFIG_NAME, PROPERTIES_PATTERN );
     }
 
     /**
@@ -113,10 +110,7 @@ public class PropertiesService
      */
     private static List<String> findOverrideFiles( )
     {
-        List<String> list = new ArrayList<String>( );
-
-        ReadWrite.findFiles( 1, list, PATH_PROJECT + FOLDER_CONFIG_NAME + FOLDER_OVERRIDE_NAME, PROPERTIES_PATTERN );
-        return list;
+        return FileService.findFiles( 1, PATH_PROJECT + FOLDER_CONFIG_NAME + FOLDER_OVERRIDE_NAME, PROPERTIES_PATTERN );
     }
 
     /**
