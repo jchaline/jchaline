@@ -55,17 +55,9 @@ public class SerializableService
             ois.close( );
             inputFile.close( );
         }
-        catch ( FileNotFoundException e1 )
+        catch ( Exception e )
         {
-            logger.info( "File " + path + " not exist, ask SVN repos" );
-        }
-        catch ( IOException e )
-        {
-            logger.info( "File " + path + " throw error." );
-        }
-        catch ( ClassNotFoundException e )
-        {
-            logger.info( "File " + path + " throw error." );
+            logger.error( e );
         }
         return result;
     }

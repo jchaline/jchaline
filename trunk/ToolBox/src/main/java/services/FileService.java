@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -29,9 +28,6 @@ public class FileService
      * Read all the line of the file and return the list
      * @param path the path to the file
      * @return the list of the correct line
-     * @throws InvocationTargetException
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
      */
     public static List<String> read( String path )
     {
@@ -94,14 +90,6 @@ public class FileService
     {
         File file = new File( path );
         file.mkdirs( );
-
-    }
-
-    /**
-     * Delete a recursively a folder and all the content
-     */
-    public void deleteForlder( )
-    {
 
     }
 

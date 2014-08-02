@@ -42,9 +42,9 @@ public final class MarkerTool implements Tool
             writer = new FileWriter( filePath, true );
             writer.write( texteEND, 0, texteEND.length( ) );
         }
-        catch ( IOException ex )
+        catch ( IOException e )
         {
-            ex.printStackTrace( );
+            logger.error(e);
         }
         finally
         {
@@ -56,7 +56,7 @@ public final class MarkerTool implements Tool
                 }
                 catch ( IOException e )
                 {
-                    e.printStackTrace( );
+                	logger.error(e);
                 }
             }
             if ( randomAccesFile != null )
@@ -67,7 +67,7 @@ public final class MarkerTool implements Tool
                 }
                 catch ( IOException e )
                 {
-                    e.printStackTrace( );
+                	logger.error(e);
                 }
             }
         }
