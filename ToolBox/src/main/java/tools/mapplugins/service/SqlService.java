@@ -54,7 +54,7 @@ public class SqlService
         {
             builder.append( "INSERT INTO " );
             builder.append( PropertiesService.getProperty( MappluginConstants.MARK_SQL_DEPENDENCIES_TABLE ) );
-            builder.append( " VALUES ('" + artifactId + "', '" + dependencyId + "', '" + coords[0] + "', '" + coords[1]
+            builder.append( " VALUES ('" + dependencyId + "', '" + artifactId + "', '" + coords[0] + "', '" + coords[1]
                     + "', '" + coords[2] + "');\n" );
         }
         else
