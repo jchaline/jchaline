@@ -40,5 +40,9 @@ class RepositoryApp extends AbstractXPageApplication {
 
     page
   }
+  
+  def getArtifact(request: HttpServletRequest)={
+    "fr.paris.lutece:plugin-scala:1.0.0-SNAPSHOT"
+  }
 
 }
