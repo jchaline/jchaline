@@ -26,40 +26,11 @@ class RepositoryApp extends AbstractXPageApplication {
 
     var model: Map[String, Object] = Map()
 
-    var graph = new Graph()
-    graph.addNode("A")
-    graph.addNode("B")
-    graph.addNode("C")
-    graph.addNode("D")
-    graph.addNode("E")
-    graph.addNode("F")
-    graph.addNode("G")
-    graph.addNode("H")
-    graph.addNode("I")
-    graph.addNode("J")
-    graph.addLink("A", "B", 85)
-    graph.addLink("A", "C", 217)
-    graph.addLink("A", "E", 173)
-    graph.addLink("B", "F", 80)
-    graph.addLink("C", "G", 186)
-    graph.addLink("C", "H", 103)
-    graph.addLink("H", "D", 183)
-    graph.addLink("H", "J", 167)
-    graph.addLink("F", "I", 250)
-    graph.addLink("I", "J", 84)
-    graph.addLink("E", "J", 502)
-
-    var neighbors = graph.getNeighbors("A")
-    //LOGGER.debug(neighbors)
-
-    var way = graph.findShortestWay("A", "J")
-    //LOGGER.error(way)
 
     var artifact = artifactService.findByStrPrimaryKey("")
     println(artifact)
     
     var list = artifactService.findAll(null)
-    print(list)
 
     var template = AppTemplateService.getTemplate(TEMPLATE_REPOSITORY, request.getLocale(), model);
 

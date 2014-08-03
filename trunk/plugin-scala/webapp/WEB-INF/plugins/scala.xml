@@ -26,6 +26,10 @@
 			<application-id>repository</application-id>
 			<application-class>fr.paris.lutece.plugins.scala.xpage.RepositoryApp</application-class>
 		</application>
+		<application>
+			<application-id>graph</application-id>
+			<application-class>fr.paris.lutece.plugins.scala.xpage.GraphApp</application-class>
+		</application>
 	</applications>
 
 	<!-- Daemons -->
