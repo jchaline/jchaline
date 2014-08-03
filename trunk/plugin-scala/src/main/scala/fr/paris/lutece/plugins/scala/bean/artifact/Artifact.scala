@@ -36,5 +36,13 @@ class Artifact extends AbstractBean[Int] {
   def setId(id: Int): Unit = {
     _id = id
   }
+  
+  /**
+   * Format artifact to json
+   * @return the str json
+   */
+  def toJson()={
+    
+  }
 
 }

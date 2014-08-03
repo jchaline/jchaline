@@ -41,7 +41,16 @@ class RepositoryApp extends AbstractXPageApplication {
     page
   }
   
-  def getArtifact(request: HttpServletRequest)={
+  /**
+   * Search for artifacts matching data send by user
+   * @param request the http request with artifact id, group id and version required
+   * @return the json with all artifacts matching datas
+   */
+  def searchArtifacts(request: HttpServletRequest)={
+    val groupId = request.getParameter("groupId")
+    val artifactId = request.getParameter("artifactId")
+    val version = request.getParameter("version")
+    LOGGER.debug("Search for "+groupId+":"+artifactId+":"+version)
     "fr.paris.lutece:plugin-scala:1.0.0-SNAPSHOT"
   }
 

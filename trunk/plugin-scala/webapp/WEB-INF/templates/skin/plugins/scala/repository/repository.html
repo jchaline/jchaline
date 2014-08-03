@@ -1,17 +1,45 @@
 <#-- remplacer par un tableau dynamique bourré de jquery -->
 <fieldset>
 	<legend>Inspection du repository</legend>
-		<table class="table table-condensed table-stripped">
-			<tr>
-				<th>
-					<i class="icon-user"></i>&nbsp;Artifact Id
-				</th>
-				<th>
-					<i class="icon-calendar"></i>&nbsp;Version
-				</th>
-				<th>
-					<i class="icon-calendar"></i>&nbsp;Group Id
-				</th>
-			</tr>
-		</table>
+	<div class="pull-right">
+		<div class="input-append">
+			<input class="span2" id="groupId" type="text"/>
+			<input class="span2" id="artifactId" type="text"/>
+			<input class="span2" id="version" type="text"/>
+			<button class="btn btn-small" type="button" id="artifactSearch">Search</button>
+		</div>
+	</div>
+	<table class="table table-condensed table-stripped">
+		<tr>
+			<th>
+				<i class="icon-user"></i>&nbsp;Artifact Id
+			</th>
+			<th>
+				<i class="icon-calendar"></i>&nbsp;Version
+			</th>
+			<th>
+				<i class="icon-calendar"></i>&nbsp;Group Id
+			</th>
+		</tr>
+	</table>
 </fieldset>
+
+<script>
+	$('#artifactSearch').click(function(){
+		jQuery.ajax({
+		  type: 'POST', 
+		  url: 'jsp/site/plugins/scala/artifact/Artifact.jsp', 
+		  data: {
+		    groupId: $('#groupId').val(),
+		    artifactId: $('#artifactId').val(),
+		    version: $('#version').val()
+		  }, 
+		  success: function(data) {
+			  //get json with artifacts array
+			  alert("test")
+		  },
+		  error: function(jqXHR, textStatus, errorThrown) {
+		  }
+		});
+	});
+</script>
