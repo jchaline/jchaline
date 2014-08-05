@@ -1,5 +1,9 @@
 package fr.paris.lutece.plugins.pac.service.pacdate;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -18,6 +22,14 @@ public class PacdateService extends AbstractPacService<Integer, Pacdate> impleme
     @Inject
     @Named( PacConfigs.BEAN_PACDATE_DAO )
     private IPacdateDAO _daoDate;
+    
+    public static Date getToday(){
+    	Calendar cal = new GregorianCalendar();
+    	cal.set(Calendar.SECOND,0);
+    	cal.set(Calendar.MINUTE,0);
+    	cal.set(Calendar.HOUR_OF_DAY,0);
+    	return cal.getTime();
+    }
 
     @Override
     public IPluginDAO<Integer, Pacdate> getPluginDao( )

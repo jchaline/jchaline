@@ -5,14 +5,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.junit.Test;
 
 import fr.paris.lutece.plugins.pac.bean.pacconfig.Pacconfig;
+import fr.paris.lutece.plugins.pac.bean.pacdate.Pacdate;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
-import fr.paris.lutece.plugins.pac.utils.commons.PacConfigs;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
+import fr.paris.lutece.plugins.pac.service.pacconfig.PacconfigService;
+import fr.paris.lutece.plugins.pac.utils.commons.PacConstants;
 import fr.paris.lutece.test.LuteceTestCase;
 
 
@@ -23,6 +25,41 @@ import fr.paris.lutece.test.LuteceTestCase;
 public class PacuserServiceTest extends LuteceTestCase
 {
     private static final int NB_USER = 4;
+    
+    @Test
+    public void testUserAcceptDate(){
+    	Calendar cal = new GregorianCalendar(Locale.FRANCE);
+    	cal.set(2014, Calendar.JANUARY, 5);
+    	Date dateEntree = cal.getTime();
+    	cal.set(2014, Calendar.APRIL, 5);
+    	Date dateDernierPac = cal.getTime();
+    	cal.set(2014, Calendar.JULY, 14);
+    	Date dateConge = cal.getTime();
+    	Date dateTestFailed = cal.getTime();
+    	cal.set(2014, Calendar.AUGUST, 14);
+    	Date dateTestSuccess = cal.getTime();
+    	
+    	Pacuser user = new Pacuser( );
+        user.setId( 1 );
+        user.setNom( "Nadal" );
+        user.setNom( "Rafael" );
+        user.setDateEntree(dateEntree);
+    	user.setDernierPac(dateDernierPac);
+    	
+    	Pacdate pacdate = new Pacdate();
+    	pacdate.setDate(dateConge);
+    	pacdate.setId(1);
+    	pacdate.setPacuser(user);
+    	pacdate.setType(PacConstants.TYPE_DATE_CONGE);
+    	user.getJoursConges().add(pacdate);
+    	
+    	PacuserService pacuserService = new PacuserService();
+    	boolean acceptDateTrue = pacuserService.userAcceptDatePac(user, dateTestFailed, PacconfigService.getDefaultConfig());
+    	assertFalse(acceptDateTrue);
+
+    	boolean acceptDateFalse = pacuserService.userAcceptDatePac(user, dateTestSuccess, PacconfigService.getDefaultConfig());
+    	assertTrue(acceptDateFalse);
+    }
 
     @Test
     public void testOrderWithDate( )
@@ -49,15 +86,7 @@ public class PacuserServiceTest extends LuteceTestCase
         assertTrue( list.get( 2 ).getId( ).equals( 0 ) );
         assertTrue( list.get( 3 ).getId( ).equals( 3 ) );
 
-        Pacconfig config = new Pacconfig( );
-        config.setDayFrequency( 7 );
-        config.setMonthFrequency( 0 );
-        config.setDayWait( 0 );
-        config.setMonthWait( 2 );
-        GregorianCalendar calendar = new GregorianCalendar( );
-        calendar.set( 2014, Calendar.JANUARY, Calendar.FRIDAY );
-        config.setFirstDate( calendar.getTime( ) );
-        config.setTeam( "Mairie de Paris" );
+        Pacconfig config = PacconfigService.getDefaultConfig();
 
         PacuserService userService = new PacuserService();
 
