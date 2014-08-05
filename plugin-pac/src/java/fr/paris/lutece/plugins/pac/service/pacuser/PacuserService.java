@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import fr.paris.lutece.plugins.genericjpa.dao.IPluginDAO;
 import fr.paris.lutece.plugins.genericjpa.dao.commons.ResultList;
 import fr.paris.lutece.plugins.pac.bean.pacconfig.Pacconfig;
+import fr.paris.lutece.plugins.pac.bean.pacdate.Pacdate;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
 import fr.paris.lutece.plugins.pac.bean.pacuser.PacuserComparator;
 import fr.paris.lutece.plugins.pac.bean.pacuser.PacuserFilter;
@@ -28,6 +29,7 @@ import fr.paris.lutece.plugins.pac.service.AbstractPacService;
 import fr.paris.lutece.plugins.pac.service.pacconfig.IPacconfigService;
 import fr.paris.lutece.plugins.pac.service.pacconfig.PacconfigService;
 import fr.paris.lutece.plugins.pac.service.pacdate.IPacdateService;
+import fr.paris.lutece.plugins.pac.service.pacdate.PacdateService;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConfigs;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.beanvalidation.BeanValidationUtil;
@@ -80,7 +82,7 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
     public void doSaveBean( Pacuser bean )
     {
         //delete old date before update pacuser
-        if ( bean.getId( ) != null )
+        if ( bean.getId( ) != null && bean.getJoursConges()!=null && !bean.getJoursConges().isEmpty() )
         {
             _servicePacdate.removeWithOwnerId( bean.getId( ) );
         }
@@ -97,24 +99,16 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
 
         doOrderNextPac( listPacuser );
 
-        Pacconfig config = new Pacconfig( );
-        config.setDayFrequency( 7 );
-        config.setMonthFrequency( 0 );
-        config.setDayWait( 0 );
-        config.setMonthWait( 2 );
-        GregorianCalendar calendar = new GregorianCalendar( );
-        calendar.set( 2014, Calendar.JANUARY, 3 );
-        config.setFirstDate( calendar.getTime( ) );
-        config.setTeam( "Mairie de Paris" );
-
+        Pacconfig config = PacconfigService.getDefaultConfig();
         //determination des prochains pacs
-        associatePacDate( listPacuser, new Date( ), config );
+        associatePacDate( listPacuser, PacdateService.getToday(), config );
 
         //sauvegarde des pacuser mis à jour
         for ( Pacuser user : listPacuser )
         {
             doSaveBean( user );
         }
+        logger.debug("end");
     }
 
     @Override
@@ -149,7 +143,7 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
     @Override
     public boolean userAcceptDatePac( Pacuser user, Date date, Pacconfig config )
     {
-        boolean result = false;
+        boolean acceptDate = false;
 
         Date firstDayAllowed = user.getDateEntree( );
         firstDayAllowed = DateUtils.addMonths( firstDayAllowed, config.getMonthWait( ) );
@@ -157,10 +151,18 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
         //si la date actuelle n'est pas dans la période sans pac pour l'utilisateur
         if ( !date.before( firstDayAllowed ) )
         {
-            result = !user.getJoursConges( ).contains( date );
+        	acceptDate = true;
+        	Iterator<Pacdate> itr = user.getJoursConges( ).iterator();
+            while(acceptDate && itr.hasNext()){
+            	Pacdate next = itr.next();
+            	Calendar cal = new GregorianCalendar();
+            	cal.setTime(next.getDate());
+            	Date time = cal.getTime();
+				acceptDate = !time.equals( date );
+            }
         }
 
-        return result;
+        return acceptDate;
     }
 
     /**

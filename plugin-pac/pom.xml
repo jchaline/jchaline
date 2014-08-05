@@ -39,12 +39,6 @@
 			<artifactId>lutece-core</artifactId>
 			<version>4.4.0</version>
 			<type>lutece-core</type>
-			<exclusions>
-				<exclusion>
-					<groupId>fr.paris.lutece</groupId>
-					<artifactId>lutece-core</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
