@@ -1,0 +1,55 @@
+<html>
+  <head><title>OpenLayers Marker Popups</title></head>
+  <body>
+  <div id="mapdiv"></div>
+  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+  <script>
+	function getMark(x,y,projection,mapProjection){
+		var feature = new OpenLayers.Feature.Vector(
+            new OpenLayers.Geometry.Point( x, y  ).transform(projection, mapProjection),
+            {description:'Big Ben'} ,
+            {externalGraphic: 'http://www.openlayers.org/dev/img/marker.png', graphicHeight: 25, graphicWidth: 21, graphicXOffset:-12, graphicYOffset:-25  }
+        );
+		return feature;
+	}
+  
+    map = new OpenLayers.Map("mapdiv");
+    map.addLayer(new OpenLayers.Layer.OSM());
+    
+    epsg4326 =  new OpenLayers.Projection("EPSG:4326"); //WGS 1984 projection
+    projectTo = map.getProjectionObject(); //The map projection (Spherical Mercator)
+   
+    var lonLat = new OpenLayers.LonLat( -0.1279688 ,51.5077286 ).transform(epsg4326, projectTo);
+
+    var zoom=14;
+    map.setCenter (lonLat, zoom);
+
+    var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
+    
+	var x1= -0.1279688;
+	var x2 = -0.1244324;
+	var y1= 51.5077286;
+	var y2 = 51.5006728;
+	
+    // Define markers as "features" of the vector layer: 
+	var feature1 = getMark(x1, y1,epsg4326, projectTo)
+    vectorLayer.addFeatures(feature1);
+	var feature2 = getMark(x2, y2,epsg4326, projectTo)
+	vectorLayer.addFeatures(feature2);
+    //map.addLayer(vectorLayer);
+	
+	var markers = new OpenLayers.Layer.Markers( "Markers" );
+	map.addLayer(markers);
+	
+	var size = new OpenLayers.Size(21,25);
+	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+	var icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png', size, offset);
+	markers.addMarker(new OpenLayers.Marker(lonLat,icon));
+	
+	console.log('test');
+	
+	
+	
+
+  </script>
+</body></html>
