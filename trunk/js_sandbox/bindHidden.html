@@ -1,0 +1,106 @@
+<html>
+<head>
+<script src="js/jquery-1.11.0.min.js" type="text/javascript"></script>
+
+<script>
+	//display or hide div with radio : add div with the same name of the radio id and add "hidden_" prefix for the div name
+	//exemple : <div name="hidden_utilisationMontantRepetition" > will be hide by utilisationMontantRepetition radio
+	$(document).ready(function(){
+		$("[data-hidden]").each(function(){
+			var idArea = this.attributes['id'].value;
+			var checkboxId = $(this).attr("data-hidden");
+			
+			//init at load
+			if($("input:checkbox[id="+checkboxId+"]:checked").attr('id')==null){
+				$("[id='"+idArea+"']").toggle();
+			}
+
+			$("#"+checkboxId).bind('change',function(){
+				var id = this.attributes['id'].value;
+				$("[data-hidden^='"+id+"']").toggle();
+			});
+		});
+	});
+
+	//example : <div name="hiddenRadio_[ID_RADIO]" pattern="[02468]$"> for the even number
+	//same for yes/no options, use odd number for yes (show div) and even number for no (hidden div)
+	$(document).ready(function(){
+		$("[name^='hiddenRadio_']").each(function(){
+			var name = this.attributes['name'].value;
+			var radioName = name.split('_')[1];
+			
+			//hide all the div by default
+			$("[name='"+name+"']").hide();
+			
+			//check all div at loading
+			$("input:radio[name^="+radioName+"]").each(function(){
+				//display the div if the odd value is select
+				if(this.checked==true){
+					showHideDiv(this.value,name);
+				}
+				
+				//bind change with toggle
+				$(this).bind('change',function(){
+					showHideDiv(this.value,name);
+				});
+			});
+		});
+	});
+
+	//check and display element if necessary
+	//TODO  : extract matching part in function
+	function showHideDiv(radioValue,elementName){
+		$("[name='"+elementName+"']").each(function(){
+			//the validate method to display div
+			
+			//default pattern : odd number
+			var patternValue = "[13579]$";
+			if(this.attributes['pattern']!=null){
+				patternValue = this.attributes['pattern'].value;
+			}
+			var matching = (new RegExp(patternValue)).test(radioValue);
+			if(matching){
+				$(this).show();
+			}else{
+				$(this).hide();
+			}
+		});
+	}
+</script>
+</head>
+
+<body>
+
+
+<form id="testForm">
+	Test checkbox
+	<div align="center">
+		<input type="checkbox" name="option1" id="option1" value="Milk"> Milk<br>
+		<input type="checkbox" name="option2" value="Butter" checked> Butter<br>
+		<input type="checkbox" name="option3" value="Cheese"> Cheese<br>
+	</div>
+	<div data-hidden="option1" id="milk">
+		Milk checked ! 
+	</div>
+	
+	
+	<hr/>
+	
+	Test radio
+	<label for="dejaExperience341">
+		<input id="dejaExperience341" type="radio" name="dejaExperience" value="341" checked="checked">
+		Oui
+	</label>
+	<label for="dejaExperience342">
+		<input id="dejaExperience342" type="radio" readonly="readonly" name="dejaExperience" value="342">
+		Non
+	</label>
+		
+	<div id="hiddenRadio_dejaExperience" name="hiddenRadio_dejaExperience" >
+		Blablabagjhieognzoie rgioze gruieo gre
+	</div>
+</form>
+
+</body>
+
+</html>
