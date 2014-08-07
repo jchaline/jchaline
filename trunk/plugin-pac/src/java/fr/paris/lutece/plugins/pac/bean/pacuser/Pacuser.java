@@ -1,8 +1,8 @@
 package fr.paris.lutece.plugins.pac.bean.pacuser;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -68,7 +68,7 @@ public class Pacuser extends AbstractBean<Integer>
     private Date _dernierPac;
 
     @OneToMany( cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, mappedBy = "_pacuser" )
-    private Set<Pacdate> _joursConges = new HashSet<Pacdate>( 0 );
+    private List<Pacdate> _joursConges = new ArrayList<Pacdate>( 0 );
 
     @Override
     public int hashCode( )
@@ -224,7 +224,7 @@ public class Pacuser extends AbstractBean<Integer>
     /**
      * @return the joursConges
      */
-    public Set<Pacdate> getJoursConges( )
+    public List<Pacdate> getJoursConges( )
     {
         return _joursConges;
     }
@@ -232,7 +232,7 @@ public class Pacuser extends AbstractBean<Integer>
     /**
      * @param joursConges the joursConges to set
      */
-    public void setJoursConges( Set<Pacdate> joursConges )
+    public void setJoursConges( List<Pacdate> joursConges )
     {
         this._joursConges = joursConges;
     }

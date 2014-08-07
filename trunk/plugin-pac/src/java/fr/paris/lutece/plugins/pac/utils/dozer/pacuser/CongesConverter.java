@@ -2,10 +2,10 @@ package fr.paris.lutece.plugins.pac.utils.dozer.pacuser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.dozer.CustomConverter;
@@ -31,9 +31,9 @@ public class CongesConverter implements CustomConverter
         Object result = null;
         if ( source != null )
         {
-            if ( source instanceof Set )
+            if ( source instanceof List )
             {
-                Set<Pacdate> sourceCast = (Set<Pacdate>) source;
+                List<Pacdate> sourceCast = (List<Pacdate>) source;
                 StringBuilder target = new StringBuilder( );
                 Iterator<Pacdate> iterator = sourceCast.iterator( );
                 while ( iterator.hasNext( ) )
@@ -53,7 +53,7 @@ public class CongesConverter implements CustomConverter
                 if ( StringUtils.isNotBlank( sourceCast ) )
                 {
                     String[] strDates = sourceCast.split( PacConstants.PARAMETER_STR_DATE_SEPARATOR );
-                    Set<Pacdate> target = new HashSet<Pacdate>( );
+                    List<Pacdate> target = new ArrayList<Pacdate>( );
 
                     for ( String strDate : strDates )
                     {
