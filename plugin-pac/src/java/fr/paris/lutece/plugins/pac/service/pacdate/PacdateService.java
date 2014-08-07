@@ -24,10 +24,16 @@ public class PacdateService extends AbstractPacService<Integer, Pacdate> impleme
     private IPacdateDAO _daoDate;
     
     public static Date getToday(){
+    	return maskTime(new Date());
+    }
+    
+    public static Date maskTime(Date date){
     	Calendar cal = new GregorianCalendar();
+    	cal.setTime(date);
     	cal.set(Calendar.SECOND,0);
     	cal.set(Calendar.MINUTE,0);
     	cal.set(Calendar.HOUR_OF_DAY,0);
+    	cal.set(Calendar.MILLISECOND,0);
     	return cal.getTime();
     }
 
@@ -57,5 +63,6 @@ public class PacdateService extends AbstractPacService<Integer, Pacdate> impleme
     @Override
     public void removeWithOwnerId( Integer idOwner ){
         _daoDate.removeWithOwnerId( idOwner );
+        _daoDate.flush();
     }
 }

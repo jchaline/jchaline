@@ -67,6 +67,7 @@ public class PacdateDAO extends AbstractPacDAO<Integer, Pacdate> implements IPac
         Query query = em.createNativeQuery( "DELETE FROM " + Pacdate.TABLE + " WHERE idOwner = " + idOwner );
         int resultCode = query.executeUpdate( );
         AppLogService.debug( "result remove : " + resultCode );
+        em.flush();
     }
 
     @Override

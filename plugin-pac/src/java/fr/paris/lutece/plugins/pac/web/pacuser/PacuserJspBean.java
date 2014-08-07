@@ -16,10 +16,14 @@ import com.google.common.base.Function;
 
 import fr.paris.lutece.plugins.genericjpa.utils.messages.SessionMessage;
 import fr.paris.lutece.plugins.genericjpa.web.AbstractJspBean;
+import fr.paris.lutece.plugins.pac.bean.pacconfig.Pacconfig;
 import fr.paris.lutece.plugins.pac.bean.pacuser.Pacuser;
 import fr.paris.lutece.plugins.pac.bean.pacuser.PacuserFilter;
 import fr.paris.lutece.plugins.pac.dto.pacuser.PacuserDTO;
+import fr.paris.lutece.plugins.pac.service.pacconfig.PacconfigService;
+import fr.paris.lutece.plugins.pac.service.pacdate.PacdateService;
 import fr.paris.lutece.plugins.pac.service.pacuser.IPacuserService;
+import fr.paris.lutece.plugins.pac.service.pacuser.PacuserService;
 import fr.paris.lutece.plugins.pac.utils.commons.ArrayUtils;
 import fr.paris.lutece.plugins.pac.utils.commons.CsvUtils;
 import fr.paris.lutece.plugins.pac.utils.commons.PacConfigs;
@@ -235,7 +239,21 @@ public class PacuserJspBean extends AbstractJspBean<Integer, Pacuser>
      */
     public String doOrderNextPac( HttpServletRequest request )
     {
-        _servicePacuser.doOrderNextPac( );
+    	List<Pacuser> listPacuser = _servicePacuser.findAll(null);
+
+    	_servicePacuser.doSavePreviousPac( listPacuser );
+
+    	PacuserService.doOrderNextPac( listPacuser );
+
+        Pacconfig config = PacconfigService.getDefaultConfig();
+        //determination des prochains pacs
+        _servicePacuser.associatePacDate( listPacuser, PacdateService.getToday(), config );
+
+        //sauvegarde des pacuser mis à jour
+        for ( Pacuser user : listPacuser )
+        {
+        	_servicePacuser.doSaveBean( user );
+        }
         return doGoBack( request, PacConfigs.JSP_MANAGE_PACUSER );
     }
 

@@ -86,10 +86,12 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
         {
             _servicePacdate.removeWithOwnerId( bean.getId( ) );
         }
+        _daoPacuser.flush();
         super.doSaveBean( bean );
     }
 
     @Override
+    @Deprecated()
     public void doOrderNextPac( )
     {
         //a l'avenir, utilisation d'une configuration @link{Pacconfig} spécifique à chaque équipe
@@ -155,10 +157,9 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
         	Iterator<Pacdate> itr = user.getJoursConges( ).iterator();
             while(acceptDate && itr.hasNext()){
             	Pacdate next = itr.next();
-            	Calendar cal = new GregorianCalendar();
-            	cal.setTime(next.getDate());
-            	Date time = cal.getTime();
-				acceptDate = !time.equals( date );
+            	//TODO : faire un test sur l'égalité du jour plutôt que de comparer des version modifiés des dates
+            	Date conge = PacdateService.maskTime(next.getDate());
+				acceptDate = !conge.equals( PacdateService.maskTime(date) );
             }
         }
 
@@ -169,7 +170,7 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
      * Save precious pac if exist
      * @param listPacuser the list of users
      */
-    private void doSavePreviousPac( List<Pacuser> listPacuser )
+    public void doSavePreviousPac( List<Pacuser> listPacuser )
     {
         Date today = new Date( );
 
@@ -177,7 +178,6 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
         while ( iterator.hasNext( ) )
         {
             Pacuser user = iterator.next( );
-            doSaveBean( user );
             if ( user.getProchainPac( ) == null || !today.before( user.getProchainPac( ) ) )
             {
                 user.setDernierPac( user.getProchainPac( ) );

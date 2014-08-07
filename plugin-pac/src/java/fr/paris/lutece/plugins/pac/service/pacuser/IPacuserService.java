@@ -58,4 +58,10 @@ public interface IPacuserService extends IPacService<Integer, Pacuser>
      * @return the list of users present at this day
      */
     List<Pacuser> findUserPresent( Date day);
+    
+    /**
+     * Save precious pac if exist
+     * @param listPacuser the list of users
+     */
+    void doSavePreviousPac( List<Pacuser> listPacuser );
 }
