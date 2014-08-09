@@ -157,9 +157,7 @@ public class PacuserService extends AbstractPacService<Integer, Pacuser> impleme
         	Iterator<Pacdate> itr = user.getJoursConges( ).iterator();
             while(acceptDate && itr.hasNext()){
             	Pacdate next = itr.next();
-            	//TODO : faire un test sur l'égalité du jour plutôt que de comparer des version modifiés des dates
-            	Date conge = PacdateService.maskTime(next.getDate());
-				acceptDate = !conge.equals( PacdateService.maskTime(date) );
+				acceptDate = !DateUtils.isSameDay(next.getDate(), date);
             }
         }
 
