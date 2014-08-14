@@ -49,6 +49,7 @@ public class MavenServiceTest
     }
 
     @Test
+    @Ignore
     public void compareTest( )
     {
         assertTrue( ArtifactComparator.compareStatic( "2.0.0", "2.0.2" ) < 0 );
@@ -58,6 +59,7 @@ public class MavenServiceTest
     }
 
     @Test
+    @Ignore
     public void associateDependenciesTest( )
     {
         Project project = MavenService.findDependency( repo, "fr.paris.lutece.plugins", "plugin-html",
@@ -82,6 +84,7 @@ public class MavenServiceTest
     }
 
     @Test
+    @Ignore
     public void resolveVersionTest( )
     {
         Project dependencySimple = MavenService.findDependency( repo, "fr.paris.lutece.plugins", "plugin-html",
