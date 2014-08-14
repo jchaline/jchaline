@@ -17,7 +17,4 @@
 	<context:component-scan base-package="tools"/>
 	
 	<import resource="springConfiguration/SpringConfiguration.xml" />
-	
-	<import resource="springAOP/SpringAOP.xml" />
-
 </beans>
