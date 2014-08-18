@@ -37,65 +37,68 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * The abstract class for filter
- * @param <K> the type of the bean primary key
+ * 
+ * @param <K>
+ *            the type of the bean primary key
  */
-public abstract class AbstractFilter<K> implements Serializable
-{
-    private static final long serialVersionUID = -2029442617417680733L;
-    private Boolean _orderAsc = true;
-    private List<String> _orders = new ArrayList<String>();
-    private K _id;
+public abstract class AbstractFilter<K> implements Serializable {
+	private static final long serialVersionUID = -2029442617417680733L;
+	private Boolean _orderAsc = true;
+	private List<String> _orders = new ArrayList<String>();
+	private K _id;
 
-    /**
-     * Get the order for SELECT query
-     * @return the orderAsc
-     */
-    public Boolean getOrderAsc(  )
-    {
-        return _orderAsc;
-    }
+	public String convertFieldName(String fieldName) {
+		return fieldName;
+	}
 
-    /**
-     * @param orderAsc the orderAsc to set
-     */
-    public void setOrderAsc( final Boolean orderAsc )
-    {
-        this._orderAsc = orderAsc;
-    }
+	/**
+	 * Get the order for SELECT query
+	 * 
+	 * @return the orderAsc
+	 */
+	public Boolean getOrderAsc() {
+		return _orderAsc;
+	}
 
-    /**
-     * Get the column to order
-     * @return the orders
-     */
-    public List<String> getOrders(  )
-    {
-        return _orders;
-    }
+	/**
+	 * @param orderAsc
+	 *            the orderAsc to set
+	 */
+	public void setOrderAsc(final Boolean orderAsc) {
+		this._orderAsc = orderAsc;
+	}
 
-    /**
-     * @param orders the orders to set
-     */
-    public void setOrders( final List<String> orders )
-    {
-        this._orders = orders;
-    }
+	/**
+	 * Get the column to order
+	 * 
+	 * @return the orders
+	 */
+	public List<String> getOrders() {
+		return _orders;
+	}
 
-    /**
-     * @return the id
-     */
-    public K getId(  )
-    {
-        return _id;
-    }
+	/**
+	 * @param orders
+	 *            the orders to set
+	 */
+	public void setOrders(final List<String> orders) {
+		this._orders = orders;
+	}
 
-    /**
-     * @param id the id to set
-     */
-    public void setId( final K id )
-    {
-        this._id = id;
-    }
+	/**
+	 * @return the id
+	 */
+	public K getId() {
+		return _id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(final K id) {
+		this._id = id;
+	}
 }

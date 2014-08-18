@@ -11,13 +11,25 @@ import fr.paris.lutece.plugins.genericjpa.bean.AbstractFilter;
  */
 public class PacuserFilter extends AbstractFilter<Integer>
 {
-
     private static final long serialVersionUID = 721856727710348068L;
     private String guid;
-    private String _nom;
-    private String _prenom;
+    private String _strNom;
+    private String _strPrenom;
     private Date _dayPresent;
     private Date _dayConge;
+    
+    @Override
+    public String convertFieldName(String fieldName) {
+    	if("nom".equals(fieldName)){
+    		return "strNom";
+    	}
+    	else if("prenom".equals(fieldName)){
+    		return "strPrenom";
+    	}
+    	else{
+    		return fieldName;
+    	}
+    }
 
     /**
      * @return the guid
@@ -40,7 +52,7 @@ public class PacuserFilter extends AbstractFilter<Integer>
      */
     public String getNom( )
     {
-        return _nom;
+        return _strNom;
     }
 
     /**
@@ -48,7 +60,7 @@ public class PacuserFilter extends AbstractFilter<Integer>
      */
     public void setNom( String nom )
     {
-        this._nom = nom;
+        this._strNom = nom;
     }
 
     /**
@@ -56,7 +68,7 @@ public class PacuserFilter extends AbstractFilter<Integer>
      */
     public String getPrenom( )
     {
-        return _prenom;
+        return _strPrenom;
     }
 
     /**
@@ -64,7 +76,7 @@ public class PacuserFilter extends AbstractFilter<Integer>
      */
     public void setPrenom( String prenom )
     {
-        this._prenom = prenom;
+        this._strPrenom = prenom;
     }
 
     /**
@@ -98,6 +110,4 @@ public class PacuserFilter extends AbstractFilter<Integer>
     {
         this._dayConge = dayConge;
     }
-
-
 }

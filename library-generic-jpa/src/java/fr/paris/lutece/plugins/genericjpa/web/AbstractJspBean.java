@@ -207,7 +207,7 @@ public abstract class AbstractJspBean<K, E extends AbstractBean<K>> extends Plug
         String ascSort = request.getParameter( MARK_ASC_SORT );
         if ( StringUtils.isNotBlank( sortedAttr ) && StringUtils.isNotBlank( ascSort ) )
         {
-            sortedAttr = "_" + sortedAttr;
+            sortedAttr = "_" + filter.convertFieldName(sortedAttr);
             filterToUse.getOrders( ).clear( );
             filterToUse.setOrderAsc( ascSort.toLowerCase( ).equals( "true") );
             filterToUse.getOrders( ).add( sortedAttr );

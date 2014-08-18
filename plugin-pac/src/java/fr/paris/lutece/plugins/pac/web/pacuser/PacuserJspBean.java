@@ -223,8 +223,8 @@ public class PacuserJspBean extends AbstractJspBean<Integer, Pacuser>
         {
             dataTableToUse.addFreeColumn( "", "columnSelectBean" );
 
-            dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + "nom", "nom", false );
-            dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + "prenom", "prenom", false );
+            dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + "nom", "nom", true );
+            dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + "prenom", "prenom", true );
             dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + "prochainPac", "prochainPac", true );
             dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + "dernierPac", "dernierPac", true );
             dataTableToUse.addColumn( MARK_PACUSER_FIELDS_PREFIX + "dateEntree", "dateEntree", true );
