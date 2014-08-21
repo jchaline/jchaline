@@ -48,13 +48,13 @@
 			</feature-icon-url>
 		</admin-feature>
 		<admin-feature>
-			<feature-id>PAC_CONGE_MANAGEMENT</feature-id>
-			<feature-title>pac.adminFeature.pac.congeManagement.name
+			<feature-id>PAC_CONFIG_MANAGEMENT</feature-id>
+			<feature-title>pac.adminFeature.pac.configManagement.name
 			</feature-title>
-			<feature-description>pac.adminFeature.pac.congeManagement.description
+			<feature-description>pac.adminFeature.pac.configManagement.description
 			</feature-description>
 			<feature-level>4</feature-level>
-			<feature-url>jsp/admin/plugins/pac/conge/ManageConge.jsp
+			<feature-url>jsp/admin/plugins/pac/config/ManageConfig.jsp
 			</feature-url>
 			<feature-group>PAC</feature-group>
 			<feature-icon-url>images/admin/skin/feature_default_icon.png
