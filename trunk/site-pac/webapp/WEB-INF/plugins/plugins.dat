@@ -5,3 +5,5 @@ pac.installed=1
 pac.pool=portal
 scala.installed=1
 scala.pool=portal
+helpdesk.installed=1
+helpdesk.pool=portal
