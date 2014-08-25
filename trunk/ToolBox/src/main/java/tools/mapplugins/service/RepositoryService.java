@@ -12,10 +12,13 @@ import org.jsoup.Jsoup;
 import org.tmatesoft.svn.core.SVNException;
 
 import services.FileService;
+import services.PropertiesService;
+import services.SerializableService;
 import services.svn.Svn;
 import services.svn.SvnEntry;
 import services.svn.SvnFilter;
 import tools.mapplugins.bean.Repository;
+import tools.mapplugins.commons.MappluginConstants;
 import tools.mapplugins.xml.Project;
 
 public class RepositoryService {
@@ -27,6 +30,25 @@ public class RepositoryService {
 	public Repository parseUrl(String urls){
 		Repository repo = new Repository();
 		repo.addAll(updateRepository(urls));
+		return repo;
+	}
+	
+	public Repository loadRepo(boolean forceLoad, boolean save){
+		Repository repo = null;
+		
+		String serializableFile = PropertiesService.getProperty( MappluginConstants.MARK_SERIALIZABLE_FILE );
+
+        repo = SerializableService.deserialize( serializableFile );
+        if ( repo == null || forceLoad)
+        {
+            String urlsConfig = PropertiesService.getProperty( MappluginConstants.MARK_SVN_URLS );
+            repo = parseUrl(urlsConfig);
+            MavenService.associateDependencies( repo );
+            if(save){
+            	SerializableService.serialize( repo, serializableFile );
+            }
+        }
+        
 		return repo;
 	}
 
