@@ -20,7 +20,7 @@ class ArtifactService extends AbstractService[Int,Artifact] with IArtifactServic
   
   def findByStrPrimaryKey(key:String):Artifact={
     //artifactDAO.findByStrPrimaryKey(key)
-          new Artifact()
+      new Artifact()
   }
   
 }

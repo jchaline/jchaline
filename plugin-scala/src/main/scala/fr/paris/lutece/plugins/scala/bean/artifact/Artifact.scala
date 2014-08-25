@@ -2,12 +2,14 @@ package fr.paris.lutece.plugins.scala.bean.artifact
 
 import org.hibernate.validator.constraints.NotEmpty
 import fr.paris.lutece.plugins.genericjpa.bean.AbstractBean
-import javax.persistence.Table
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.TableGenerator
-import javax.persistence.GeneratedValue
 import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
+import javax.persistence.Table
+import javax.persistence.TableGenerator
+import javax.persistence.metamodel.SingularAttribute
+import javax.persistence.metamodel.StaticMetamodel
 import javax.persistence.GenerationType
 
 @Entity
