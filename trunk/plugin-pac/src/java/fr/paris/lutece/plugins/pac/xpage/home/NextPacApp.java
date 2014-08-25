@@ -44,6 +44,7 @@ public class NextPacApp extends AbstractPacApp
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_NEXTPAC, request.getLocale( ), model );
         
+        
         XPage page = new XPage( );
         page.setContent( template.getHtml( ) );
         page.setPathLabel( "Prochains PAC" );
