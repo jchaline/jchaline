@@ -6,9 +6,9 @@ import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.ListJoin;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.SetJoin;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -52,7 +52,7 @@ public class PacuserDAO extends AbstractPacDAO<Integer, Pacuser> implements IPac
 
             if (filter.getDayConge( ) != null )
             {
-                SetJoin<Pacuser, Pacdate> pacdateJoin = root.join( Pacuser_._joursConges, JoinType.LEFT );
+                ListJoin<Pacuser, Pacdate> pacdateJoin = root.join( Pacuser_._joursConges, JoinType.LEFT );
 
                 Predicate containDay = cb.equal( pacdateJoin.get( Pacdate_._date ), filter.getDayConge( ) );
                 Predicate isCongeDay = cb.equal( pacdateJoin.get( Pacdate_._type ), PacConstants.TYPE_DATE_CONGE );

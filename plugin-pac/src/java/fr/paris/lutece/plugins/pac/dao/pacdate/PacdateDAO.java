@@ -36,7 +36,7 @@ public class PacdateDAO extends AbstractPacDAO<Integer, Pacdate> implements IPac
 
             if ( filter.getIdOwner( ) != null )
             {
-                listPredicates.add( cb.equal( root.get( Pacdate_._idOwner ), filter.getIdOwner( ) ) );
+                //TODO
             }
             if ( StringUtils.isNotBlank( filter.getType( ) ) )
             {

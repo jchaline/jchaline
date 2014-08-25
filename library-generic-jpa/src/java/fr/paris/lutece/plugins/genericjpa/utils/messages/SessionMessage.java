@@ -44,7 +44,6 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Permet d'insérer différents type de message dans un template
- * @author jchaline
  * 
  */
 public class SessionMessage implements Serializable
