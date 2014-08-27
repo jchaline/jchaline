@@ -1,10 +1,8 @@
 package fr.paris.lutece.plugins.scala.dao.artifact
 
 import scala.collection.mutable.MutableList
-
 import org.apache.commons.lang.StringUtils
 import org.springframework.stereotype.Repository
-
 import fr.paris.lutece.plugins.genericjpa.bean.AbstractFilter
 import fr.paris.lutece.plugins.genericjpa.dao.AbstractDAO
 import fr.paris.lutece.plugins.scala.bean.artifact.Artifact
@@ -16,6 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder
 import javax.persistence.criteria.CriteriaQuery
 import javax.persistence.criteria.Predicate
 import javax.persistence.criteria.Root
+import fr.paris.lutece.plugins.scala.bean.artifact.Artifact_
 
 @Repository("scala.artifactdao")
 class ArtifactDAO extends AbstractDAO[Int, Artifact] {
@@ -30,7 +29,7 @@ class ArtifactDAO extends AbstractDAO[Int, Artifact] {
         var listPredicates = new MutableList[Predicate]
 
         if (StringUtils.isNotBlank(filter.getArtifactId)) {
-//          listPredicates += cb.like(root.get(null), filter.getArtifactId)
+          //listPredicates += cb.like(root.get(Artifact_.), filter.getArtifactId)
         }
         if (StringUtils.isNotBlank(filter.getGroupId)) {
 //          listPredicates += cb.like(root.get(null), filter.getGroupId)
