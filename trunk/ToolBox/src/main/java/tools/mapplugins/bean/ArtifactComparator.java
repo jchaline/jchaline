@@ -36,9 +36,7 @@ package tools.mapplugins.bean;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
 
 /**
  * 
@@ -51,7 +49,6 @@ public class ArtifactComparator implements Comparator<String>, Serializable
 
     private static final String REGEX_DOT = "\\.";
     private static final String REGEX_DASH = "-";
-    private static final String SNAPSHOT = "SNAPSHOT";
     private static final long serialVersionUID = 6330488276398145992L;
 
     /**
@@ -76,7 +73,6 @@ public class ArtifactComparator implements Comparator<String>, Serializable
         int compare = 0;
         String[] arrayVersion1 = version1.split( REGEX_DOT );
         String[] arrayVersion2 = version2.split( REGEX_DOT );
-        String tmp1, tmp2;
 
         if ( arrayVersion1.length == 3 && arrayVersion2.length == 3 )
         {
@@ -116,7 +112,9 @@ public class ArtifactComparator implements Comparator<String>, Serializable
         {
             compare = 1;
         }
+        
+        LOGGER.debug("compare "+ version1 + " and " + version2 + " : " + compare);
 
-        return compare;
-    }
+		return compare;
+	}
 }

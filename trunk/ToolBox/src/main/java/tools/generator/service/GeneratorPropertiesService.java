@@ -49,8 +49,7 @@ public class GeneratorPropertiesService
     {
         List<Bean> beanList = new LinkedList<Bean>( );
 
-        String pathBeansFile = PATH_PROJECT + FOLDER_CONFIG_NAME + GeneratorConstants.PATH_SEPARATOR
-                + PropertiesService.getProperty( GeneratorConstants.KEY_BEANS_FILE_NAME );
+        String pathBeansFile = PropertiesService.getProperty( GeneratorConstants.KEY_BEANS_FILE_NAME );
         List<String> linesOfBeanFile = FileService.read( pathBeansFile );
         linesOfBeanFile = filterLine( linesOfBeanFile );
 
