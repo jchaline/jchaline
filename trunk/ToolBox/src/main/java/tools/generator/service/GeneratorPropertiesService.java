@@ -1,11 +1,10 @@
 package tools.generator.service;
 
-import java.io.FileInputStream;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 
 import services.FileService;
+import services.PropertiesService;
 import tools.generator.bean.Attribut;
 import tools.generator.bean.Bean;
 import tools.generator.bean.Plugin;
@@ -19,28 +18,9 @@ public class GeneratorPropertiesService
     public final static String FOLDER_OVERRIDE_NAME = "\\override";
     public static final String PROPERTIES_PATTERN = "([^\\s]+(\\.(?i)(properties))$)";
 
-    private static Properties _properties = new Properties( );
-
     private GeneratorPropertiesService( )
     {
 
-    }
-
-    /**
-     * The initialization class, ensure the load of the properties files
-     */
-    public static void init( )
-    {
-        List<String> findPropertiesFiles = findPropertiesFiles( );
-        for ( String filePath : findPropertiesFiles )
-        {
-            initFileProperties( filePath );
-        }
-        List<String> findOverrideFiles = findOverrideFiles( );
-        for ( String filePath : findOverrideFiles )
-        {
-            initFileProperties( filePath );
-        }
     }
 
     /**
@@ -50,9 +30,9 @@ public class GeneratorPropertiesService
      */
     public static Plugin getPlugin( ) 
     {
-        Plugin plugin = new Plugin( _properties.getProperty( GeneratorConstants.KEY_PLUGIN_NAME ) );
-        plugin.setName( _properties.getProperty( GeneratorConstants.KEY_PLUGIN_NAME ) );
-        plugin.setAuthorName( _properties.getProperty( GeneratorConstants.KEY_PLUGIN_AUTHOR ) );
+        Plugin plugin = new Plugin( PropertiesService.getProperty( GeneratorConstants.KEY_PLUGIN_NAME ) );
+        plugin.setName( PropertiesService.getProperty( GeneratorConstants.KEY_PLUGIN_NAME ) );
+        plugin.setAuthorName( PropertiesService.getProperty( GeneratorConstants.KEY_PLUGIN_AUTHOR ) );
 
         List<Bean> beanList = getBeanList( );
 
@@ -70,7 +50,7 @@ public class GeneratorPropertiesService
         List<Bean> beanList = new LinkedList<Bean>( );
 
         String pathBeansFile = PATH_PROJECT + FOLDER_CONFIG_NAME + GeneratorConstants.PATH_SEPARATOR
-                + _properties.getProperty( GeneratorConstants.KEY_BEANS_FILE_NAME );
+                + PropertiesService.getProperty( GeneratorConstants.KEY_BEANS_FILE_NAME );
         List<String> linesOfBeanFile = FileService.read( pathBeansFile );
         linesOfBeanFile = filterLine( linesOfBeanFile );
 
@@ -136,59 +116,5 @@ public class GeneratorPropertiesService
         boolean isFiltered = arrayAttribut.length == 3 && arrayAttribut[2].endsWith( "true" );
         Attribut attribut = new Attribut( typeAttribut, nameAttribut, isFiltered );
         return attribut;
-    }
-
-    /**
-     * Load the properties file
-     * @return the properties object
-     */
-    public static void initFileProperties( String filePath )
-    {
-        try
-        {
-            _properties.load( new FileInputStream( filePath ) );
-        }
-        catch ( Exception e )
-        {
-            e.printStackTrace( );
-        }
-    }
-
-    /**
-     * 
-     * @param keyPathProject
-     * @return
-     */
-    public static String getProperty( String keyPathProject )
-    {
-        return _properties.getProperty( keyPathProject );
-    }
-
-    /**
-     * Find all the properties file to use
-     * @return
-     */
-    private static List<String> findPropertiesFiles( )
-    {
-       return FileService.findFiles( 1, PATH_PROJECT + FOLDER_CONFIG_NAME, PROPERTIES_PATTERN );
-    }
-
-    /**
-     * Find all the OVERRIDE properties file to use
-     * @return
-     */
-    private static List<String> findOverrideFiles( )
-    {
-        return FileService.findFiles( 1, PATH_PROJECT + FOLDER_CONFIG_NAME + FOLDER_OVERRIDE_NAME, PROPERTIES_PATTERN );
-    }
-
-    /**
-     * Call the containsKey method of the Properties
-     * @param key the property key
-     * @return true if the property exist, false otherwise
-     */
-    public static boolean containsKey( String key )
-    {
-        return _properties.containsKey( key );
     }
 }

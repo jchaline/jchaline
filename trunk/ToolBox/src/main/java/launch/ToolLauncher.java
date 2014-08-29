@@ -23,6 +23,7 @@ public class ToolLauncher
 
     public static void main( String[] args )
     {
+    	SpringService.init();
         PropertiesService.init( );
 
         String toolId = null;

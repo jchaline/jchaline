@@ -12,6 +12,7 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 import services.FileService;
+import services.PropertiesService;
 import tools.generator.bean.Attribut;
 import tools.generator.bean.Bean;
 import tools.generator.bean.Plugin;
@@ -252,9 +253,9 @@ public class TemplateService
         for ( Attribut a : bean.getAttributs( ).values( ) )
         {
             type = a.getType( );
-            if ( GeneratorPropertiesService.containsKey( type ) )
+            if ( PropertiesService.containsKey( type ) )
             {
-                imports.add( GeneratorPropertiesService.getProperty( type ) );
+                imports.add( PropertiesService.getProperty( type ) );
             }
         }
         return imports;
@@ -282,7 +283,7 @@ public class TemplateService
      */
     private String getPackagePath( String pathToFileToFolder )
     {
-        String srcFolder = GeneratorPropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_SRC );
+        String srcFolder = PropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_SRC );
 
         int indexSrc = pathToFileToFolder.indexOf( srcFolder );
 
@@ -358,8 +359,8 @@ public class TemplateService
     {
         String ret = "";
 
-        String folderSource = GeneratorPropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_SOURCE );
-        String folderGenerated = GeneratorPropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_TO_GENERATE );
+        String folderSource = PropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_SOURCE );
+        String folderGenerated = PropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_TO_GENERATE );
         ret = templatePath.replace( folderSource, folderGenerated );
 
         ret = getFolderPath( ret );
@@ -419,7 +420,7 @@ public class TemplateService
     public boolean nameMatchPattern( String name )
     {
         boolean match = false;
-        String pattern = GeneratorPropertiesService.getProperty( GeneratorConstants.KEY_TEMPLATES_PATTERN );
+        String pattern = PropertiesService.getProperty( GeneratorConstants.KEY_TEMPLATES_PATTERN );
         match = Pattern.matches( pattern, name );
         return match;
     }
