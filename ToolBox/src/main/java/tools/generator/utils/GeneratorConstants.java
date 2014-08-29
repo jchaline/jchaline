@@ -4,7 +4,7 @@ public class GeneratorConstants {
 
 	public static final String KEY_PATH_PROJECT = "path.project";
 	public static final String KEY_PLUGIN_NAME = "plugin.name";
-	public static final String KEY_BEANS_FILE_NAME = "bean.file.name";
+	public static final String KEY_BEANS_FILE_NAME = "generator.path.bean.att";
 	public static final String KEY_PLUGIN_AUTHOR = "plugin.author.name";
 	public static final String KEY_FOLDER_SOURCE = "path.folder.source";
 	public static final String KEY_PLUGIN_PACKAGES = "plugin.packages";
