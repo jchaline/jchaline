@@ -15,7 +15,7 @@ public class SqlService
 {
     private static final Logger LOGGER = Logger.getLogger( SqlService.class );
 
-    public static void generateSqlFile( Repository repo, String path )
+    public static int generateSqlFile( Repository repo, String path )
     {
         String strArtifactFirstId = PropertiesService.getProperty( MappluginConstants.MARK_SQL_ARTIFACT_FIRST_ID );
         String strDependenciesFirstId = PropertiesService
@@ -36,7 +36,7 @@ public class SqlService
             artifactId++;
         }
 
-        FileService.write( path, builder.toString( ) );
+        return FileService.write( path, builder.toString( ) );
     }
 
     /**

@@ -277,20 +277,12 @@ public class Svn
         boolean accept = true;
         if ( filter != null )
         {
-            if ( !filter.getBlackList( ).isEmpty( ) )
-            {
-                if ( filter.getBlackList( ).contains( entry.getName( ) ) )
-                {
-                    accept = false;
-                }
-            }
-            else if ( !filter.getWhiteList( ).isEmpty( ) )
-            {
-                if ( !filter.getWhiteList( ).contains( entry.getName( ) ) )
-                {
-                    accept = false;
-                }
-
+        	Iterator<String> itr = filter.getBlackList( ).iterator();
+            while(accept && itr.hasNext()){
+            	String next = itr.next();
+				if(entry.getName().matches(next)){
+            		accept = false;
+            	}
             }
         }
         return accept;

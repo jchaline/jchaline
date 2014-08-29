@@ -39,7 +39,7 @@ public class SvnService
     public static SvnFilter getSvnFilter( )
     {
         SvnFilter filter = new SvnFilter( );
-        String blackFolders = PropertiesService.getProperty( MappluginConstants.MARK_FOLDER_BLACKLISTED );
+        String blackFolders = PropertiesService.getProperty( MappluginConstants.MARK_FOLDER_REFUSED );
         if ( StringUtils.isNotBlank( blackFolders ) )
         {
             for ( String folderName : blackFolders.split( MappluginConstants.PROPERTIES_SEPARATOR ) )
