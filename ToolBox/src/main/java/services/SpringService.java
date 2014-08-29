@@ -14,11 +14,13 @@ import utils.ToolsConstants;
 public class SpringService
 {
     private static Logger logger = Logger.getLogger( SpringService.class );
-    private static ApplicationContext context = new ClassPathXmlApplicationContext( ToolsConstants.SPRING_BEANS_XML );
+    private static ApplicationContext context;
 
     public static void init( )
     {
-
+    	if(context==null){
+    		context = new ClassPathXmlApplicationContext( ToolsConstants.SPRING_BEANS_XML );
+    	}
     }
     
     /**

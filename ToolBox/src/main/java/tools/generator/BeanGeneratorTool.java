@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import services.PropertiesService;
 import tools.Tool;
 import tools.generator.bean.Plugin;
 import tools.generator.service.GeneratorPropertiesService;
@@ -22,12 +23,11 @@ public class BeanGeneratorTool implements Tool
     @Override
     public int run( )
     {
-        GeneratorPropertiesService.init( );
         TemplateService _templateService = new TemplateService( );
 
         String pathProjet = GeneratorPropertiesService.PATH_PROJECT;
         String separator = GeneratorConstants.PATH_SEPARATOR;
-        String folderSource = GeneratorPropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_SOURCE );
+        String folderSource = PropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_SOURCE );
 
         String pathSources = pathProjet + separator + folderSource;
         _templateService.setPathFolderWithTemplate( pathSources );
@@ -53,7 +53,7 @@ public class BeanGeneratorTool implements Tool
     @Override
     public String getConf( )
     {
-        return null;
+        return "Path project : "+GeneratorPropertiesService.PATH_PROJECT+", separator : "+GeneratorConstants.PATH_SEPARATOR+", path sources : "+PropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_SOURCE );
     }
 
     @Override
