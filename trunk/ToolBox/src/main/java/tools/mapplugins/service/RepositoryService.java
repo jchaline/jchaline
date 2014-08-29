@@ -81,6 +81,7 @@ public class RepositoryService {
      */
     private List<Project> updateRepoWithLocalPath(String repoPath) {
     	List<Project> projects = new ArrayList<Project>();
+    	
     	List<String> listPaths = FileService.findFiles(-1, repoPath, PATTERN_POM);
     	logger.debug("Find "+listPaths.size()+" poms");
     	for(String pomPath : listPaths){
@@ -132,6 +133,7 @@ public class RepositoryService {
 		            }
 		            catch ( IOException | JAXBException e )
 		            {
+		            	logger.error("Error with "+entry.getUrl());
 		                logger.error( e );
 		            }
 		        }

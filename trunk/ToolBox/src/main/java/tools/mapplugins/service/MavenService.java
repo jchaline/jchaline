@@ -20,7 +20,9 @@ import tools.mapplugins.bean.Repository;
 import tools.mapplugins.xml.Dependency;
 import tools.mapplugins.xml.Project;
 
-
+/**
+ * the maven service
+ */
 public class MavenService
 {
     private static final String DEFAULT_GROUPID = "fr.paris.lutece.plugins";

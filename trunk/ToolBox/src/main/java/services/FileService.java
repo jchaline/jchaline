@@ -15,6 +15,8 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import utils.ToolsConstants;
+
 
 public class FileService
 {
@@ -57,8 +59,9 @@ public class FileService
      * @param filePath the path to the folder
      * @param text the text content
      */
-    public static void write( String filePath, String text )
+    public static int write( String filePath, String text )
     {
+    	int error = ToolsConstants.STATUS_OK;
         //on met try si jamais il y a une exception
         BufferedWriter output = null;
         try
@@ -78,8 +81,10 @@ public class FileService
         }
         catch ( IOException ioe )
         {
+        	error = ToolsConstants.STATUS_ERROR;
             logger.error( ioe );
         }
+        return error;
     }
 
     /**
@@ -100,7 +105,9 @@ public class FileService
      * @param fileList the list of the files
      * @param directoryPath the directory to search recursively
      * @param pattern the pattern the file must match, can be null
+     * @deprecated Replace deep by filter object
      */
+    @Deprecated
     public static List<String> findFiles( int deep, String directoryPath, String pattern )
     {
     	List<String> fileList = new ArrayList<String>();

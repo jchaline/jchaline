@@ -27,12 +27,13 @@ public class MappluginTool implements Tool
     @Override
     public int run( )
     {
-    	Repository repo = _repositoryService.loadRepo(false, false);
+    	boolean forceLoad = "true".equals(PropertiesService.getProperty(MappluginConstants.MARK_FORCE_LOAD));
+    	boolean forceSave = "true".equals(PropertiesService.getProperty(MappluginConstants.MARK_FORCE_SAVE));
+    	Repository repo = _repositoryService.loadRepo(forceLoad, forceSave);
 
         //derniere etape, generer le fichier SQL permettant de créer la bdd
         String sqlPath = PropertiesService.getProperty( MappluginConstants.MARK_SQL_FILE );
-        SqlService.generateSqlFile( repo, sqlPath );
-        return 0;
+        return SqlService.generateSqlFile( repo, sqlPath );
     }
 
     @Override
