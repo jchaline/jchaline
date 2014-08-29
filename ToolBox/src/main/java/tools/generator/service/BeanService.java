@@ -11,14 +11,14 @@ import tools.generator.bean.Plugin;
 import tools.generator.utils.GeneratorConstants;
 
 
-public class GeneratorPropertiesService
+public class BeanService
 {
     public static final String PATH_PROJECT = System.getProperty( "user.dir" );
     public final static String FOLDER_CONFIG_NAME = "\\conf";
     public final static String FOLDER_OVERRIDE_NAME = "\\override";
     public static final String PROPERTIES_PATTERN = "([^\\s]+(\\.(?i)(properties))$)";
 
-    private GeneratorPropertiesService( )
+    private BeanService( )
     {
 
     }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import services.PropertiesService;
 import tools.Tool;
 import tools.generator.bean.Plugin;
-import tools.generator.service.GeneratorPropertiesService;
+import tools.generator.service.BeanService;
 import tools.generator.service.TemplateService;
 import tools.generator.utils.GeneratorConstants;
 import utils.ToolsConstants;
@@ -25,7 +25,7 @@ public class BeanGeneratorTool implements Tool
     {
         TemplateService _templateService = new TemplateService( );
 
-        String pathProjet = GeneratorPropertiesService.PATH_PROJECT;
+        String pathProjet = BeanService.PATH_PROJECT;
         String separator = GeneratorConstants.PATH_SEPARATOR;
         String folderSource = PropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_SOURCE );
 
@@ -35,7 +35,7 @@ public class BeanGeneratorTool implements Tool
         Plugin plugin = null;
         try
         {
-            plugin = GeneratorPropertiesService.getPlugin( );
+            plugin = BeanService.getPlugin( );
         }
         catch ( IllegalArgumentException e )
         {
@@ -53,7 +53,7 @@ public class BeanGeneratorTool implements Tool
     @Override
     public String getConf( )
     {
-        return "Path project : "+GeneratorPropertiesService.PATH_PROJECT+", separator : "+GeneratorConstants.PATH_SEPARATOR+", path sources : "+PropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_SOURCE );
+        return "Path project : "+BeanService.PATH_PROJECT+", separator : "+GeneratorConstants.PATH_SEPARATOR+", path sources : "+PropertiesService.getProperty( GeneratorConstants.KEY_FOLDER_SOURCE );
     }
 
     @Override
