@@ -2,7 +2,6 @@ package fr.paris.lutece.plugins.scala.xpage
 
 import org.apache.commons.lang.StringUtils
 import org.apache.log4j.Logger
-
 import fr.paris.lutece.plugins.scala.bean.artifact.ArtifactFilter
 import fr.paris.lutece.plugins.scala.service.artifact.IArtifactService
 import fr.paris.lutece.portal.service.plugin.Plugin
@@ -13,6 +12,8 @@ import fr.paris.lutece.portal.web.xpages.XPage
 import javax.persistence.Entity
 import javax.persistence.Table
 import javax.servlet.http.HttpServletRequest
+import net.sf.json.JSON
+import net.sf.json.JSONSerializer
 
 class RepositoryApp extends AbstractXPageApplication {
 
@@ -59,11 +60,11 @@ class RepositoryApp extends AbstractXPageApplication {
     if (StringUtils.isNotBlank(version)) {
       filter.setVersion(version)
     }
-    filter.setArtifactId("plugin-library")
     val res = _artifactService.find(filter, null)
     LOGGER.error("Search for " + groupId + ":" + artifactId + ":" + version)
     LOGGER.error("and find " + res.size + " candidate")
-    "fr.paris.lutece:plugin-scala:1.0.0-SNAPSHOT"
+    var json = JSONSerializer.toJSON(res)
+    json.toString()
   }
 
 }

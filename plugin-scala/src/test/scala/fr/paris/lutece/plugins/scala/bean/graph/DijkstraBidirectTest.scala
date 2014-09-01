@@ -8,7 +8,7 @@ import org.mockito.Mockito._
 
 class DijkstraBidirectTest extends AssertionsForJUnit with MockitoSugar {
 
-  var graph: Graph = null
+  var graph: Graph = _
 
   @Before
   def init() {
