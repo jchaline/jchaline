@@ -29,14 +29,17 @@ class ArtifactDAO extends AbstractDAO[Int, Artifact] {
         var listPredicates = new MutableList[Predicate]
 
         if (StringUtils.isNotBlank(filter.getArtifactId)) {
-          //listPredicates += cb.like(root.get(Artifact_.), filter.getArtifactId)
+          listPredicates += cb.like(root.get(Artifact_._artifactId), filter.getArtifactId)
         }
         if (StringUtils.isNotBlank(filter.getGroupId)) {
-//          listPredicates += cb.like(root.get(null), filter.getGroupId)
+          listPredicates += cb.like(root.get(Artifact_._groupId), filter.getGroupId)
+        }
+        if (StringUtils.isNotBlank(filter.getVersion())) {
+        	listPredicates += cb.like(root.get(Artifact_._version), filter.getVersion)
         }
 
         if (!listPredicates.isEmpty) {
-          //cq.where(listPredicates(0), listPredicates(1));
+          cq.where(listPredicates:_*);
         }
       }
     }

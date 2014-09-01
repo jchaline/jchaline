@@ -39,12 +39,4 @@ class Artifact extends AbstractBean[Int] {
     _id = id
   }
   
-  /**
-   * Format artifact to json
-   * @return the str json
-   */
-  def toJson()={
-    
-  }
-
 }
