@@ -2,16 +2,13 @@ package mavenscan
 
 class Artifact {
 	
-	String artifactId
-	String version
-	String groupId
-	String name
+	static hasMany = [dependencies: Dependency]
 	
-	
+	String artifactId, groupId, artifactVersion
 
     static constraints = {
-		artifactId()
-		version()
 		groupId()
+		artifactId()
+		artifactVersion()
     }
 }

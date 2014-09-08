@@ -1,9 +1,16 @@
 package mavenscan
 
 class Dependency {
-	
-	String artifactId,groupId,version
 
+	static belongsTo = [owner: Artifact]
+	
+	String artifactId
+	String groupId 
+	String dependencyVersion
+	
     static constraints = {
+		groupId()
+		artifactId()
+		dependencyVersion()
     }
 }
