@@ -18,3 +18,6 @@ if (typeof jQuery !== 'undefined') {
 		});
 	})(jQuery);
 }
+
+//= require bootstrap
+console.log("My javascript goes here");
