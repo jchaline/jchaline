@@ -1,3 +1,9 @@
+<%@ page import="fr.naoned.core.Feature" %>
+<%@ page import="fr.naoned.core.GroupFeature" %>
+<%
+	List<GroupFeature> groupfeatures = GroupFeature.list()
+%>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -19,7 +25,21 @@
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li><g:link class="list" controller="feature"><g:message code="default.new.feature" default="Feature" /></g:link></li>
+						<g:displayMenu />
+						<g:each in="${groupfeatures}" var="group" >
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">${group.name}<span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<g:each in="${group.features}" var="feature" >
+										<li>
+											<g:link class="list" controller="${feature.controllerName}" action="${feature.actionName}">
+												${feature.name}
+											</g:link>
+										</li>
+									</g:each>
+								</ul>
+							</li>
+						</g:each>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 					</ul>

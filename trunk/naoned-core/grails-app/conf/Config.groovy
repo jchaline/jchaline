@@ -122,16 +122,14 @@ grails.assets.plugin."twitter-bootstrap".includes = ["bootstrap.less"]
 
 grails.plugins.twitterbootstrap.fixtaglib = true
 
-
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.rejectIfNoRule = false
 grails.plugin.springsecurity.fii.rejectPublicInvocations = false
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'fr.cg92.pmse.security.User'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'fr.cg92.pmse.security.UserRole'
-grails.plugin.springsecurity.authority.className = 'fr.cg92.pmse.security.Role'
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'fr.naoned.core.security.SecUser'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'fr.naoned.core.security.SecUserSecRole'
+grails.plugin.springsecurity.authority.className = 'fr.naoned.core.security.SecRole'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                              ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_VIEWER'],
-	'/user/**' :                      ['permitAll'],
 	'/index':                         ['permitAll'],
 	'/index.gsp':                     ['permitAll'],
 	'/assets/**':                     ['permitAll'],
@@ -140,3 +138,4 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/images/**':                  ['permitAll'],
 	'/**/favicon.ico':                ['permitAll']
 ]
+
