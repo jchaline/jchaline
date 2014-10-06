@@ -17,6 +17,26 @@ class BootstrapFormTagLib extends FormTagLib{
 	private String flashMessage(String cssClass, String message){
 		return """<div role="alert" class="$cssClass">$message</div>"""
 	}
+	
+	Closure displayMenu = {attrs ->
+		List<GroupFeature> groupfeatures = GroupFeature.list()
+		groupfeatures.each {group ->
+			out << """<li class="dropdown">"""
+			out << """<a href="#" class="dropdown-toggle" data-toggle="dropdown">${group.name}<span class="caret"></span></a>"""
+			out << """<ul class="dropdown-menu" role="menu">"""
+			group.features.each{f ->
+				out << """<li>"""
+				out << """<g:link class="list" controller="${f.controllerName}" action="${f.actionName}">"""
+				out << """${f.name}"""
+				out << """</g:link>"""
+				out << """</li>"""
+			}
+			out << """</ul>"""
+			out << """</li>"""
+		}
+		
+	}
+	
 	Closure bsActionSubmit = { attrs, body ->
 		if (!attrs.value) {
 			throwTagError("Tag [actionSubmit] is missing required attribute [value]")
