@@ -14,13 +14,16 @@ class BootStrap {
     }
 	
 	def initFeature(){
+		
+    	GroupFeature gFeature = new GroupFeature(name:'Feature',controllerName:'feature',actionName:'index').save()
+		
 		GroupFeature gAdmin = new GroupFeature(name:'Administration').save()
 		gAdmin.addToFeatures(new Feature(name:'Feature',controllerName:'feature').save())
 		gAdmin.addToFeatures(new Feature(name:'User',controllerName:'secUser').save())
 		
 		
 		GroupFeature gFunctional = new GroupFeature(name:'Fonctionnel').save()
-		gFunctional.addToFeatures(new Feature(name:"Cas d'utilisation 1",controllerName:'use').save())
+		gFunctional.addToFeatures(new Feature(name:"Cas d'utilisation 1",controllerName:'use', actionName:'use1').save())
 		gFunctional.addToFeatures(new Feature(name:"Cas d'utilisation 2",controllerName:'case').save())
 	}
 	
