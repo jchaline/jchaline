@@ -1,8 +1,11 @@
 package fr.naoned.core.workflow
 
-class Task {
+/**
+ * Abstract common class for task config
+ */
+abstract class Task {
 	
-	static hasMany = [states: State]
+	abstract def doProcess()
 
     static constraints = {
     }

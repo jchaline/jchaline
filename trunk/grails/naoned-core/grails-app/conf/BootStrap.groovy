@@ -15,7 +15,10 @@ class BootStrap {
 	
 	def initFeature(){
 		
-    	GroupFeature gFeature = new GroupFeature(name:'Gestion des workflows',controllerName:'workflow').save()
+    	GroupFeature gWorkflow = new GroupFeature(name:'Gestion des workflows').save()
+    	gWorkflow.addToFeatures(new Feature(name:'Workflow',controllerName:'workflow').save())
+    	gWorkflow.addToFeatures(new Feature(name:'Actions',controllerName:'action').save())
+    	gWorkflow.addToFeatures(new Feature(name:'States',controllerName:'state').save())
 		
 		GroupFeature gAdmin = new GroupFeature(name:'Administration').save()
 		gAdmin.addToFeatures(new Feature(name:'Feature',controllerName:'feature').save())
