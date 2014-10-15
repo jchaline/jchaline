@@ -3,8 +3,12 @@ package fr.naoned.core.workflow
 class Action {
 	
 	String name
-	static hasMany = [states: State]
+	State before
+	State after
 
     static constraints = {
+		name()
+		before nullable:true
+		after nullable:true
     }
 }
