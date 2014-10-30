@@ -25,10 +25,8 @@ public final class MarkerTool implements Tool
     {
         logger.info( "Run tool : " + getName( ) );
         PropertiesService.init( );
-        String filePatternFilter = PropertiesService.getProperty( "marker.templates.pattern" );
-        logger.debug( "Use pattern : " + filePatternFilter );
-        String pathFiles = PropertiesService.getProperty( "marker.templates.path" );
-        logger.debug( "File path : " + pathFiles );
+        String filePatternFilter = MarkerService.getFilePattern();
+        String pathFiles = MarkerService.getPathFiles();
 
         //configuration test
         if ( StringUtils.isBlank( filePatternFilter ) || StringUtils.isBlank( pathFiles ) )
@@ -60,7 +58,9 @@ public final class MarkerTool implements Tool
     @Override
     public String getConf( )
     {
-        return "no conf set";
+    	String filePatternFilter = MarkerService.getFilePattern();
+        String pathFiles = MarkerService.getPathFiles();
+        return "Use parttern : "+filePatternFilter+" and path : "+pathFiles;
     }
 
     @Override

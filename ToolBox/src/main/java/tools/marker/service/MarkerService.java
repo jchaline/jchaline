@@ -59,4 +59,12 @@ public class MarkerService {
             }
         }
     }
+
+	public static String getFilePattern() {
+		return PropertiesService.getProperty( "marker.templates.pattern" );
+	}
+
+	public static String getPathFiles() {
+		return PropertiesService.getProperty( "marker.templates.path" );
+	}
 }
