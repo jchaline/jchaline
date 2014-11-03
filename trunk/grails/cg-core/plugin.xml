@@ -1,0 +1,15 @@
+<plugin name='cg-core' version='1.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+  <author>Sopra</author>
+  <title>Cg Core Plugin</title>
+  <description>Elements Core / Taglib / Scaffolding communs aux projets grails CG92.</description>
+  <documentation>http://grails.org/plugin/cg-core</documentation>
+  <type>CgCoreGrailsPlugin</type>
+  <resources>
+    <resource>fr.cg92.core.domain.Feature</resource>
+    <resource>fr.cg92.core.domain.GroupFeature</resource>
+    <resource>fr.cg92.core.domain.SecRole</resource>
+    <resource>fr.cg92.core.domain.SecUser</resource>
+    <resource>fr.cg92.core.domain.SecUserSecRole</resource>
+    <resource>fr.cg92.core.taglib.BootstrapTagLib</resource>
+  </resources>
+</plugin>
