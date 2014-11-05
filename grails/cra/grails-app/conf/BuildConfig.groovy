@@ -60,5 +60,9 @@ grails.project.dependency.resolution = {
 
         compile "fr.cg92:cg-core:1.0.0-SNAPSHOT"
     }
-
+}
+grails.plugin.location.'cg-core' = "../cg-core"
+environments {
+    development {
+    }
 }
