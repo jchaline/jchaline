@@ -1,3 +1,6 @@
+import fr.cg92.core.domain.Feature
+import fr.cg92.core.domain.GroupFeature
+
 class CgCoreGrailsPlugin {
     // Group ID
     def groupId="fr.cg92"

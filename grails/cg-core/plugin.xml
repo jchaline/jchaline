@@ -5,11 +5,16 @@
   <documentation>http://grails.org/plugin/cg-core</documentation>
   <type>CgCoreGrailsPlugin</type>
   <resources>
+    <resource>fr.cg92.core.controller.DatasetController</resource>
+    <resource>fr.cg92.core.controller.FeatureController</resource>
+    <resource>fr.cg92.core.controller.GroupFeatureController</resource>
     <resource>fr.cg92.core.domain.Feature</resource>
     <resource>fr.cg92.core.domain.GroupFeature</resource>
     <resource>fr.cg92.core.domain.SecRole</resource>
     <resource>fr.cg92.core.domain.SecUser</resource>
     <resource>fr.cg92.core.domain.SecUserSecRole</resource>
+    <resource>fr.cg92.core.service.DatasetService</resource>
+    <resource>fr.cg92.core.service.SecurityService</resource>
     <resource>fr.cg92.core.taglib.BootstrapTagLib</resource>
   </resources>
 </plugin>
