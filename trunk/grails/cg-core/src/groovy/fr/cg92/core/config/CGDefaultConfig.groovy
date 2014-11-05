@@ -1,5 +1,7 @@
 package fr.cg92.core.config
 
+import fr.cg92.core.domain.SecRole
+
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
@@ -129,9 +131,8 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'fr.cg92.core.doma
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'fr.cg92.core.domain.SecUserSecRole'
 grails.plugin.springsecurity.authority.className = 'fr.cg92.core.domain.SecRole'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-        '/':                              ['permitAll'],
-        '/index':                         ['permitAll'],
-        '/index.gsp':                     ['permitAll'],
+        '/**':                              [SecRole.ADMINISTRATEUR,SecRole.GESTIONNAIRE,SecRole.VISUALISEUR],
+        '/dataset/*':                     [SecRole.ADMINISTRATEUR],
         '/assets/**':                     ['permitAll'],
         '/**/js/**':                      ['permitAll'],
         '/**/css/**':                     ['permitAll'],
