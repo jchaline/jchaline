@@ -126,7 +126,10 @@ grails.assets.plugin."twitter-bootstrap".includes = ["bootstrap.less"]
 
 grails.plugins.twitterbootstrap.fixtaglib = true
 
-// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.onAbstractAuthenticationFailureEvent = { e, appCtx ->
+    println "\nERROR auth failed for user $e.authentication.name: $e.exception.message\n"
+}
+grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'fr.cg92.core.domain.SecUser'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'fr.cg92.core.domain.SecUserSecRole'
 grails.plugin.springsecurity.authority.className = 'fr.cg92.core.domain.SecRole'

@@ -8,7 +8,7 @@ class BootStrap {
     def securityService
 
     def init = { servletContext ->
-        datasetService.generateFeatures()
+        datasetService.initIOC()
         securityService.initSecurity()
     }
 

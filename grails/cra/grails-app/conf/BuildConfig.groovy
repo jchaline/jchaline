@@ -6,6 +6,7 @@ grails.project.work.dir = "target/work"
 grails.project.target.level = 1.8
 grails.project.source.level = 1.8
 grails.project.war.file = "target/${appName}.war"
+grails.assets.minifyJs = false
 
 grails.project.fork = [
     // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
@@ -61,7 +62,10 @@ grails.project.dependency.resolution = {
         compile "fr.cg92:cg-core:1.0.0-SNAPSHOT"
     }
 }
+grails.assets.minifyJs = false
+
 grails.plugin.location.'cg-core' = "../cg-core"
+grails.plugin.location.'plugin-import' = "../plugin-import"
 environments {
     development {
     }

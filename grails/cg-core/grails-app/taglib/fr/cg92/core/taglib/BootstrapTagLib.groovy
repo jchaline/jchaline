@@ -77,7 +77,6 @@ class BootstrapTagLib extends FormTagLib {
      * get content for menu, must be use into <u class="xxx"></ul>
      */
     Closure displayMenu = {attrs ->
-        log.error("Display menu")
         def user = springSecurityService.currentUser
 
         if(user){

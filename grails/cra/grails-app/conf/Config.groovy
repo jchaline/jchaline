@@ -22,5 +22,5 @@ def projectRules = [
         '/collaborateur/**':                              [SecRole.ADMINISTRATEUR],
         '/projet/**':                              ['permitAll'],
 ]
-grails.assets.minifyJs = false
+
 grails.plugin.springsecurity.controllerAnnotations.staticRules.putAll(projectRules)
