@@ -9,7 +9,7 @@
         <div class="col-md-12">
             <fieldset>
                 <legend>Bienvenue sur ${appName?:'AppName'}</legend>
-                <p>Gestion des comptes rendu d'activité</p>
+                <p>Index fourni par le core</p>
             </fieldset>
         </div>
     </div>
