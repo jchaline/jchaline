@@ -60,7 +60,7 @@ grails.project.dependency.resolution = {
         build ":tomcat:7.0.55"
 
         compile "fr.cg92.socle:cg-core:1.0.0-SNAPSHOT"
-        compile "fr.cg92.socle:plugin-imports:1.0.0-SNAPSHOT"
+        compile "fr.cg92.socle.plugins:plugin-imports:1.0.0-SNAPSHOT"
     }
 }
 grails.assets.minifyJs = false
