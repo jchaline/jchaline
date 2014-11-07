@@ -59,14 +59,11 @@ grails.project.dependency.resolution = {
         // plugins for the build system only
         build ":tomcat:7.0.55"
 
-        compile "fr.cg92:cg-core:1.0.0-SNAPSHOT"
+        compile "fr.cg92.socle:cg-core:1.0.0-SNAPSHOT"
+        compile "fr.cg92.socle:plugin-imports:1.0.0-SNAPSHOT"
     }
 }
 grails.assets.minifyJs = false
 
 grails.plugin.location.'cg-core' = "../cg-core"
-grails.plugin.location.'plugin-import' = "../plugin-import"
-environments {
-    development {
-    }
-}
+grails.plugin.location.'plugin-imports' = "../plugin-imports"

@@ -35,7 +35,7 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        compile "fr.cg92:cg-core:1.0.0-SNAPSHOT"
+        compile "fr.cg92.socle:cg-core:1.0.0-SNAPSHOT"
     }
 }
 grails.assets.minifyJs = false

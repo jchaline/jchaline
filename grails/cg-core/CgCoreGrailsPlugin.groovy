@@ -3,7 +3,7 @@ import fr.cg92.core.domain.GroupFeature
 
 class CgCoreGrailsPlugin {
     // Group ID
-    def groupId="fr.cg92"
+    def groupId="fr.cg92.socle"
     // the plugin version
     def version = "1.0.0-SNAPSHOT"
     // the version or versions of Grails the plugin is designed for
