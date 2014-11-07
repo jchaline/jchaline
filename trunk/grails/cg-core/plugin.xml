@@ -14,6 +14,7 @@
     <resource>fr.cg92.core.domain.SecUser</resource>
     <resource>fr.cg92.core.domain.SecUserSecRole</resource>
     <resource>fr.cg92.core.service.DatasetService</resource>
+    <resource>fr.cg92.core.service.IDatasetService</resource>
     <resource>fr.cg92.core.service.SecurityService</resource>
     <resource>fr.cg92.core.taglib.BootstrapTagLib</resource>
   </resources>
