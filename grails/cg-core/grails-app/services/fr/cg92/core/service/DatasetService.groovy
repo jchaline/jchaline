@@ -12,7 +12,7 @@ class DatasetService implements IDatasetService {
 
     void initIOC(){
         def listBeans = grailsApplication.mainContext.getBeansOfType(IDatasetService.class)
-        listBeans.sort{ it.level() }.each {
+        listBeans.collect{e -> e.value}.sort{ it.level() }.each {
             it.initData()
         }
 
