@@ -15,7 +15,7 @@
 	<aop:config>
 		<aop:aspect id="logTimeAspect" ref="timeProfiler">
 			<aop:pointcut
-				expression="execution(* battle.csn.lucette2.game.*.*.*(..))"
+				expression="execution(* battle.csn.lucette2.game.*.*.chooseMove(..))"
 				id="executeForTime" />
 			<aop:around pointcut-ref="executeForTime" method="timeProfile" />
 		</aop:aspect>
