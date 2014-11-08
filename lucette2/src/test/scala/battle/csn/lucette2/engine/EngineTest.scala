@@ -43,6 +43,7 @@ class EngineTest extends AssertionsForJUnit with MockitoSugar {
     var sBoard = e.board
     sBoard match {
       case Some(board) => println(board)
+      case _ => println("not a valid board")
     }
   }
 
