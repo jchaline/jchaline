@@ -4,7 +4,6 @@ import org.scalatest.junit.AssertionsForJUnit
 import org.junit.runner.RunWith
 import org.mockito.runners.MockitoJUnitRunner
 import battle.csn.lucette2.game.logic.NegaMax
-import battle.csn.lucette.game.board.IBoard
 import org.junit.Assert._
 import org.junit._
 import org.scalatest.mock._

@@ -7,7 +7,7 @@ import org.apache.commons.cli.CommandLine
 import org.apache.commons.cli.HelpFormatter
 import org.apache.commons.cli.OptionGroup
 import org.apache.commons.cli.DefaultParser
-import battle.csn.lucette.service.InitGameHelper
+import battle.csn.lucette2.service.InitGameHelper
 import battle.csn.lucette2.engine.FightStateMachine
 import org.apache.commons.cli.ParseException
 

@@ -17,9 +17,6 @@
 	<!-- Scala Lucette Spring -->
 	<import resource="ScalaSpringBeans.xml" />
 
-	<!-- Java Lucette Spring -->
-	<import resource="JavaSpringBeans.xml" />
-
 	<!-- AOP Spring configuration -->
 	<import resource="springAOP/SpringAOP.xml" />
 
