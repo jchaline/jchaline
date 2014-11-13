@@ -6,3 +6,7 @@
  		=> noter les plateau qui permettent de jouer un coup amenant vers une table existante
  			=> rajouter le plateau aux tables
  - utiliser un composant commun pour la gestion du client et du serveur
+  => completer LucetteServer pour pouvoir brancher serveur & client ensemble à partir du même projet
+
+ - pattern option à utiliser pour améliorer le code
+ - akka pour nega max
