@@ -16,7 +16,7 @@ class MultiTabTest extends AssertionsForJUnit with MockitoSugar {
 
   @Test
   def updateTabTest() {
-    var t = new MultiTab[Int]()
+    val t = new MultiTab[Int]()
     t.updateSizes(Seq(3, 3))
     println ("multitab size : "+t.size)
   }

@@ -13,25 +13,25 @@ import battle.csn.lucette2.game.board.Board
 @RunWith(classOf[MockitoJUnitRunner])
 class EngineTest extends AssertionsForJUnit with MockitoSugar {
 
-  var LOGGER = Logger.getLogger(classOf[EngineTest])
+  val LOGGER = Logger.getLogger(classOf[EngineTest])
 
   @Test
   def initEngineTest() {
-    var e = new Engine[Int]("game1");
+    val e = new Engine[Int]("game1");
   }
 
   @Test
   def moveAvailableTest() {
-    var players = Map(1 -> "player1", -1 -> "player2")
+    val players = Map(1 -> "player1", -1 -> "player2")
     var turn = 1
-    var e = new Engine[Int]("game1");
+    val e = new Engine[Int]("game1");
 
     var status = e.gameStatus(players(turn))
     while (status.equals(Board.OUI)) {
-      var optM = e.chooseMove(players(turn))
+      val optM = e.chooseMove(players(turn))
       optM match {
         case Some(m) =>
-          e.play(players(turn), m);
+          e.play(players(turn), m)
           LOGGER.debug(m)
         case default => fail("No move find")
       }
@@ -40,7 +40,7 @@ class EngineTest extends AssertionsForJUnit with MockitoSugar {
       println(status)
     }
     println("result : " + players(turn) + " : " + status)
-    var sBoard = e.board
+    val sBoard = e.board
     sBoard match {
       case Some(board) => println(board)
       case _ => println("not a valid board")

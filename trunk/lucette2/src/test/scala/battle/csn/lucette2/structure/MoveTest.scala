@@ -17,8 +17,8 @@ class MoveTest extends AssertionsForJUnit with MockitoSugar {
   
   @Test
   def compagnionCreateTest(){
-    var m1 = Move(1,2)
-    var m2 = new Move(Seq(1,2))
+    val m1 = Move(1,2)
+    val m2 = new Move(Seq(1,2))
     
   }
 

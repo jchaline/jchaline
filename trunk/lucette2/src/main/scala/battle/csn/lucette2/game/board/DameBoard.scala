@@ -156,13 +156,13 @@ class DameBoard extends Board[Int] {
   def inBoundary(x: Int, y: Int) = (x < DIM_X && x >= 0 && y < DIM_Y && y >= 0)
 
   def updateBoard(strBoard: String) {
-    var lines = strBoard.split(LINE_SEPARATOR)
+    val lines = strBoard.split(LINE_SEPARATOR)
     var i = 0
     for (line <- lines) {
       var j = 0;
-      var columns = line.split(COLUMN_SEPARATOR)
+      val columns = line.split(COLUMN_SEPARATOR)
       for (col <- columns) {
-        var elem = col.trim();
+        val elem = col.trim();
         if (StringUtils.isNotBlank(elem)) {
           writeCase(if (elem.equals(WHITE)) State.WHITE else State.BLACK, i, j)
         } else {
