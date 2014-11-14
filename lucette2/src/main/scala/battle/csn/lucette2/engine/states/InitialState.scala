@@ -8,10 +8,10 @@ import battle.csn.lucette2.network.RestClient
 class InitialState extends AbstractIntermediateState {
 
   override def pull(chain: Chain) {
-    var stateMachine = chain.stateMachine
-    var idPartie = stateMachine.game
-    var idEquipe = stateMachine.idEquipe
-    var gameStatus = new RestClient().getGameStatus(idPartie, idEquipe)
+    val stateMachine = chain.stateMachine
+    val idPartie = stateMachine.game
+    val idEquipe = stateMachine.idEquipe
+    val gameStatus = new RestClient().getGameStatus(idPartie, idEquipe)
     gameStatus match {
       case OUI =>
         chain.current = new PlayState()

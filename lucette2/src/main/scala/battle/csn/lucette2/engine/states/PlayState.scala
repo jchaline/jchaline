@@ -14,12 +14,12 @@ class PlayState extends AbstractIntermediateState {
   def LOGGER = Logger.getLogger(classOf[PlayState]);
 
   def pull(chain: Chain) {
-    var stateMachine: FightStateMachine = chain.stateMachine
+    val stateMachine: FightStateMachine = chain.stateMachine
 
-    var strBoard = new RestClient().getBoard(chain.stateMachine.game)
+    val strBoard = new RestClient().getBoard(chain.stateMachine.game)
 
-    var engine = new Engine("")
-    var plateau = engine.board
+    val engine = new Engine("")
+    val plateau = engine.board
 
     plateau match {
       case Some(p) => p.updateBoard(strBoard)
@@ -34,9 +34,9 @@ class PlayState extends AbstractIntermediateState {
 
     //TODO implement
     //var move = new GameEngine( ).getMove( plateau, chain.getStateMachine( ).getIdEquipe( ) );
-    var move = Move()
+    val move = Move()
 
-    var result = new RestClient().play(stateMachine.game, stateMachine.idEquipe, move.positions)
+    val result = new RestClient().play(stateMachine.game, stateMachine.idEquipe, move.positions)
 
     result match {
       case OUI =>
@@ -44,7 +44,7 @@ class PlayState extends AbstractIntermediateState {
       case KO =>
         chain.current = new ErrorState("We did a forbidden move here :/")
       case PTT =>
-        System.out.println("Why the f**k did we played now ???")
+        LOGGER.error("Why the f**k did we played now ???")
         chain.current = new InitialState()
       case GAGNE =>
         chain.current = new WinState()

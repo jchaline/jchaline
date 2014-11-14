@@ -35,7 +35,7 @@ class NegaMax extends Logic {
   def solveOld(player: Int, plateau: Board[Int], alpha: Integer, beta: Integer, heuristique: (Int, Board[Int]) => Int, findMax: Boolean, deep: Integer): Int = {
     cpt += 1
     var value = 0;
-    var moves = plateau.moveAvailables(player)
+    val moves = plateau.moveAvailables(player)
 
     //si le plateau est une feuille
     if (moves.size == 0 || deep == 0) {
@@ -44,9 +44,9 @@ class NegaMax extends Logic {
       var bestScore = if (findMax) Integer.MIN_VALUE else Integer.MAX_VALUE
       //Pour toutes les coups jouables du plateau
       for (move <- moves) {
-        var deepCopy = plateau.deepCopy()
+        val deepCopy = plateau.deepCopy()
         deepCopy.play(player, move)
-        var score = solveOld(player * -1, deepCopy, -beta, -alpha, heuristique, !findMax, deep - 1)
+        val score = solveOld(player * -1, deepCopy, -beta, -alpha, heuristique, !findMax, deep - 1)
         if ((findMax && score > bestScore) || (!findMax && score < bestScore)) {
           bestScore = score
           if ((findMax && bestScore > alpha) || (!findMax && bestScore < alpha)) {
@@ -65,7 +65,7 @@ class NegaMax extends Logic {
   
   def solve(node:Board[Int], heuristic:(Int,Board[Int]) => Int, depth:Int, α:Int, β:Int, color:Int):Int={
     
-    var moves = node.moveAvailables(color)
+    val moves = node.moveAvailables(color)
     if (depth == 0 || moves.isEmpty ) {
         color * heuristic(color,node)
     }
@@ -73,10 +73,10 @@ class NegaMax extends Logic {
       var αLooped = α
         var bestValue = Int.MinValue
         for(move <- moves){
-          var copy = node.deepCopy
+          val copy = node.deepCopy
           copy.play(color * -1, move)
           
-          var value = -solve(copy, heuristic, depth - 1, -β, -αLooped, -color)
+          val value = -solve(copy, heuristic, depth - 1, -β, -αLooped, -color)
           bestValue = math.max( bestValue, value )
           αLooped = math.max( αLooped, value );
           if (αLooped >= β){

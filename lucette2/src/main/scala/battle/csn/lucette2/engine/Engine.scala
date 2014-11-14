@@ -27,7 +27,7 @@ class Engine[T](@BeanProperty val idGame: String) {
     board = Some(context.getBean(classOf[Board[T]]))
     bot = Some(context.getBean(classOf[Bot[T]]))
 
-    var logic = Some(context.getBean(classOf[Logic]))
+    val logic = Some(context.getBean(classOf[Logic]))
 
     bot match {
       case Some(b) => (b.logic = logic)

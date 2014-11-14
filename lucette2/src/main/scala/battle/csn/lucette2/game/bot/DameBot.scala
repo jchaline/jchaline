@@ -2,17 +2,18 @@ package battle.csn.lucette2.game.bot
 
 import battle.csn.lucette2.game.board.Board
 import battle.csn.lucette2.game.structure.Move
+import org.apache.log4j.Logger
 
 class DameBot extends Bot[Int] {
-  
+
+  val LOGGER = Logger.getLogger(classOf[DameBot])
   val ALPHA = Int.MaxValue
   val BETA = Int.MinValue
   val FIND_MAX = true
   val DEEP = 0
 
   def chooseMove(player: Int, board: Board[Int]) = {
-    var moves = board.moveAvailables(player)
-    
+    val moves = board.moveAvailables(player)
     var bestMove : Option[Move]=None
     
     logic match{
@@ -20,9 +21,9 @@ class DameBot extends Bot[Int] {
           var maxFind = BETA
           
           for( move <- moves){
-              var copy = board.deepCopy()
+              val copy = board.deepCopy()
               copy.play(player, move)
-              var evaluation = l.solve(board, evaluateBoard, DEEP, BETA, ALPHA, player)
+              val evaluation = l.solve(board, evaluateBoard, DEEP, BETA, ALPHA, player)
               
               if (evaluation>maxFind) {
                 maxFind = evaluation
@@ -30,7 +31,7 @@ class DameBot extends Bot[Int] {
               }
           }
         
-      case None => 
+      case None => LOGGER.error("no logic for dame bot !")
     }
     
     bestMove
@@ -43,7 +44,7 @@ class DameBot extends Bot[Int] {
         {
             for ( column <- 0 to board.getHeight()-1 )
             {
-                var value = board.readCase( Seq(row, column) )
+                val value = board.readCase( Seq(row, column) )
                 value match{
                   case Some(v)=> sum+=v
                   case None => 

@@ -19,13 +19,13 @@ class NegaMaxTest extends AssertionsForJUnit with MockitoSugar {
 
   @Test
   def solveBoardTest() {
-    var solver: NegaMax = new NegaMax
-    var board = new DameBoard
+    val solver: NegaMax = new NegaMax
+    val board = new DameBoard
     
     println("Begin with board : ")
     println(board)
     
-    var firstEvaluate = solver.solve(board, (new DameBot).evaluateBoard, 0, Int.MinValue, Int.MaxValue, 1)
+    val firstEvaluate = solver.solve(board, (new DameBot).evaluateBoard, 0, Int.MinValue, Int.MaxValue, 1)
     assertTrue(firstEvaluate==0)
     
     println("End with board : ")

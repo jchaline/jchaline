@@ -15,21 +15,21 @@ class DameBoardTest {
 
   @Test
   def moveAvailablesTest() {
-    var board = new DameBoard()
+    val board = new DameBoard()
     println("search for : ")
     println(board)
-    var ms = board.moveAvailables(1)
+    val ms = board.moveAvailables(1)
     println("find : "+ms.size)
     ms.foreach(println(_))
   }
 
   @Test
   def toStringTest() {
-    var board = new DameBoard()
-    var res = board.toString()
+    val board = new DameBoard()
+    val res = board.toString()
     board.updateBoard(res)
-    var res2 = board.toString
-    assertTrue(res.equals(res))
+    val res2 = board.toString
+    assertTrue(res.equals(res2))
   }
 
 }
