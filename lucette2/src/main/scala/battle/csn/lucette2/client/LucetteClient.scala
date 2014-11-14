@@ -20,10 +20,10 @@ class LucetteClient {
     run(args)
   }
 
-  val restClient = new RestClient();
+  val restClient = new RestClient()
 
   def run(args: Array[String]) {
-    var options = getOptions()
+    val options = getOptions()
 
     try {
       var cmd = new DefaultParser().parse(options, args)
