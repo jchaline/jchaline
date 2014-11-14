@@ -7,8 +7,8 @@
 	<!-- @AspectJ support -->
 	<aop:aspectj-autoproxy />
 	<!-- Aspect with only XML configuration -->
-	<bean id="timeProfiler" class="fr.paris.lutece.plugins.log4jspringaop.profiler.TimeProfiler" />
-	<bean id="argsProfiler" class="fr.paris.lutece.plugins.log4jspringaop.profiler.ArgsProfiler" >
+	<bean id="timeProfiler" class="fr.jchaline.library.profiler.TimeProfiler" />
+	<bean id="argsProfiler" class="fr.jchaline.library.profiler.ArgsProfiler" >
 		<property name="config" value="2"/>
 	</bean>
 
