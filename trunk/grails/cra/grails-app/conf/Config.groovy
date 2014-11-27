@@ -11,7 +11,8 @@ println("Begin")
 println("config : "+configPath)
 println("db : "+dbPath)
 println("end")
-grails.config.locations = ["classpath:${configPath}","classpath:db/${dbPath}"]
+
+//grails.config.locations = ["classpath:${configPath}","classpath:db/${dbPath}"]
 
 def projectRules = [
         '/collaborateur/**':                       [SecRole.ADMINISTRATEUR],

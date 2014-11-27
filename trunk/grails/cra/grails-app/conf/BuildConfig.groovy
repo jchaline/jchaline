@@ -3,8 +3,8 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 grails.project.work.dir = "target/work"
-grails.project.target.level = 1.8
-grails.project.source.level = 1.8
+grails.project.target.level = 1.7
+grails.project.source.level = 1.7
 grails.project.war.file = "target/${appName}.war"
 
 forkConfig = false
@@ -37,9 +37,6 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
-        // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
-        // runtime 'mysql:mysql-connector-java:5.1.29'
-        // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
         runtime 'mysql:mysql-connector-java:5.1.29'
         test "org.grails:grails-datastore-test-support:1.0-grails-2.4"
     }
