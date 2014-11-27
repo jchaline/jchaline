@@ -1,0 +1,4 @@
+ - gestion de la conf : surchage à partir de %HOME%/conf/sograils/%APPNAME%
+ - configuraiton automatique du BuildConfig.groovy d'une grail-app via script d'init
+	- idem bootstrap.groovy
+ - 
