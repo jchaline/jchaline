@@ -1,4 +1,10 @@
- - gestion de la conf : surchage � partir de %HOME%/conf/sograils/%APPNAME%
+ - gestion de la conf : surchage à partir de %HOME%/conf/sograils/%APPNAME%
  - configuraiton automatique du BuildConfig.groovy d'une grail-app via script d'init
 	- idem bootstrap.groovy
- - 
+ - supprimer gsp inutiles, remplacer index/error
+ - vider grails-app/assets/stylesheets
+ - remplacer grails-app/assets/javascripts/application.js
+ - remplacer Gonfig.groovy
+ - attention, par defaut, il n'y a pas les locations
+ - déplacer nom de l'application (main.gsp) dans la configuration
+ - prévoir un systeme d'update ?
