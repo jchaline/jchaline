@@ -1,7 +1,3 @@
-import fr.cg92.core.domain.SecRole
-import fr.cg92.core.domain.SecUser
-import fr.cg92.core.domain.SecUserSecRole
-
 class BootStrap {
 
     def datasetService
