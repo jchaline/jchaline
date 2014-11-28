@@ -16,7 +16,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span class="navbar-brand" >Prospect</span>
+            <span class="navbar-brand" >SoGrails</span>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
