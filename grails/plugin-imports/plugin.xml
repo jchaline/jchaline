@@ -1,0 +1,13 @@
+<plugin name='plugin-imports' version='1.0.0-SNAPSHOT' grailsVersion='2.4 &gt; *'>
+  <author>Your name</author>
+  <title>Plugin Imports Plugin</title>
+  <description>Brief summary/description of the plugin.
+</description>
+  <documentation>http://grails.org/plugin/plugin-imports</documentation>
+  <type>PluginImportsGrailsPlugin</type>
+  <resources>
+    <resource>fr.cg92.socle.plugins.imports.controller.ImportController</resource>
+    <resource>fr.cg92.socle.plugins.imports.domain.Import</resource>
+    <resource>fr.cg92.socle.plugin.imports.service.ImportsDatasetService</resource>
+  </resources>
+</plugin>
