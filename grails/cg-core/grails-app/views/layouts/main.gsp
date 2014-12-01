@@ -20,10 +20,10 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <c:displayMenu />
+                <b:displayMenu />
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <c:displayRightMenu />
+                <b:displayRightMenu />
             </ul>
         </div>
     </div>

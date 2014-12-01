@@ -2,6 +2,7 @@ package fr.cg92.core.controller
 
 import fr.cg92.core.domain.Feature
 import fr.cg92.core.domain.GroupFeature
+import fr.cg92.core.service.DatasetService
 
 class DatasetController {
 
@@ -12,7 +13,7 @@ class DatasetController {
     }
 
     def generate(){
-        datasetService.generateFeatures()
+        datasetService.initFeatures()
         redirect action:'index'
     }
 }
