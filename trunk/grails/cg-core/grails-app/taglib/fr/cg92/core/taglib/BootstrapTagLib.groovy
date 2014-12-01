@@ -7,7 +7,7 @@ import fr.cg92.core.domain.GroupFeature
 class BootstrapTagLib extends FormTagLib {
     //static encodeAsForTags = [tagName: [taglib:'html'], otherTagName: [taglib:'none']]
 
-    static namespace = 'c'
+    static namespace = 'b'
 
     def springSecurityService
 
