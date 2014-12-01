@@ -5,14 +5,7 @@ grails.config.defaults.locations = [
 ]
 
 envName = "${appName}-${grails.util.Environment.current.name}"
-configPath = "${envName}-config.properties"
-dbPath = "${envName}-db.properties"
-println("Begin")
-println("config : "+configPath)
-println("db : "+dbPath)
-println("end")
-
-//grails.config.locations = ["classpath:${configPath}","classpath:db/${dbPath}"]
+grails.config.locations = ["file:${userHome}/conf/sograils/${appName}/${envName}-db.groovy",]
 
 def projectRules = [
         '/collaborateur/**':                       [SecRole.ADMINISTRATEUR],
